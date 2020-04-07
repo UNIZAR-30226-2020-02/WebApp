@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TabsPageRouterModule } from './tabs-page-router.module';
+import { SplitPanePageRouterModule } from './split-pane.routing';
 
-import { TabsPage } from './tabs.page';
+import { SplitPanePage } from './split-pane.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TabsPageRouterModule
+    SplitPanePageRouterModule
   ],
-  declarations: [TabsPage]
+  declarations: [SplitPanePage]
 })
-export class TabsPageModule {}
+export class SplitPanePageModule {}

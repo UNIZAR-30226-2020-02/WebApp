@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
+import { SplitPanePage } from './split-pane.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
-    component: TabsPage,
+    path: 'split-pane',
+    component: SplitPanePage,
     children: [
       {
         path: 'home',
@@ -26,7 +26,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'paraTi',
+        path: 'para-ti',
         children: [
           {
             path: '',
@@ -56,16 +56,14 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'tabs/home',
+    redirectTo: 'split-pane/home',
     pathMatch: 'full'
   }
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    RouterModule.forChild(routes)
-  ],
+  imports: [RouterModule.forChild(routes)],
   exports: [ RouterModule ]
 })
-export class TabsPageRouterModule { }
+export class SplitPanePageRouterModule { }

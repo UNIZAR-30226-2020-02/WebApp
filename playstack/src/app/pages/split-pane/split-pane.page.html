@@ -1,0 +1,74 @@
+<ion-split-pane contentId="main-content">
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-content>
+      <ion-list id="inbox-list">
+        <ion-grid>
+        <ion-row>
+        <ion-col size="2" ><ion-icon name="person-circle-outline" style="padding: 5px; zoom: 2;"></ion-icon></ion-col>
+        <ion-col size="10">
+          <ion-row>
+            <ion-list-header>Usuario</ion-list-header>
+          </ion-row>
+          <ion-row>
+            <ion-note>Cuenta premium</ion-note>
+          </ion-row>
+        </ion-col>
+        </ion-row>
+        </ion-grid>
+        
+        <ion-menu-toggle auto-hide="false">
+
+          <!--
+          <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
+            <ion-icon slot="start" [md]="p.icon + '-sharp'"></ion-icon>
+            <ion-label>{{ p.title }}</ion-label>
+          </ion-item>
+
+          tab="home"
+
+          <ion-item routerDirection="root" routerLink="home" lines="none" detail="false">
+
+          -->
+          <ion-item routerDirection="root" [routerLink]="['home']" lines="none" detail="false">
+            <ion-icon slot="start" name="home-outline"></ion-icon>
+            <ion-label>Home</ion-label>
+          </ion-item>
+
+          <ion-item routerDirection="root" [routerLink]="['buscar']" lines="none" detail="false">
+            <ion-icon slot="start" name="search-outline"></ion-icon>
+            <ion-label>Buscar</ion-label>
+          </ion-item>
+
+          <ion-item routerDirection="root" routerLink="biblioteca" lines="none" detail="false">
+            <ion-icon slot="start" name="library-outline"></ion-icon>
+            <ion-label>Biblioteca</ion-label>
+          </ion-item>
+
+          <ion-item routerDirection="root" routerLink="para-ti" lines="none" detail="false">
+            <ion-icon slot="start" name="heart-outline"></ion-icon>
+            <ion-label>Para ti</ion-label>
+          </ion-item>
+
+
+        </ion-menu-toggle>
+        
+
+      </ion-list>
+
+      <ion-list id="labels-list">
+        <ion-list-header>Playlists</ion-list-header>
+
+        <!--
+        <ion-item *ngFor="let label of labels" lines="none">
+          <ion-icon slot="start" md="list-sharp"></ion-icon>
+          <ion-label>{{ label }}</ion-label>
+        </ion-item>
+        -->
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+
+</ion-split-pane>
