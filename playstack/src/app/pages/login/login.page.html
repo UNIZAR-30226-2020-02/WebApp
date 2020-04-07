@@ -22,8 +22,8 @@
         <button  item-end  class="btn_eye_icon"  (click)="togglePasswordMode()">
           <ion-icon  [name]="(passwordTypeInput === 'text')?'eye-off':'eye'"></ion-icon>   
         </button> -->
-        <ion-input required="true" clearInput="true" inputmode="password" placeholder="Contraseña"></ion-input>
-        <ion-icon name="eye-off"></ion-icon>
+        <ion-input [type]="showPassword ? 'text' : 'password'" required="true" clearInput="true" placeholder="Contraseña"></ion-input>
+        <ion-icon [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
       </ion-item>
       <div style="padding: 10px;">
         <ion-button color="light" style="--border-radius: 15px; width: 310px;"><b>Iniciar Sesión</b></ion-button>
@@ -33,7 +33,7 @@
           <b>Iniciar Sesión con Google</b>
         </ion-button>
       </div>
-      <p style="padding: 15px;"><b style="color:gray; padding-right: 10px;">¿NO TIENES CUENTA?</b><a href="../register/register.page.html" style="color: white;">REGISTRATE</a></p>
+      <p style="padding: 15px;"><b style="color:gray; padding-right: 10px;">¿NO TIENES CUENTA?</b><a href="../register" style="color: white;">Regístrate</a></p>
     </ion-card-content>
   </ion-card>
 

@@ -17,7 +17,7 @@ const routes: Routes = [
   {
     path: 'init-screen',
     loadChildren: () => import('./pages/init-screen/init-screen.module').then( m => m.InitScreenPageModule)
-  }
+  },
 ];
 
 @NgModule({
