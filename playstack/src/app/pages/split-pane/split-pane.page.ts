@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+
+//TODO creo que hay que poner aqui lo de routes con las cosas 
+
 @Component({
   selector: 'app-tabs',
   templateUrl: './split-pane.page.html',
@@ -14,7 +17,7 @@ export class SplitPanePage implements OnInit {
     }
 
     open(id: string) {
-      this.router.navigateByUrl(this.router.url + '/' + id);
+      this.router.navigateByUrl('/' + id);
     }
 
 }

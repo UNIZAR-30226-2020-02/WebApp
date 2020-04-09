@@ -26,14 +26,14 @@
         <ion-icon [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
       </ion-item>
       <div style="padding: 10px;">
-        <ion-button color="light" style="--border-radius: 15px; width: 310px;"><b>Iniciar Sesión</b></ion-button>
+        <ion-button [routerLink]="['/app']" color="light" style="--border-radius: 15px; width: 310px;"><b>Iniciar Sesión</b></ion-button>
         <div style="border-top: 1px solid #d9dadc; display: block; line-height: 1px; margin: 15px 0; position: relative; text-align: center;"></div>
         <ion-button color="light" style="--border-radius: 15px; width: 310px;">
           <ion-icon style="padding-right: 15px;" src="assets/icon/google-logo.svg"></ion-icon>
           <b>Iniciar Sesión con Google</b>
         </ion-button>
       </div>
-      <p style="padding: 15px;"><b style="color:gray; padding-right: 10px;">¿NO TIENES CUENTA?</b><a href="../register" style="color: white;">Regístrate</a></p>
+      <p style="padding: 15px;"><b style="color:gray; padding-right: 10px;">¿NO TIENES CUENTA?</b><a [routerLink]="['/register']" style="color: white;">Regístrate</a></p>
     </ion-card-content>
   </ion-card>
 
