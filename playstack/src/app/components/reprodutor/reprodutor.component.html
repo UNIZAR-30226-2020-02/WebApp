@@ -1,0 +1,30 @@
+<ion-toolbar>
+  <ion-row>
+    <ion-col size="12" class="ion-text-center" *ngIf="rs.activeTrack">
+      {{ rs.activeTrack.name }}
+    </ion-col>
+    <ion-col size="12">
+      <ion-range #range [(ngModel)]="rs.progress" max="100" color="success" (touchend)="seek()" (mouseup)="seek()"></ion-range>
+    </ion-col>
+    <ion-col size="12" class="ion-text-center">
+      <!-- Botones del reproductor --->
+
+      <ion-button fill="clear" (click)="rs.prev()" color="light">
+        <ion-icon slot="icon-only" name="play-skip-back"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="rs.togglePlayer(false)" *ngIf="!rs.isPlaying" color="light">
+        <ion-icon slot="icon-only" name="play"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="rs.togglePlayer(true)" *ngIf="rs.isPlaying" color="light">
+        <ion-icon slot="icon-only" name="pause"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="rs.next()" color="light">
+        <ion-icon slot="icon-only" name="play-skip-forward"></ion-icon>
+      </ion-button>
+
+    </ion-col>
+  </ion-row> 
+</ion-toolbar>
