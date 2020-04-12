@@ -8,13 +8,15 @@ import { IonRange } from '@ionic/angular';
 
 
 @Component({
-  selector: 'app-reprodutor',
-  templateUrl: './reprodutor.component.html',
-  styleUrls: ['./reprodutor.component.scss'],
+  selector: 'app-reproductor',
+  templateUrl: './reproductor.component.html',
+  styleUrls: ['./reproductor.component.scss'],
 })
-export class ReprodutorComponent implements OnInit {
+export class ReproductorComponent implements OnInit {
   @ViewChild('range', {static: false}) range: IonRange;
-  constructor(private rs: ReproductorService) { }
+
+
+  constructor(public rs: ReproductorService) { }
   
   seek()
   {
