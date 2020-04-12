@@ -1,7 +1,9 @@
 <ion-split-pane contentId="main-content">
   <ion-menu contentId="main-content" type="overlay">
+
     <ion-content>
       <ion-list id="inbox-list">
+
         <ion-grid>
         <ion-row>
         <ion-col size="2" ><ion-icon name="person-circle-outline" style="padding: 5px; zoom: 2;"></ion-icon></ion-col>
@@ -18,17 +20,6 @@
         
         <ion-menu-toggle auto-hide="false">
 
-          <!--
-          <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
-            <ion-icon slot="start" [md]="p.icon + '-sharp'"></ion-icon>
-            <ion-label>{{ p.title }}</ion-label>
-          </ion-item>
-
-          tab="home"
-
-          <ion-item routerDirection="root" routerLink="home" lines="none" detail="false">
-
-          -->
           <ion-item  [routerLink]="['/app/home']" lines="none" detail="false">
             <ion-icon slot="start" name="home-outline"></ion-icon>
             <ion-label>Home</ion-label>
@@ -63,16 +54,15 @@
       <ion-list id="labels-list">
         <ion-list-header>Playlists</ion-list-header>
 
-        <!--
-        <ion-item *ngFor="let label of labels" lines="none">
+        <ion-item *ngFor="let playlist of playlists" lines="none">
           <ion-icon slot="start" md="list-sharp"></ion-icon>
-          <ion-label>{{ label }}</ion-label>
+          <ion-label>{{ playlist }}</ion-label>
         </ion-item>
-        -->
 
       </ion-list>
     </ion-content>
   </ion-menu>
+
 
   <ion-router-outlet id="main-content"></ion-router-outlet>
 

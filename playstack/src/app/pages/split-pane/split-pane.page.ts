@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 })
 export class SplitPanePage implements OnInit {
 
+  public playlists = ["Éxitos de España", "Canciones favoritas", "Mi Playlist"]
+
   constructor(private router: Router) { }
 
     ngOnInit() {
