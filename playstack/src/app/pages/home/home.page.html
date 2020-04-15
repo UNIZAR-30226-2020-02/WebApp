@@ -22,11 +22,12 @@
   <div expand="full">
     <h1>Pruebas del reproductor</h1>
     <ion-list>
+      
       <ion-item button *ngFor="let track of rs.playlist" (click)="rs.start(track)">
         <ion-label [color]="track == rs.activeTrack ? 'success' : 'warning'">
           {{ track.name }}
         </ion-label>
-      </ion-item> 
+      </ion-item>
     </ion-list>
   </div>
 

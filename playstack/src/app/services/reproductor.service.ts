@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Howl } from 'howler';
+import {HttpClient} from '@angular/common/http';
 
 export interface Track {
   name : string;
@@ -31,7 +32,7 @@ export class ReproductorService {
   isPlaying = false;
   progress = 0;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   start(track: Track)
   {
@@ -98,4 +99,12 @@ export class ReproductorService {
     this.progress = (seek / this.player.duration()) * 100 || 0;
     setTimeout(() => {this.updateProgress();}, 1000)
   }
+
+  getListaCanciones()
+  {
+    console.log('HOLA ESTOY VIVO');
+    console.log(this.http.get('https://playstack.azurewebapps.net/get/song/bygenre?NombreGenero=Copla'));
+    return this.http.get('https://playstack.azurewebapps.net/get/song/bygenre?NombreGenero=Copla');
+  }
+
 }
