@@ -4,6 +4,7 @@
 /** Ionic CSS Variables **/
 /** Ionic CSS Variables **/
 :root {
+  
   /** primary **/
    --ion-color-primary: #272b30;
    --ion-color-primary-rgb: 39,43,48;
@@ -129,6 +130,7 @@
    */
 
   body {
+
     --ion-color-primary: #428cff;
     --ion-color-primary-rgb: 66,140,255;
     --ion-color-primary-contrast: #ffffff;
@@ -272,5 +274,4 @@
   ion-title.title-large {
     --color: white;
   }
-
 }

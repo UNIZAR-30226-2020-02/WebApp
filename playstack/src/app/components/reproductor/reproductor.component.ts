@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor.service';
 
-import { Howl } from 'howler';
-import { hostViewClassName } from '@angular/compiler';
 import { IonRange } from '@ionic/angular';
 
 

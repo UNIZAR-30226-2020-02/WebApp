@@ -1,0 +1,31 @@
+span{
+    padding-left: 2px!important;
+    padding-right: 2px!important;
+    padding-top: 2px!important;
+    padding-bottom: 2px!important;
+    width: 85px!important;
+    height: 70px!important;
+  
+  }
+  ion-slide:hover{
+    background: rgba(205, 9, 9, 0.43);
+    cursor: pointer;
+  }
+  span img{
+    width: 55px;
+    height: 55px;
+  }
+  
+  
+  ion-slide {
+    width: 200px!important;
+    height: 200px!important;
+    background-color:  #FFF;
+    float: left;
+    margin-left: 15px!important;
+    margin-right: 15px!important;
+    //border-radius: 50px!important;
+  }
+  ion-slides {
+    //background-color:  rgba(194, 193, 194, 0.52);
+  }
