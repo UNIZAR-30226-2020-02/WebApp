@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 export interface Track {
   name : string;
   path : string;
+  cover: string;
 }
 
 @Injectable({
@@ -15,15 +16,18 @@ export class ReproductorService {
   playlist: Track[] = [
     {
       name: 'TestSong',
-      path: './assets/mp3/TestSong.mp3'
+      path: './assets/mp3/TestSong.mp3',
+      cover: './assets/icon/playstack-icon.png'
     },
     {
       name: 'TestSong_2',
-      path: './assets/mp3/TestSong_2.mp3'
+      path: './assets/mp3/TestSong_2.mp3',
+      cover: './assets/icon/wildworld.jpg'
     },
     {
       name: 'TestOGG',
-      path: './assets/mp3/TestOGG.ogg'
+      path: './assets/mp3/TestOGG.ogg',
+      cover: './assets/icon/vlc.png'
     }
   ]
   

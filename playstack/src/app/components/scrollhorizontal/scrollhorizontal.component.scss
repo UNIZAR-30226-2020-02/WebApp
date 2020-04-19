@@ -1,31 +1,46 @@
-span{
-    padding-left: 2px!important;
-    padding-right: 2px!important;
-    padding-top: 2px!important;
-    padding-bottom: 2px!important;
-    width: 85px!important;
-    height: 70px!important;
   
-  }
-  ion-slide:hover{
-    background: rgba(205, 9, 9, 0.43);
-    cursor: pointer;
-  }
-  span img{
-    width: 55px;
-    height: 55px;
-  }
-  
-  
-  ion-slide {
-    width: 200px!important;
-    height: 200px!important;
-    background-color:  #FFF;
-    float: left;
-    margin-left: 15px!important;
-    margin-right: 15px!important;
+   ion-slide {
+    width: 220px!important;
+    height: 250px!important;
+    //background-color:  #FFF;
+    //margin-left: 15px!important;
+    //margin-right: 15px!important;
     //border-radius: 50px!important;
   }
+  
+  ion-card:hover{
+    background: var(--ion-color-playstack-soft-shade);
+    cursor: pointer;
+  }
+
+/*
   ion-slides {
-    //background-color:  rgba(194, 193, 194, 0.52);
+    background-color:  rgba(194, 193, 194, 0.52);
+  }
+*/
+  img{
+    width: 200px;
+    height: 200px;
+  }
+
+  ion-card{
+    background-color:  rgba(194, 193, 194, 0.3);
+  }
+
+  .ion-color-playstack-soft {
+    --ion-color-base: var(--ion-color-playstack-soft);
+    --ion-color-base-rgb: var(--ion-color-playstack-soft-rgb);
+    --ion-color-contrast: var(--ion-color-playstack-soft-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-playstack-soft-contrast-rgb);
+    --ion-color-shade: var(--ion-color-playstack-soft-shade);
+    --ion-color-tint: var(--ion-color-playstack-soft-tint);
+  }
+  
+  .ion-color-playstack {
+    --ion-color-base: var(--ion-color-playstack);
+    --ion-color-base-rgb: var(--ion-color-playstack-rgb);
+    --ion-color-contrast: var(--ion-color-playstack-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-playstack-contrast-rgb);
+    --ion-color-shade: var(--ion-color-playstack-shade);
+    --ion-color-tint: var(--ion-color-playstack-tint);
   }

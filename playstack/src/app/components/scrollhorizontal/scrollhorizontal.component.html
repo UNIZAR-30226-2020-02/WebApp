@@ -1,14 +1,12 @@
-<ion-slides [options]="slideOpts">
-  <ion-card *ngFor="let track of rs.playlist" (click)="rs.start(track)">
-    <ion-card-content>
-      <ion-slide>
-        <span>
-            <img src="../../../assets/icon/favicon.png" alt=""> 
-        </span>
-          <ion-label [color]="track == rs.activeTrack ? 'success' : 'warning'">
-            {{ track.name }}
-          </ion-label>
-      </ion-slide>
-    </ion-card-content>
-  </ion-card>
+<ion-slides>
+  <ion-slide *ngFor="let track of rs.playlist" (click)="rs.start(track)">
+    <ion-card>
+      <img src="{{track.cover}}"/>
+      <ion-card-header>
+        <ion-label [color]="track == rs.activeTrack ? 'playstack shade' : 'white'">
+          {{ track.name }}
+        </ion-label>
+      </ion-card-header>
+    </ion-card>
+  </ion-slide>
 </ion-slides>
