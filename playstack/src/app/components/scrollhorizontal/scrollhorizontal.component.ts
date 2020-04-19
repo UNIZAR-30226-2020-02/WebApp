@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-scrollhorizontal',
@@ -7,6 +8,9 @@ import { ReproductorService } from '../../services/reproductor.service';
   styleUrls: ['./scrollhorizontal.component.scss'],
 })
 export class ScrollhorizontalComponent implements OnInit {
+
+  @Input()
+  listaCanciones: Observable<any>;
 
   constructor(public rs: ReproductorService) { }
 

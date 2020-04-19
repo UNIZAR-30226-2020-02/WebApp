@@ -7,12 +7,13 @@
 <ion-content>
   <div expand="full">
     <h1>Recientes</h1>
-      <app-scrollhorizontal></app-scrollhorizontal>
+      <app-scrollhorizontal [listaCanciones]="canciones"></app-scrollhorizontal>
   </div>
   <div expand="full">
     <h1>Playlists populares</h1>
     <ion-item></ion-item>
   </div>
+
   <!--
   <div expand="full">
     <h1>Pruebas del reproductor</h1>
@@ -26,6 +27,16 @@
     </ion-list>
   </div>
 -->
+
+  Empieza prueba
+  <!-- Mostrar canciones -->
+  <ion-list>
+    <ion-item button lines="inset" *ngFor="let cancion of canciones | async | keyvalue">
+      {{ cancion.key }} --> {{ cancion.value }}
+    </ion-item>
+  </ion-list>
+  termina prueba
+
 </ion-content>
 
 <ion-footer>

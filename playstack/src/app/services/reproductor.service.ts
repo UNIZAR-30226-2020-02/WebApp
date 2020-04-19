@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Howl } from 'howler';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export interface Track {
-  name : string;
+  nombre : string;
+  artistas : string[];
+  albumes : string[];
+  covers: string[];
   path : string;
-  cover: string;
+  esFavorita : boolean;
 }
 
 @Injectable({
@@ -13,23 +17,8 @@ export interface Track {
 })
 export class ReproductorService {
 
-  playlist: Track[] = [
-    {
-      name: 'TestSong',
-      path: './assets/mp3/TestSong.mp3',
-      cover: './assets/icon/playstack-icon.png'
-    },
-    {
-      name: 'TestSong_2',
-      path: './assets/mp3/TestSong_2.mp3',
-      cover: './assets/icon/wildworld.jpg'
-    },
-    {
-      name: 'TestOGG',
-      path: './assets/mp3/TestOGG.ogg',
-      cover: './assets/icon/vlc.png'
-    }
-  ]
+  playlist: Track[];
+  cola: Track[];
   
   activeTrack: Track = null;
   player: Howl = null;
@@ -38,8 +27,52 @@ export class ReproductorService {
 
   constructor(private http: HttpClient) { }
 
+  
+  constructTrack(cancion: any) {
+
+    console.log("constructor");
+    console.log(cancion);
+
+    let track = {
+      nombre: cancion.key,
+      artistas: cancion.value.Artistas,
+      albumes: cancion.value.Albumes,
+      covers: cancion.value.ImagenesAlbum,
+      path: cancion.value.url,
+      esFavorita: cancion.value.EsFavorita
+    };
+
+    console.log(track);
+
+    return track;
+  }
+
+  constructPlaylist(observableCanciones: Observable<any>) {
+    let playlist: Track[];
+
+    console.log("lista canciones");
+
+    observableCanciones.subscribe(mapCanciones => {
+      for (let cancion in mapCanciones) {
+
+       // playlist = playlist.concat(this.constructTrack(cancion));
+      }
+    });
+
+    return playlist;
+  }
+
+  addToPlaylist(track: Track[]) {
+    
+  }
+
+  setPlaylist(playlist: Track[]) {
+    this.playlist = playlist;
+  }
+
   start(track: Track)
   {
+    console.log(track);
     if(this.player)
     {
       this.player.stop();
@@ -107,8 +140,7 @@ export class ReproductorService {
   getListaCanciones()
   {
     console.log('HOLA ESTOY VIVO');
-    console.log(this.http.get('https://playstack.azurewebapps.net/get/song/bygenre?NombreGenero=Copla'));
-    return this.http.get('https://playstack.azurewebapps.net/get/song/bygenre?NombreGenero=Copla');
+    return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=Rap&Usuario=Rodolfo');
   }
 
 }

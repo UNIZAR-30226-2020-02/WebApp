@@ -17,6 +17,15 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.canciones = this.rs.getListaCanciones();
+    
+    console.log(this.canciones);
+
+    /*
+    this.canciones.subscribe(data => {
+      console.log('my data: ', data);
+    })
+    */
+
   }
 
 }
