@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content style="--background: linear-gradient(#a50a0a, #3d2d2d);">
+<ion-content style="--background: linear-gradient(#e94546, #e94546, #ef7b7e, #3d2d2d);">
   <ion-card class="card">
     <ion-card-content class="ion-text-center">
       <h1 class="itemCard">Music, something for everyone</h1>
@@ -18,15 +18,12 @@
         <ion-icon name="mail-outline"></ion-icon>
       </ion-item>
       <ion-item class="itemCard">
-        <!--<ion-input  #passwordEyeRegister  [type]="passwordTypeInput"  formControlName="password" clearOnEdit="false"></ion-input>  
-        <button  item-end  class="btn_eye_icon"  (click)="togglePasswordMode()">
-          <ion-icon  [name]="(passwordTypeInput === 'text')?'eye-off':'eye'"></ion-icon>   
-        </button> -->
         <ion-input [type]="showPassword ? 'text' : 'password'" required="true" clearInput="true" placeholder="Contraseña"></ion-input>
         <ion-icon [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
       </ion-item>
       <div style="padding: 10px;">
-        <ion-button [routerLink]="['/app']" color="light" style="--border-radius: 15px; width: 310px;"><b>Iniciar Sesión</b></ion-button>
+        <!-- TODO TERMINAR EL LOGIN, ESTÁ BASTANTE INCOMPLETO -->
+        <ion-button [routerLink]="['/app']" (click)="hacerLogin()" color="light" style="--border-radius: 15px; width: 310px;"><b>Iniciar Sesión</b></ion-button>
         <div style="border-top: 1px solid #d9dadc; display: block; line-height: 1px; margin: 15px 0; position: relative; text-align: center;"></div>
         <ion-button color="light" style="--border-radius: 15px; width: 310px;">
           <ion-icon style="padding-right: 15px;" src="assets/icon/google-logo.svg"></ion-icon>
