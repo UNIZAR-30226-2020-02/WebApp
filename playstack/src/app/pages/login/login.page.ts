@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-
+import { PeticionesLoginService } from '../../services/peticiones_login/peticiones-login.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
   showPassword = false;
   passwordToggleIcon = 'eye';
 
-  constructor() { }
+  constructor(private login : PeticionesLoginService) { }
 
   ngOnInit() {
   }
@@ -30,6 +30,11 @@ export class LoginPage implements OnInit {
     {
       this.passwordToggleIcon = 'eye';
     }
+  }
+
+  hacerLogin()
+  {
+    //this.login.hacerLoginUsuario();
   }
 
 }
