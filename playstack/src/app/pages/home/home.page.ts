@@ -10,15 +10,17 @@ import { Observable } from 'rxjs';
 
 export class HomePage implements OnInit {
   
-  canciones: Observable<any>;
+  cancionesRap: Observable<any>;
+  cancionesTechno: Observable<any>;
+
 
   constructor(public rs: ReproductorService) {
   }
 
   ngOnInit() {
-    this.canciones = this.rs.getListaCanciones();
-    
-    console.log(this.canciones);
+    this.cancionesRap = this.rs.getCancionesByGenero("Rap");
+    this.cancionesTechno = this.rs.getCancionesByGenero("Techno");
+
 
     /*
     this.canciones.subscribe(data => {

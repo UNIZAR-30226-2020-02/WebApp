@@ -25,6 +25,10 @@ export class ReproductorService {
   isPlaying = false;
   progress = 0;
 
+
+  puntoActual: Number;
+  duracion: Number;
+  
   constructor(private http: HttpClient) { }
 
   
@@ -47,6 +51,24 @@ export class ReproductorService {
     return track;
   }
 
+  constructTrack2(key: string, value: any) {
+
+    console.log("constructor");
+
+    let track = {
+      nombre: key,
+      artistas: value.Artistas,
+      albumes: value.Albumes,
+      covers: value.ImagenesAlbum,
+      path: value.url,
+      esFavorita: value.EsFavorita
+    };
+
+    console.log(track);
+
+    return track;
+  }
+
   constructPlaylist(observableCanciones: Observable<any>) {
     let playlist: Track[];
 
@@ -54,7 +76,6 @@ export class ReproductorService {
 
     observableCanciones.subscribe(mapCanciones => {
       for (let cancion in mapCanciones) {
-
        // playlist = playlist.concat(this.constructTrack(cancion));
       }
     });
@@ -67,6 +88,24 @@ export class ReproductorService {
   }
 
   setPlaylist(playlist: Track[]) {
+    this.playlist = playlist;
+  }
+
+  addToPlaylistObservable(cancionesObservable: Observable<any>) {
+    let playlist: Track[] = [];
+
+    cancionesObservable.subscribe(mapCanciones => {
+      console.log(mapCanciones);
+      
+      for (let cancion in mapCanciones) {
+        console.log(mapCanciones[cancion]);
+        console.log(mapCanciones[cancion].Albumes);
+        let track: Track = this.constructTrack2(cancion, mapCanciones[cancion]);
+        console.log("track");
+        console.log(track);
+        playlist.push(track);
+      }
+    })
     this.playlist = playlist;
   }
 
@@ -88,6 +127,11 @@ export class ReproductorService {
       onend: () => {
       }
     });
+  
+    this.duracion = this.player.duration();
+    
+    this.puntoActual = 0;
+
     this.player.play();
   }
 
@@ -143,4 +187,7 @@ export class ReproductorService {
     return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=Rap&Usuario=Rodolfo');
   }
 
+  getCancionesByGenero(genero: string) {
+    return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=' + genero + '&Usuario=Rodolfo');
+  }
 }
