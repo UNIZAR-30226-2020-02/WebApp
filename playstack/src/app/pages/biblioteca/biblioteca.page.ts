@@ -8,19 +8,44 @@ import { ReproductorService } from '../../services/reproductor.service';
 })
 export class BibliotecaPage implements OnInit {
   currentTab: string;
+  currentTabMusica: string;
+  currentTabPodcasts: string;
+
   constructor(public rs: ReproductorService) {
   }
 
   ngOnInit() {
     this.currentTab = "Musica";
+    this.currentTabMusica = "Playlists";
+    this.currentTabPodcasts = "Episodios";
   }
 
-  setMusic(){
+  setMusic() {
     this.currentTab = "Musica";
   }
 
-  setPodcasts(){
+  setPodcasts() {
     this.currentTab = "Podcasts";
+  }
+
+  setPlaylists() {
+    this.currentTabMusica = "Playlists";
+  }
+
+  setArtistas() {
+    this.currentTabMusica = "Artistas";
+  }
+
+  setAlbumes() {
+    this.currentTabMusica = "Albumes";
+  }
+
+  setEpisodios() {
+    this.currentTabPodcasts = "Episodios";
+  }
+
+  setProgramas() {
+    this.currentTabPodcasts = "Programas";
   }
 
 }

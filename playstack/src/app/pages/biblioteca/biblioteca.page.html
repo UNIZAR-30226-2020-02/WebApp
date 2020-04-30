@@ -6,8 +6,10 @@
 
 
 <ion-content>
+
+
   <ion-toolbar>
-    <ion-segment color="light" {value}="currentTab">
+    <ion-segment color="light" [value]="currentTab">
       <ion-segment-button value="Musica" (click)="setMusic()">
         Música
       </ion-segment-button>
@@ -17,9 +19,61 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-item *ngIf="currentTab == Music">
-    hola
-  </ion-item>
+  <ion-content *ngIf="currentTab == 'Musica'">
+    <ion-toolbar>
+      <ion-segment color="light" [value]="currentTabMusica">
+        <ion-segment-button value="Playlists" (click)="setPlaylists()">
+          Playlists
+        </ion-segment-button>
+        <ion-segment-button value="Artistas" (click)="setArtistas()">
+          Artistas
+        </ion-segment-button>
+        <ion-segment-button value="Albumes" (click)="setAlbumes()">
+          Álbumes
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+
+
+    <ion-item *ngIf="currentTabMusica == 'Playlists'">
+      Hola
+    </ion-item>
+  
+    <ion-item *ngIf="currentTabMusica == 'Artistas'">
+      que tal
+    </ion-item>
+  
+    <ion-item *ngIf="currentTabMusica == 'Albumes'">
+     Pues muy bien
+    </ion-item>
+  </ion-content>
+
+  <ion-content *ngIf="currentTab == 'Podcasts'">
+    <ion-toolbar>
+      <ion-segment color="light" [value]="currentTabPodcasts">
+        <ion-segment-button value="Episodios" (click)="setEpisodios()">
+          Episodios
+        </ion-segment-button>
+        <ion-segment-button value="Programas" (click)="setProgramas()">
+          Programas
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+
+    <ion-item *ngIf="currentTabPodcasts == 'Episodios'">
+      Ah vale
+    </ion-item>
+  
+    <ion-item *ngIf="currentTabPodcasts == 'Programas'">
+      Adiós
+    </ion-item>
+    
+  </ion-content>
+
+
+
+
+
 </ion-content>
 
 <ion-footer>
