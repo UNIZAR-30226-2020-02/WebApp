@@ -4,6 +4,24 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
+<ion-content>
+  <ion-toolbar>
+    <ion-segment color="light" {value}="currentTab">
+      <ion-segment-button value="Musica" (click)="setMusic()">
+        Música
+      </ion-segment-button>
+      <ion-segment-button value="Podcasts" (click)="setPodcasts()">
+        Podcasts
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-item *ngIf="currentTab == Music">
+    hola
+  </ion-item>
 </ion-content>
+
+<ion-footer>
+  <app-reproductor></app-reproductor>
+</ion-footer>
