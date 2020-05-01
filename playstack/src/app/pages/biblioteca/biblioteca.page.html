@@ -36,11 +36,37 @@
 
 
     <ion-item *ngIf="currentTabMusica == 'Playlists'">
-      Hola
+      <!-- AYUDAAAA NO SE COMO HACER QUE SE PONGA EN OTRA LINEA-->
+        <ion-button color="light" style="width: 310px; height: 45px; padding-bottom: 10px;">
+          <ion-icon name="add-outline"></ion-icon>
+          <b>Crear playlist</b>
+        </ion-button>
+
+        <ion-button color="light" style="width: 310px; height: 45px; padding-bottom: 10px;">
+          <ion-icon name="add-outline"></ion-icon>
+          <b>Crear carpeta</b>
+        </ion-button>
+      <ion-grid>
+        <ion-row style="font-size: large;">
+          <ion-col>Nombre</ion-col>
+          <ion-col>Duración</ion-col>
+          <ion-col>Fecha</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let playlist of listado | async | keyvalue">
+          <ion-col><!-- FALTA POR HACER {{ playlist.key }}--></ion-col>
+          <ion-col><!-- FALTA POR HACER {{ playlist.value.duracion }} --></ion-col>
+          <ion-col><!-- FALTA POR HACER {{ playlist.value.fecha }} --></ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   
     <ion-item *ngIf="currentTabMusica == 'Artistas'">
-      que tal
+      <ion-grid>
+        <ion-row *ngFor="let artista of listado | async | keyvalue">
+          <ion-col><!-- FALTA POR HACER<img src="{{ artista.value.imagen }}"/> --></ion-col>
+          <ion-col><!-- FALTA POR HACER {{ artista.key }} --></ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   
     <ion-item *ngIf="currentTabMusica == 'Albumes'">
@@ -75,12 +101,38 @@
       </ion-segment>
     </ion-toolbar>
 
+    <!-- Falta por hacer acceso a BD-->
     <ion-item *ngIf="currentTabPodcasts == 'Episodios'">
-      Ah vale
+      Sin escuchar:
+      <ion-card *ngFor="let episodio of listado | async | keyvalue"
+      (click)="rs.start(rs.constructTrack(cancion)); rs.addToPlaylistObservable(listado)">
+        <ion-card-content>
+          <ion-label [color]="episodio.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'">
+            {{ episodio.key }}
+          </ion-label>
+          <ion-label>
+            {{ episodio.value.programa }}
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
     </ion-item>
   
     <ion-item *ngIf="currentTabPodcasts == 'Programas'">
-      Adiós
+      Podcasts que sigues:
+      <ion-grid>
+        <!--
+        <ion-row style="font-size: large;">
+          <ion-col>Nombre</ion-col>
+          <ion-col>Presentación</ion-col>
+          <ion-col>Duración</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let programa of listado | async | keyvalue">
+          <ion-col>{{ programa.key }}</ion-col>
+          <ion-col>{{ programa.value.presentacion }}</ion-col>
+          <ion-col>{{ programa.value.duracion}}
+        </ion-row>
+      -->
+      </ion-grid>
     </ion-item>
     
   </ion-content>
