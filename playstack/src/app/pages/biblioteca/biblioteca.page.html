@@ -44,7 +44,22 @@
     </ion-item>
   
     <ion-item *ngIf="currentTabMusica == 'Albumes'">
-     Pues muy bien
+      <ion-grid>
+        <ion-row style="font-size: large;">
+          <ion-col>Nombre</ion-col>
+          <ion-col>Artista</ion-col>
+          <ion-col>Duración</ion-col>
+          <ion-col>Fecha</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let cancion of listado | async | keyvalue" 
+        (click)="rs.start(rs.constructTrack(cancion)); rs.addToPlaylistObservable(listado)">
+        <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
+          <ion-col>{{ cancion.key }}</ion-col>
+          <ion-col>{{ cancion.value.Artistas }}</ion-col>
+          <!-- Falta la duracion en el servicio <ion-col>{{ cancion.value.duracion}}</ion-col>-->
+          <!-- Falta la fecha en el servicio <ion-col>{{ cancion.value.fecha}}</ion-col>-->
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-content>
 

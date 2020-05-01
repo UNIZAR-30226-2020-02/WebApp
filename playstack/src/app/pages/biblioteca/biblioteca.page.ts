@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-biblioteca',
@@ -10,6 +11,7 @@ export class BibliotecaPage implements OnInit {
   currentTab: string;
   currentTabMusica: string;
   currentTabPodcasts: string;
+  listado: Observable<any>;
 
   constructor(public rs: ReproductorService) {
   }
