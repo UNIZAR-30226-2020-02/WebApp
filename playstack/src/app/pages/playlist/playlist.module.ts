@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PremiumPageRoutingModule } from './premium-routing.module';
+import { PlaylistPageRoutingModule } from './playlist-routing.module';
 
-import { PremiumPage } from './premium.page';
+import { PlaylistPage } from './playlist.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PremiumPageRoutingModule
+    PlaylistPageRoutingModule
   ],
-  declarations: [PremiumPage]
+  declarations: [PlaylistPage]
 })
-export class PremiumPageModule {}
+export class PlaylistPageModule {}

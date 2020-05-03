@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ParaTiPage } from './para-ti.page';
+import { PlaylistPage } from './playlist.page';
 
-describe('ParaTiPage', () => {
-  let component: ParaTiPage;
-  let fixture: ComponentFixture<ParaTiPage>;
+describe('PlaylistPage', () => {
+  let component: PlaylistPage;
+  let fixture: ComponentFixture<PlaylistPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ParaTiPage ],
+      declarations: [ PlaylistPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ParaTiPage);
+    fixture = TestBed.createComponent(PlaylistPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

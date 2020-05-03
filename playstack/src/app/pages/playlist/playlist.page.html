@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="./home"></ion-back-button>
+    </ion-buttons>
+    <ion-title><font size="-1">LISTA</font> </ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--img src="{{ listaCanciones.value[0] }}" style="width: 50px; height: 50px; border-radius: 5px; margin: 10px;"/-->
+  <p><ion-text>{{ name }}</ion-text></p>
+  <ion-text style="font-size: smaller;">
+      Creado por: Usuario<!--{{ user.name}}--> | <!--{{ numCanciones }} --> x canciones, <!--{{ duracion }} -->
+  </ion-text>
+  <ion-grid>
+    <ion-row style="font-size: large;">
+      <ion-col>Titulo</ion-col>
+      <ion-col>Album</ion-col>
+      <ion-col>Artista</ion-col>
+      <ion-col>Duracion</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let cancion of listaCanciones | async | keyvalue" style="margin: 20px; align-items: center; let i = index">
+      <ion-col>{{ i + 1 }}</ion-col>
+      <ion-col>{{ cancion.key }}</ion-col>
+      <!--
+      <ion-col>{{ playlist.value.duracion }}</ion-col>
+      <ion-col>{{ playlist.value.fecha }}</ion-col>
+      -->
+    </ion-row>
+  </ion-grid>
+</ion-content>

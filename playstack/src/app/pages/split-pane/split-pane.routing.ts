@@ -21,16 +21,8 @@ const routes: Routes = [
         loadChildren: () => import('../buscar/buscar.module').then(m => m.BuscarPageModule)
       },
       {
-        path: 'para-ti',
-        loadChildren: () => import('../para-ti/para-ti.module').then(m => m.ParaTiPageModule)
-      },
-      {
         path: 'biblioteca',
         loadChildren: () => import('../biblioteca/biblioteca.module').then(m => m.BibliotecaPageModule)
-      },
-      {
-        path: 'premium',
-        loadChildren: () => import('../premium/premium.module').then(m => m.PremiumPageModule)
       },
     ]
   }  

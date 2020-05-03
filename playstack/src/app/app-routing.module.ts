@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path:'app',
     loadChildren: './pages/split-pane/split-pane.module#SplitPanePageModule'
+  },  {
+    path: 'playlist',
+    loadChildren: () => import('./pages/playlist/playlist.module').then( m => m.PlaylistPageModule)
   }
+
 ];
 
 @NgModule({
