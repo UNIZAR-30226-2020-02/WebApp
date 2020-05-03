@@ -6,10 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PeticionesLoginService {
-
   constructor( private http : HttpClient ) {}
 
-  hacerLoginUsuario(nombre : string, passwd : string)
+  hacerLoginUsuario(nombre : string, passwd : string): boolean
   {
     const httpOptions={
       headers : new HttpHeaders({
@@ -17,12 +16,18 @@ export class PeticionesLoginService {
       })
     };
     let postParams = {"NombreUsuario": nombre, "Contrasenya": passwd};
-
-    this.http.post("https://playstack.azurewebapps.net/user/login", postParams, httpOptions)
+    console.log(nombre);
+    console.log(passwd);
+  
+    this.http.post("https://playstack.azurewebsites.net/user/login", postParams, httpOptions)
       .subscribe(data => {
-        console.log(data['_body']);
+        console.log(data.toString());
+        return (data.toString() === "Usuario autenticado correctamente");
         }, error => {
         console.log(error);
+        return false;
       });
+      console.log("Se ha hecho una petición de login");
+      return;
   }
 }

@@ -10,6 +10,10 @@ import { PeticionesLoginService } from '../../services/peticiones_login/peticion
 
 export class LoginPage implements OnInit {
   @ViewChild('passwordEyeRegister', {static: false}) passwordEye: ElementRef;
+  usuario = {
+    nombre : "",
+    passwd : ""
+  };
 
   showPassword = false;
   passwordToggleIcon = 'eye';
@@ -34,7 +38,7 @@ export class LoginPage implements OnInit {
 
   hacerLogin()
   {
-    //this.login.hacerLoginUsuario();
+    console.log(this.login.hacerLoginUsuario(this.usuario.nombre,this.usuario.passwd));
   }
 
 }
