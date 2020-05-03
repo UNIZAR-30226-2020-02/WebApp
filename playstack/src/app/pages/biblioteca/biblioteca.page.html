@@ -35,31 +35,39 @@
     </ion-toolbar>
 
 
-    <ion-item *ngIf="currentTabMusica == 'Playlists'">
+    <ion-item-group *ngIf="currentTabMusica == 'Playlists'">
       <!-- AYUDAAAA NO SE COMO HACER QUE SE PONGA EN OTRA LINEA-->
+      <ion-item-group style="text-align: right;">
         <ion-button color="light" style="width: 310px; height: 45px; padding-bottom: 10px;">
-          <ion-icon name="add-outline"></ion-icon>
-          <b>Crear playlist</b>
-        </ion-button>
+            <ion-icon name="add-outline"></ion-icon>
+            <b>Crear playlist</b>
+          </ion-button>
 
-        <ion-button color="light" style="width: 310px; height: 45px; padding-bottom: 10px;">
-          <ion-icon name="add-outline"></ion-icon>
-          <b>Crear carpeta</b>
-        </ion-button>
+          <ion-button color="light" style="width: 310px; height: 45px; padding-bottom: 10px;">
+            <ion-icon name="add-outline"></ion-icon>
+            <b>Crear carpeta</b>
+          </ion-button>
+      </ion-item-group>
+
       <ion-grid>
         <ion-row style="font-size: large;">
           <ion-col>Nombre</ion-col>
           <ion-col>Duración</ion-col>
           <ion-col>Fecha</ion-col>
         </ion-row>
-        <ion-row *ngFor="let playlist of listado | async | keyvalue">
-          <ion-col><!-- FALTA POR HACER {{ playlist.key }}--></ion-col>
-          <ion-col><!-- FALTA POR HACER {{ playlist.value.duracion }} --></ion-col>
-          <ion-col><!-- FALTA POR HACER {{ playlist.value.fecha }} --></ion-col>
+        <ion-row *ngFor="let playlist of playlists | async | keyvalue" style="margin: 20px; align-items: center;">
+          <img src="{{ playlist.value[0] }}" style="width: 50px; height: 50px; border-radius: 5px; margin: 10px;"/>
+          <ion-col>{{ playlist.key }}</ion-col>
+          <!--
+          <ion-col>{{ playlist.value.duracion }}</ion-col>
+          <ion-col>{{ playlist.value.fecha }}</ion-col>
+          -->
         </ion-row>
       </ion-grid>
-    </ion-item>
+
+    </ion-item-group>
   
+
     <ion-item *ngIf="currentTabMusica == 'Artistas'">
       <ion-grid>
         <ion-row *ngFor="let artista of listado | async | keyvalue">
@@ -77,9 +85,9 @@
           <ion-col>Duración</ion-col>
           <ion-col>Fecha</ion-col>
         </ion-row>
-        <ion-row *ngFor="let cancion of listado | async | keyvalue" 
-        (click)="rs.start(rs.constructTrack(cancion)); rs.addToPlaylistObservable(listado)">
+        <ion-row *ngFor="let cancion of listado | async | keyvalue" (click)="rs.start(rs.constructTrack(cancion)); rs.addToPlaylistObservable(listado)">
         <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
+          <img src="{{ cancion.value[0] }}"/>
           <ion-col>{{ cancion.key }}</ion-col>
           <ion-col>{{ cancion.value.Artistas }}</ion-col>
           <!-- Falta la duracion en el servicio <ion-col>{{ cancion.value.duracion}}</ion-col>-->

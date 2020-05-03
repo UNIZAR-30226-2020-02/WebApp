@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor.service';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-biblioteca',
@@ -13,13 +14,14 @@ export class BibliotecaPage implements OnInit {
   currentTabPodcasts: string;
   listado: Observable<any>;
 
-  constructor(public rs: ReproductorService) {
+  constructor(public rs: ReproductorService, public http: HttpClient) {
   }
+
+  playlists: Observable<any>;
 
   ngOnInit() {
     this.currentTab = "Musica";
-    this.currentTabMusica = "Playlists";
-    this.currentTabPodcasts = "Episodios";
+    this.setPlaylists();
   }
 
   setMusic() {
@@ -30,8 +32,12 @@ export class BibliotecaPage implements OnInit {
     this.currentTab = "Podcasts";
   }
 
+
   setPlaylists() {
     this.currentTabMusica = "Playlists";
+
+    // Recuperar las playlists
+    this.playlists = this.http.get('https://playstack.azurewebsites.net/get/playlists?NombreUsuario=Rodolfo');
   }
 
   setArtistas() {
