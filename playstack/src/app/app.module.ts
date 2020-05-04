@@ -11,16 +11,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { Media } from '@ionic-native/media/ngx';
 import { ComponentsModule } from './components/components.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), ComponentsModule, AppRoutingModule,HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), ComponentsModule, AppRoutingModule,HttpClientModule, IonicStorageModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreen,
     Media,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]
 })
