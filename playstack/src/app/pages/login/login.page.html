@@ -18,12 +18,13 @@
           <ion-input required="true" [(ngModel)]="usuario.nombre" name="nombre" autocorrect="on" autofocus="on" clearInput="true" inputmode="text" placeholder="Correo electrónico o nombre de usuario"></ion-input>
           <ion-icon name="mail-outline"></ion-icon>
         </ion-item>
-        <ion-item class="itemCard">
-          <ion-input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="usuario.passwd" name="passwd" required="true" clearInput="true" placeholder="Contraseña"></ion-input>
+        <ion-item >
+          <ion-input required="true" [(ngModel)]="usuario.passwd" name="passwd" [type]="showPassword ? 'text' : 'password'" clearInput="true" placeholder="Contraseña"></ion-input>
           <ion-icon [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
         </ion-item>
+        <ion-text color="danger">{{mensajeFormulario}}</ion-text>
         <div style="padding: 10px;">
-          <ion-button [routerLink]="['/app']" type="submit" color="light" style="--border-radius: 15px; width: 310px;"><b>Iniciar Sesión</b></ion-button>
+          <ion-button type="submit" color="light" style="--border-radius: 15px; width: 310px;"><b>Iniciar Sesión</b></ion-button>
           <div style="border-top: 1px solid #d9dadc; display: block; line-height: 1px; margin: 15px 0; position: relative; text-align: center;"></div>
           <ion-button color="light" style="--border-radius: 15px; width: 310px;">
             <ion-icon style="padding-right: 15px;" src="assets/icon/google-logo.svg"></ion-icon>

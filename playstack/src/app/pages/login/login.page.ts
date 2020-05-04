@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { PeticionesLoginService } from '../../services/peticiones_login/peticiones-login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,9 @@ export class LoginPage implements OnInit {
 
   showPassword = false;
   passwordToggleIcon = 'eye';
+  mensajeFormulario = "";
 
-  constructor(private login : PeticionesLoginService) { }
+  constructor(private login : PeticionesLoginService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -36,9 +38,21 @@ export class LoginPage implements OnInit {
     }
   }
 
-  hacerLogin()
+  open(id: string) {
+    this.router.navigateByUrl('/' + id);
+  }
+
+  async hacerLogin()
   {
-    console.log(this.login.hacerLoginUsuario(this.usuario.nombre,this.usuario.passwd));
+    let resp : number = await this.login.hacerLoginUsuario(this.usuario.nombre, this.usuario.passwd);
+    switch(resp)
+      {
+        case 201: {this.open("app"); break;}
+        case 400: {this.mensajeFormulario='Formato de parámetros incorrecto';break;}
+        case 401: {this.mensajeFormulario='Contraseña incorrecta';break;}
+        case 404: {this.mensajeFormulario='Usuario y/o contraseña incorrectos';break;}
+        default: {this.mensajeFormulario='Error inesperado durante el proceso';break;}
+      }
   }
 
 }
