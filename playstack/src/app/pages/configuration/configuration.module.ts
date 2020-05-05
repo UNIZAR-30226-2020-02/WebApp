@@ -8,12 +8,16 @@ import { ConfigurationPageRoutingModule } from './configuration-routing.module';
 
 import { ConfigurationPage } from './configuration.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ConfigurationPageRoutingModule
+    ConfigurationPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [ConfigurationPage]
 })

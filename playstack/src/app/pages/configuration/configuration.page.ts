@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { HttpClient } from '@angular/common/http';
 
+import { ReproductorService } from '../../services/reproductor.service';
+
+
 
 @Component({
   selector: 'app-configuration',
@@ -27,6 +30,7 @@ export class ConfigurationPage implements OnInit {
   nuevoNombreUsuario: string;
   nuevaPasswd: string;
   nuevaPasswdConfirm: string;
+
 
   ngOnInit() {
     console.log("Entrado");
@@ -162,6 +166,12 @@ export class ConfigurationPage implements OnInit {
 
   logout() {
     this.auth.logout();
+  }
+
+
+  ionViewDidLeave() {
+    this.mensajeCambioDatos = "";
+    this.mensajeCambioContrasena = "";
   }
 
 }
