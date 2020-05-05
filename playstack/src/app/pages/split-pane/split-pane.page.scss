@@ -121,3 +121,21 @@ ion-menu ion-content {
   ion-item.selected {
     --color: var(--ion-color-primary);
   }
+
+  .ion-color-playstack-soft {
+    --ion-color-base: var(--ion-color-playstack-soft);
+    --ion-color-base-rgb: var(--ion-color-playstack-soft-rgb);
+    --ion-color-contrast: var(--ion-color-playstack-soft-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-playstack-soft-contrast-rgb);
+    --ion-color-shade: var(--ion-color-playstack-soft-shade);
+    --ion-color-tint: var(--ion-color-playstack-soft-tint);
+  }
+  
+  .ion-color-playstack {
+    --ion-color-base: var(--ion-color-playstack);
+    --ion-color-base-rgb: var(--ion-color-playstack-rgb);
+    --ion-color-contrast: var(--ion-color-playstack-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-playstack-contrast-rgb);
+    --ion-color-shade: var(--ion-color-playstack-shade);
+    --ion-color-tint: var(--ion-color-playstack-tint);
+  }

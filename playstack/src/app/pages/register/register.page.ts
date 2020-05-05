@@ -93,7 +93,7 @@ export class RegisterPage implements OnInit {
           let resp : number = await this.register.hacerRegisterUsuario(this.usuario.nombre, this.usuario.passwd, this.usuario.correo);
           switch(resp)
           {
-            case 201: {this.auth.login();this.open("app"); break;}
+            case 201: {await this.auth.login(this.usuario.nombre);this.open("app"); break;}
             case 400: {this.mensajeFormulario='El usuario ya existe';break;}
             case 406: {this.mensajeFormulario='Error en la petición a la BD';break;}
             default: {this.mensajeFormulario='Error inesperado durante el proceso';break;}
