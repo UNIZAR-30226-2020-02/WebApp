@@ -25,11 +25,6 @@ export class SplitPanePage implements OnInit {
       });
     }
 
-    logout()
-    {
-      this.auth.logout();
-    }
-
     open(id: string) {
       this.router.navigateByUrl('/' + id);
     }
