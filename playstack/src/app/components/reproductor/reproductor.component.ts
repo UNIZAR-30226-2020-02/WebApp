@@ -20,6 +20,7 @@ export class ReproductorComponent implements OnInit {
   {
     let newValue = +this.range.value;
     let duration = this.rs.player.duration();
+    console.log(duration * (newValue / 100));
     this.rs.player.seek(duration * (newValue / 100));
   }
 
