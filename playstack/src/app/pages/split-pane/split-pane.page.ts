@@ -13,16 +13,16 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class SplitPanePage implements OnInit {
 
-  public playlists = ["Éxitos de España", "Canciones favoritas", "Mi Playlist"]
+  public playlists = ["Éxitos de España", "Canciones favoritas", "Mi Playlist"];
+
+  nombreUsuario: string;
 
   constructor(private router: Router, private auth: AuthenticationService) { }
 
     ngOnInit() {
-    }
-
-    logout()
-    {
-      this.auth.logout();
+      this.auth.getUserName().then(value => {
+        this.nombreUsuario = value;
+      });
     }
 
     open(id: string) {

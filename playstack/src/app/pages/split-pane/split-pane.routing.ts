@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('../biblioteca/biblioteca.module').then(m => m.BibliotecaPageModule),
         canActivate: [AuthGuardService]
       },
+      {
+        path: 'configuration',
+        loadChildren: () => import('../configuration/configuration.module').then(m => m.ConfigurationPageModule)
+      }
     ]
   }  
 ];
