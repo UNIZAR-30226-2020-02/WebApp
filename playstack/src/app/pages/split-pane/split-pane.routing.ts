@@ -24,6 +24,10 @@ const routes: Routes = [
         path: 'biblioteca',
         loadChildren: () => import('../biblioteca/biblioteca.module').then(m => m.BibliotecaPageModule)
       },
+      {
+        path: 'configuration',
+        loadChildren: () => import('../configuration/configuration.module').then(m => m.ConfigurationPageModule)
+      }
     ]
   }  
 ];

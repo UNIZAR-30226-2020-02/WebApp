@@ -23,12 +23,16 @@ const routes: Routes = [
   {
     path:'app',
     loadChildren: './pages/split-pane/split-pane.module#SplitPanePageModule',
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'playlist',
     loadChildren: () => import('./pages/playlist/playlist.module').then( m => m.PlaylistPageModule),
     canActivate: [AuthGuardService]
+  },
+  {
+    path: 'configuration',
+    loadChildren: () => import('./pages/configuration/configuration.module').then( m => m.ConfigurationPageModule)
   }
 
 ];
