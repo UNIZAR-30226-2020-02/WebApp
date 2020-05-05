@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 
 //TODO creo que hay que poner aqui lo de routes con las cosas 
@@ -13,9 +15,14 @@ export class SplitPanePage implements OnInit {
 
   public playlists = ["Éxitos de España", "Canciones favoritas", "Mi Playlist"]
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private auth: AuthenticationService) { }
 
     ngOnInit() {
+    }
+
+    logout()
+    {
+      this.auth.logout();
     }
 
     open(id: string) {

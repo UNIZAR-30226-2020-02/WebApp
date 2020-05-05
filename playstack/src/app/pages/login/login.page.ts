@@ -24,6 +24,7 @@ export class LoginPage implements OnInit {
   constructor(private login : PeticionesLoginService, private router: Router, private auth: AuthenticationService) { }
 
   ngOnInit() {
+    
   }
 
   togglePassword(): void
@@ -48,12 +49,14 @@ export class LoginPage implements OnInit {
     let resp : number = await this.login.hacerLoginUsuario(this.usuario.nombre, this.usuario.passwd);
     switch(resp)
       {
-        case 201: {this.auth.login();this.open("app"); break;}
+        case 201: {await this.auth.login(this.usuario.nombre);this.open("app");
+                  this.usuario.nombre = "";this.usuario.passwd = "";this.mensajeFormulario=''; break;}
         case 400: {this.mensajeFormulario='Formato de parámetros incorrecto';break;}
         case 401: {this.mensajeFormulario='Contraseña incorrecta';break;}
         case 404: {this.mensajeFormulario='Nombre de usuario incorrecto';break;}
         default: {this.mensajeFormulario='Error inesperado durante el proceso';break;}
       }
+
   }
 
 }
