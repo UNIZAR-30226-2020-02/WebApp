@@ -78,16 +78,10 @@ export class ReproductorService {
     let playlist: Track[] = [];
     cancionesObservable.subscribe(mapCanciones => {
       
-      /*for (let cancion in mapCanciones) {
-        console.log("addToPlaylistObservable va a crear el track: "+mapCanciones[cancion].url);
+      for (let cancion in mapCanciones) {
         let track: Track = this.constructTrack2(cancion, mapCanciones[cancion]);
         playlist.push(track);
-        console.log("addToPlaylistObservable ha creado el track: "+track.nombre);
-      }*/
-      console.log("En total, la lista creada contiene:");
-      /*for (let index = 0; index < this.playlist.length; index++) {
-        console.log(index+": "+this.playlist[index].nombre);
-      }*/
+      }
     })
     this.playlist = playlist;
   }
