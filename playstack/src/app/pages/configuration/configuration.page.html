@@ -15,30 +15,31 @@
 
     <ion-card-content>
       <ion-grid>
-        <ion-row>
-          <ion-col class="ion-text-center">
-            <ion-button (click)="cambiarImagen()">
-              <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+        <ion-row class="ion-text-center">
+          <ion-col>
+            <ion-button (click)="cambiarImagen()" class="boton-imagen">
+              <ion-icon slot="icon-only" name="person-circle-outline" class="foto-perfil"></ion-icon>
             </ion-button>
             <ion-label style="display: block;">Cambiar imagen de usuario</ion-label>
           </ion-col>
-          <ion-col>
 
+
+          <ion-col style="padding: 40px;" class="ion-text-center">
 
             <!-- Configuración -->
             <form ngForm (ngSubmit)="cambiarDatos()">
               <ion-item>
-                <ion-input required="true" [(ngModel)]="nuevoNombreUsuario" name="correo" autocorrect="on"
+                <ion-input [(ngModel)]="nuevoNombreUsuario" name="correo" autocorrect="on"
                   autofocus="on" clearInput="true" inputmode="text" [placeholder]="nombreUsuario"></ion-input>
                 <ion-icon name="person-circle-outline"></ion-icon>
               </ion-item>
               <ion-item>
-                <ion-input required="true" [(ngModel)]="nuevoCorreo" name="nombre" clearInput="true" inputmode="text"
+                <ion-input [(ngModel)]="nuevoCorreo" name="nombre" clearInput="true" inputmode="text"
                   [placeholder]="correoUsuario"></ion-input>
                 <ion-icon name="mail-outline"></ion-icon>
               </ion-item>
-              <ion-item>
-                <ion-text color="danger">{{ mensajeCambioDatos }}</ion-text>
+              <ion-text color="danger">{{ mensajeCambioDatos }}</ion-text>
+              <ion-item lines="none" class="boton-aceptar" style="padding-bottom: 20px;">
                 <div style="padding: 10px;">
                   <ion-button type="submit" color="light" style="--border-radius: 15px; width: 310px;"><b>Guardar
                       cambios</b>
@@ -49,18 +50,18 @@
 
             <form ngForm (ngSubmit)="cambiarPasswd()">
               <ion-item>
-                <ion-input [type]="showPassword ? 'text' : 'password'" required="true" [(ngModel)]="nuevaPasswd"
+                <ion-input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="nuevaPasswd"
                   name="passwd" clearInput="true" placeholder="Nueva Contraseña (Mínimo 8 caracteres)"></ion-input>
                 <ion-icon [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
               </ion-item>
               <ion-item>
-                <ion-input [type]="showPasswordConfirm ? 'text' : 'password'" required="true"
+                <ion-input [type]="showPasswordConfirm ? 'text' : 'password'"
                   [(ngModel)]="nuevaPasswdConfirm" name="passwdConfirm" clearInput="true"
                   placeholder="Confirmar contraseña"></ion-input>
                 <ion-icon [name]="passwordConfirmToggleIcon" (click)="togglePassword2()"></ion-icon>
               </ion-item>
-              <ion-item>
-                <ion-text color="danger">{{ mensajeCambioContrasena }}</ion-text>
+              <ion-text color="danger">{{ mensajeCambioContrasena }}</ion-text>
+              <ion-item lines="none" class="boton-aceptar">
                 <div style="padding: 10px;">
                   <ion-button type="submit" color="light" style="--border-radius: 15px; width: 310px;"><b>Cambiar
                       contraseña</b>
@@ -83,23 +84,25 @@
       </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content style="display: flex; align-items: center; justify-content: center;">
-      Tienes una subscripción
-      <ion-chip style="width: 100px; display: block">Estándar</ion-chip>
-      <ion-button (click)="actualizar()" style="width: 200px; display: block">Hacerse premium</ion-button>
+    <ion-card-content class="ion-text-center">
+      <div>Tienes una subscripción</div>
+      <ion-chip style="width: 100px">Estándar</ion-chip>
+      <ion-button (click)="actualizar()" style="width: 200px">Hacerse premium</ion-button>
     </ion-card-content>
   </ion-card>
 
 
 
   <ion-button (click)="logout()" [routerLink]="['/login']" color="playstack-soft"
-    style="--border-radius: 15px; width: 75%; padding-bottom: 10px; padding-left: 12%;"><b>Cerrar Sesión</b>
+    style="--border-radius: 15px; width: 400px; height: 70px; padding-top: 20px; padding-bottom: 10px; padding-left: 12%;">
+    <b>Cerrar Sesión</b>
   </ion-button>
 
 
 </ion-content>
 
-
 <ion-footer>
-  <app-reproductor></app-reproductor>
+  <ion-toolbar>
+    <app-reproductor></app-reproductor>
+  </ion-toolbar>
 </ion-footer>

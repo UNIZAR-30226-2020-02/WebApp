@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { AuthGuardService } from 'src/app/services/auth-guard/auth-guard.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 

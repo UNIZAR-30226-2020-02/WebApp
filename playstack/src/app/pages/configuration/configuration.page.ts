@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { HttpClient } from '@angular/common/http';
 
-import { ReproductorService } from '../../services/reproductor.service';
+import { ReproductorService } from '../../services/reproductor/reproductor.service';
 
 
 

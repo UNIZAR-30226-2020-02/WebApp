@@ -17,6 +17,8 @@ export class LoginPage implements OnInit {
     passwd : ""
   };
 
+  showSpinner: boolean = false;
+
   showPassword = false;
   passwordToggleIcon = 'eye';
   mensajeFormulario = "";
@@ -46,7 +48,11 @@ export class LoginPage implements OnInit {
 
   async hacerLogin()
   {
+    this.mensajeFormulario = "";
+    this.showSpinner = true;
     let resp : number = await this.login.hacerLoginUsuario(this.usuario.nombre, this.usuario.passwd);
+    this.showSpinner = false;
+
     switch(resp)
       {
         case 201: {await this.auth.login(this.usuario.nombre);this.open("app");

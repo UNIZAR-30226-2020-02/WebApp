@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ReproductorService } from '../../services/reproductor.service';
+import { ReproductorService } from '../../services/reproductor/reproductor.service';
 
 import { IonRange } from '@ionic/angular';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ReproductorService } from 'src/app/services/reproductor.service';
+import { ReproductorService } from 'src/app/services/reproductor/reproductor.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { SplitPanePage } from './split-pane.page';
-import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { AuthGuardService } from 'src/app/services/auth-guard/auth-guard.service';
 
 const routes: Routes = [
   {

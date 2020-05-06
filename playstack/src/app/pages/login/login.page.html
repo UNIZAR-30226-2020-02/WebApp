@@ -22,6 +22,7 @@
           <ion-input required="true" [(ngModel)]="usuario.passwd" name="passwd" [type]="showPassword ? 'text' : 'password'" clearInput="true" placeholder="Contraseña"></ion-input>
           <ion-icon [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
         </ion-item>
+        <ion-spinner *ngIf="showSpinner"></ion-spinner>
         <ion-text color="danger">{{mensajeFormulario}}</ion-text>
         <div style="padding: 10px;" >
           <ion-button type="submit" color="light" style="--border-radius: 15px; width: 310px;"><b>Iniciar Sesión</b></ion-button>

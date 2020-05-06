@@ -5,21 +5,28 @@
 </ion-header>
 
 
+
+
+
 <ion-content>
   <div expand="full">
     <h1>Recientes</h1>
-      <app-scrollhorizontal [listaCanciones]="cancionesRap"></app-scrollhorizontal>
+    <ion-spinner *ngIf="showSpinner1"></ion-spinner>
+    <app-scrollhorizontal [listaCanciones]="cancionesRap"></app-scrollhorizontal>
   </div>
 
-  
+
   <div expand="full">
     <h1>Recomendadas</h1>
-      <app-scrollhorizontal [listaCanciones]="cancionesTechno"></app-scrollhorizontal>
+    <ion-spinner *ngIf="showSpinner2"></ion-spinner>
+    <app-scrollhorizontal [listaCanciones]="cancionesTechno"></app-scrollhorizontal>
   </div>
 
 
 </ion-content>
 
 <ion-footer>
-  <app-reproductor></app-reproductor>
+  <ion-toolbar>
+    <app-reproductor></app-reproductor>
+  </ion-toolbar>
 </ion-footer>
