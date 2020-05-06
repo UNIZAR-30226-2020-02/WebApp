@@ -4,13 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ReproductorComponent } from './reproductor/reproductor.component';
 import { ScrollhorizontalComponent} from './scrollhorizontal/scrollhorizontal.component';
+import { ModalPageModule } from '../pages/crear/modal/modal.module';
 
 @NgModule({
   declarations: [ReproductorComponent,ScrollhorizontalComponent],
   imports: [
     CommonModule,
     IonicModule,
-    FormsModule
+    FormsModule,
+    ModalPageModule
   ],
   exports: [ReproductorComponent,ScrollhorizontalComponent]
 })
