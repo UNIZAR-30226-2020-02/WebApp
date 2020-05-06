@@ -14,6 +14,7 @@ export class ScrollhorizontalComponent implements OnInit {
 
   constructor(public rs: ReproductorService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
 }

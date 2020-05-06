@@ -24,19 +24,11 @@ export class ReproductorService {
   player: Howl = null;
   isPlaying = false;
   progress = 0;
-
-
-  puntoActual: Number;
   duracion: Number;
   
   constructor(private http: HttpClient) { }
-
   
   constructTrack(cancion: any) {
-
-    console.log("constructor");
-    console.log(cancion);
-
     let track = {
       nombre: cancion.key,
       artistas: cancion.value.Artistas,
@@ -45,16 +37,12 @@ export class ReproductorService {
       path: cancion.value.url,
       esFavorita: cancion.value.EsFavorita
     };
-
-    console.log(track);
-
+    console.log("ConstructTrack: "+track);
+    console.log("ConstructTrack nombre: "+track.nombre);
     return track;
   }
 
   constructTrack2(key: string, value: any) {
-
-    console.log("constructor");
-
     let track = {
       nombre: key,
       artistas: value.Artistas,
@@ -64,15 +52,11 @@ export class ReproductorService {
       esFavorita: value.EsFavorita
     };
 
-    console.log(track);
-
     return track;
   }
 
   constructPlaylist(observableCanciones: Observable<any>) {
     let playlist: Track[];
-
-    console.log("lista canciones");
 
     observableCanciones.subscribe(mapCanciones => {
       for (let cancion in mapCanciones) {
@@ -84,7 +68,6 @@ export class ReproductorService {
   }
 
   addToPlaylist(track: Track[]) {
-    
   }
 
   setPlaylist(playlist: Track[]) {
@@ -93,45 +76,42 @@ export class ReproductorService {
 
   addToPlaylistObservable(cancionesObservable: Observable<any>) {
     let playlist: Track[] = [];
-
     cancionesObservable.subscribe(mapCanciones => {
-      console.log(mapCanciones);
       
-      for (let cancion in mapCanciones) {
-        console.log(mapCanciones[cancion]);
-        console.log(mapCanciones[cancion].Albumes);
+      /*for (let cancion in mapCanciones) {
+        console.log("addToPlaylistObservable va a crear el track: "+mapCanciones[cancion].url);
         let track: Track = this.constructTrack2(cancion, mapCanciones[cancion]);
-        console.log("track");
-        console.log(track);
         playlist.push(track);
-      }
+        console.log("addToPlaylistObservable ha creado el track: "+track.nombre);
+      }*/
+      console.log("En total, la lista creada contiene:");
+      /*for (let index = 0; index < this.playlist.length; index++) {
+        console.log(index+": "+this.playlist[index].nombre);
+      }*/
     })
     this.playlist = playlist;
   }
 
   start(track: Track)
   {
-    console.log(track);
     if(this.player)
     {
       this.player.stop();
     }
+    this.activeTrack = track;
     this.player = new Howl({
-      src: [track.path],
+      src: track.path,
       html5: true,
       onplay: () => {
+        console.log("callback de play");
         this.isPlaying = true;
-        this.activeTrack = track;
-        this.updateProgress();
+        this.updateProgress(this.activeTrack);
+        this.duracion = this.player.duration();
       },
       onend: () => {
       }
     });
-  
-    this.duracion = this.player.duration();
-    
-    this.puntoActual = 0;
-
+    console.log("Play: poniendo en marcha "+this.activeTrack.nombre);
     this.player.play();
   }
 
@@ -153,10 +133,14 @@ export class ReproductorService {
     let index = this.playlist.indexOf(this.activeTrack);
     if(index != this.playlist.length - 1)
     {
+      console.log("Poniendo canción "+ (index + 1));
+      console.log("Se titula: "+this.playlist[index + 1].nombre);
       this.start(this.playlist[index + 1]);
     }
     else
     {
+      console.log("Poniendo canción 0");
+      console.log("Se titula: "+this.playlist[0].nombre);
       this.start(this.playlist[0]);
     }
   }
@@ -166,24 +150,31 @@ export class ReproductorService {
     let index = this.playlist.indexOf(this.activeTrack);
     if(index > 0)
     {
+      console.log("Poniendo canción "+ (index - 1));
+      console.log("Se titula: "+this.playlist[index - 1].nombre);
       this.start(this.playlist[index - 1]);
     }
     else
     {
+      console.log("Poniendo canción "+ (this.playlist.length - 1));
+      console.log("Se titula: "+this.playlist[this.playlist.length - 1].nombre);
       this.start(this.playlist[this.playlist.length - 1]);
     }
   }
   
-  updateProgress()
+  updateProgress(track: Track)
   {
+    this.duracion = this.player.duration();
+    //console.log("DURACION: "+this.duracion);
     let seek = this.player.seek();
+    //console.log("SEEK: "+seek);
     this.progress = (seek / this.player.duration()) * 100 || 0;
-    setTimeout(() => {this.updateProgress();}, 1000)
+    //console.log("PROGRESS: "+ this.progress);
+    if(track === this.activeTrack){setTimeout(() => {this.updateProgress(track);}, 1000)}
   }
 
   getListaCanciones()
   {
-    console.log('HOLA ESTOY VIVO');
     return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=Rap&Usuario=Rodolfo');
   }
 

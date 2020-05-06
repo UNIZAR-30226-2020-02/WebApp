@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nueva playlist</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form onsubmit="processForm(event)">
+    <ion-item>
+      <ion-label position="stacked">Nombre: <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required type="text" oninput="handleFirstNameValue(event)"></ion-input>
+    </ion-item>
+
+    <div class="ion-padding">
+      <ion-button expand="block" type="submit" class="ion-no-margin">Crear playlist</ion-button>
+    </div>
+  </form>
+</ion-content>
