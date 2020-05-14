@@ -33,7 +33,11 @@ const routes: Routes = [
   {
     path: 'configuration',
     loadChildren: () => import('./pages/configuration/configuration.module').then( m => m.ConfigurationPageModule)
+  },  {
+    path: 'perfil',
+    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
   }
+
 ];
 
 @NgModule({
