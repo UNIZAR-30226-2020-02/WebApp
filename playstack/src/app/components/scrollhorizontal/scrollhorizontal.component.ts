@@ -1,8 +1,7 @@
 import { Playlist } from './../../services/reproductor/reproductor.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor/reproductor.service';
-import { Observable } from 'rxjs';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-scrollhorizontal',
@@ -26,7 +25,7 @@ export class ScrollhorizontalComponent implements OnInit {
     }
   }
 
-  constructor(public rs: ReproductorService, private router: Router) { }
+  constructor(public rs: ReproductorService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
   }
@@ -36,10 +35,11 @@ export class ScrollhorizontalComponent implements OnInit {
 
     // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
     let navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute,
       state: {
         playlist: playlist
       }
     };
-    this.router.navigate(['playlist'], navigationExtras);
+    this.router.navigate(['../../playlist'], navigationExtras);
   }
 }

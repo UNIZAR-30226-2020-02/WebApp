@@ -31,6 +31,10 @@ const routes: Routes = [
       {
         path: 'configuration',
         loadChildren: () => import('../configuration/configuration.module').then(m => m.ConfigurationPageModule)
+      },
+      {
+        path: 'playlist',
+        loadChildren: () => import('../playlist/playlist.module').then(m => m.PlaylistPageModule)
       }
     ]
   }  
