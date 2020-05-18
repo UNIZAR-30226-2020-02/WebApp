@@ -24,10 +24,12 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
 
-    this.cancionesRap = this.rs.getCancionesByGenero("Rap");
-    this.cancionesRap.subscribe(() => this.showSpinner1 = false);
-    this.cancionesTechno = this.rs.getCancionesByGenero("Techno");
-    this.cancionesTechno.subscribe(() => this.showSpinner2 = false);
+    // this.cancionesRap = this.rs.getCancionesByGenero("Rap");
+    // this.cancionesRap.subscribe(() => this.showSpinner1 = false);
+    // this.cancionesTechno = this.rs.getCancionesByGenero("Techno");
+    // this.cancionesTechno.subscribe(() => this.showSpinner2 = false);
+    this.showSpinner1 = false;
+    this.showSpinner2 = false;
     /*
     this.canciones.subscribe(data => {
       console.log('my data: ', data);

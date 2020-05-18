@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Howl } from 'howler';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { KeyValuePipe } from '@angular/common';
 
 export interface Track {
   nombre: string;
@@ -17,7 +19,7 @@ export interface Track {
  *  Genero
  *  Album
  *  Artista
- *  Usuario
+ *  Playlist
  */
 export interface Playlist {
   tipo: string;
@@ -42,16 +44,6 @@ export interface Genero {
 })
 export class ReproductorService {
 
-  generos: Playlist[] = [{tipo: "Genero", esPrivada: false, nombre: "Rap", cover: "assets/albumes/RapGenre.png", tracks: null},
-                         {tipo: "Genero", esPrivada: false, nombre: "Techno", cover: "assets/albumes/TechnoGenre.png", tracks: null},
-                         {tipo: "Genero", esPrivada: false, nombre: "Latin", cover: "assets/albumes/LatinGenre.png", tracks: null},
-                         {tipo: "Genero", esPrivada: false, nombre: "PopGenre", cover: "assets/albumes/PopGenre.png", tracks: null}];
-  
-  artistas: Playlist[] = [{tipo: "Artista", esPrivada: false, nombre: "Macklemore", cover: "assets/artistas/macklemore.jpg", tracks: null},
-                          {tipo: "Artista", esPrivada: false, nombre: "Eminem", cover: "assets/artistas/eminem.jpg", tracks: null},
-                          {tipo: "Artista", esPrivada: false, nombre: "Da Tweekaz", cover: "assets/artistas/datweekaz.jpg", tracks: null},
-                          {tipo: "Artista", esPrivada: false, nombre: "Timmy Trumpet", cover: "assets/artistas/timmytrumpet.jpg", tracks: null}];
-
   playlist: Track[];
   cola: Track[];
   
@@ -62,45 +54,6 @@ export class ReproductorService {
   duracion: Number;
   
   constructor(private http: HttpClient) { }
-  
-  constructTrack(cancion: any) {
-    let track = {
-      nombre: cancion.key,
-      artistas: cancion.value.Artistas,
-      albumes: cancion.value.Albumes,
-      covers: cancion.value.ImagenesAlbum,
-      path: cancion.value.url,
-      esFavorita: cancion.value.EsFavorita
-    };
-    console.log("ConstructTrack: "+track);
-    console.log("ConstructTrack nombre: "+track.nombre);
-    return track;
-  }
-
-  constructTrack2(key: string, value: any) {
-    let track = {
-      nombre: key,
-      artistas: value.Artistas,
-      albumes: value.Albumes,
-      covers: value.ImagenesAlbum,
-      path: value.url,
-      esFavorita: value.EsFavorita
-    };
-
-    return track;
-  }
-
-  constructPlaylist(observableCanciones: Observable<any>) {
-    let playlist: Track[];
-
-    observableCanciones.subscribe(mapCanciones => {
-      for (let cancion in mapCanciones) {
-       // playlist = playlist.concat(this.constructTrack(cancion));
-      }
-    });
-
-    return playlist;
-  }
 
   addToPlaylist(track: Track[]) {
   }
@@ -202,27 +155,97 @@ export class ReproductorService {
     if(track === this.activeTrack){setTimeout(() => {this.updateProgress(track);}, 1000)}
   }
 
-  getListaCanciones()
-  {
-    return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=Rap&Usuario=Rodolfo');
-  }
 
-  // TODO: usuario
-  getCancionesByGenero(genero: string) {
-    return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=' + genero + '&Usuario=pepe');
-  }
 
-  getCancionesByArtista(artista: string) {
-    return this.http.get('https://playstack.azurewebsites.net/get/artist/albums?NombreArtista=' + artista);
-  }
 
-  // Devuelve 
+
+  /* Búsqueda y construcción de listas de reproducción */
+
+  generos: Playlist[] = [{tipo: "Genero", esPrivada: false, nombre: "Rap", cover: "assets/albumes/RapGenre.png", tracks: []},
+                         {tipo: "Genero", esPrivada: false, nombre: "Techno", cover: "assets/albumes/TechnoGenre.png", tracks: []},
+                         {tipo: "Genero", esPrivada: false, nombre: "Latin", cover: "assets/albumes/LatinGenre.png", tracks: []},
+                         {tipo: "Genero", esPrivada: false, nombre: "Pop", cover: "assets/albumes/PopGenre.png", tracks: []}];
   getGeneros() {
     return this.generos;
   }
-
+  
+  artistas: Playlist[] = [{tipo: "Artista", esPrivada: false, nombre: "Macklemore", cover: "assets/artistas/macklemore.jpg", tracks: []},
+                          {tipo: "Artista", esPrivada: false, nombre: "Eminem", cover: "assets/artistas/eminem.jpg", tracks: []},
+                          {tipo: "Artista", esPrivada: false, nombre: "Da Tweekaz", cover: "assets/artistas/datweekaz.jpg", tracks: []},
+                          {tipo: "Artista", esPrivada: false, nombre: "Timmy Trumpet", cover: "assets/artistas/timmytrumpet.jpg", tracks: []}];
   getArtistas() {
     return this.artistas;
   }
 
+  constructTrack(cancion: any) {
+    let track = {
+      nombre: cancion.key,
+      artistas: cancion.value.Artistas,
+      albumes: cancion.value.Albumes,
+      covers: cancion.value.ImagenesAlbum,
+      path: cancion.value.url,
+      esFavorita: cancion.value.EsFavorita
+    };
+    console.log("ConstructTrack nombre: "+track.nombre);
+    return track;
+  }
+
+  constructTrack2(key: string, value: any) {
+    let track = {
+      nombre: key,
+      artistas: value.Artistas,
+      albumes: value.Albumes,
+      covers: value.ImagenesAlbum,
+      path: value.url,
+      esFavorita: value.EsFavorita
+    };
+    return track;
+  }
+
+  // TODO: usuario
+  getCancionesByGenero(genero: string) {
+    const request: string = 'https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=' + genero + '&Usuario=pepe';
+    return this.http.get(request);
+  }
+
+  getCancionesByArtista(artista: string) {
+    const request: string = 'https://playstack.azurewebsites.net/get/artist/albums?NombreArtista=' + artista
+    return this.http.get(request);
+  }
+
+  // TODO arreglar todo esto
+  recuperarTracks(playlist: Playlist): Observable<any> {
+    // Dependiendo del tipo de la playlist, realizar una consulta u otra para recuperar sus canciones de la BD
+    let canciones: Observable<any>;
+    let tracks: Track[] = [];
+
+    switch (playlist.tipo) {
+      case "Genero": {
+        canciones = this.getCancionesByGenero(playlist.nombre);
+        break;
+      }
+      case "Artista": {
+        canciones = this.getCancionesByArtista(playlist.nombre);
+      }
+      case "Album": {
+        // TODO
+      }
+      case "Playlist": {
+        // TODO
+      }
+    }
+
+    /*
+    canciones.subscribe(mapCanciones => {
+      for (let cancion in mapCanciones) {
+        console.log(mapCanciones);
+       // tracks.push(this.constructTrack2(cancion, mapCanciones[cancion]));
+      }
+
+      playlist.tracks = tracks;
+    });
+    */
+
+    return canciones;
+  }
 }

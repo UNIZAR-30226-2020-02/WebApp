@@ -116,8 +116,8 @@
     <!-- Falta por hacer acceso a BD-->
     <ion-content *ngIf="currentTabPodcasts == 'Episodios'">
       Sin escuchar:
-      <ion-card *ngFor="let episodio of listado | async | keyvalue"
-        (click)="rs.start(rs.constructTrack(cancion)); rs.addToPlaylistObservable(listado)">
+      <ion-card *ngFor="let episodio of listado | async | keyvalue">
+        <!-- (click)="rs.start(rs.constructTrack(cancion)); rs.addToPlaylistObservable(listado)"> -->
         <ion-card-content>
           <ion-label [color]="episodio.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'">
             {{ episodio.key }}
