@@ -10,16 +10,16 @@
 
 <ion-content>
   <div expand="full">
-    <h1>Recientes</h1>
+    <h1>Generos</h1>
     <ion-spinner *ngIf="showSpinner1"></ion-spinner>
-    <app-scrollhorizontal [listaCanciones]="cancionesRap"></app-scrollhorizontal>
+    <app-scrollhorizontal [listaPlaylists]="rs.getGeneros()"></app-scrollhorizontal>
   </div>
 
 
   <div expand="full">
-    <h1>Recomendadas</h1>
+    <h1>Artistas</h1>
     <ion-spinner *ngIf="showSpinner2"></ion-spinner>
-    <app-scrollhorizontal [listaCanciones]="cancionesTechno"></app-scrollhorizontal>
+    <app-scrollhorizontal [listaPlaylists]="rs.getArtistas()"></app-scrollhorizontal>
   </div>
 
 

@@ -4,18 +4,53 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Track {
-  nombre : string;
-  artistas : string[];
-  albumes : string[];
+  nombre: string;
+  artistas: string[];
+  albumes: string[];
   covers: string[];
-  path : string;
-  esFavorita : boolean;
+  path: string;
+  esFavorita: boolean;
 }
+
+/*
+ * tipo puede ser:
+ *  Genero
+ *  Album
+ *  Artista
+ *  Usuario
+ */
+export interface Playlist {
+  tipo: string;
+  esPrivada: boolean;
+  nombre: string;
+  cover: string;
+  tracks: Track[];
+}
+
+export interface ColaReproduccion {
+  tracks: Track[];
+}
+
+export interface Genero {
+  nombre: string;
+  cover: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReproductorService {
+
+  generos: Playlist[] = [{tipo: "Genero", esPrivada: false, nombre: "Rap", cover: "assets/albumes/RapGenre.png", tracks: null},
+                         {tipo: "Genero", esPrivada: false, nombre: "Techno", cover: "assets/albumes/TechnoGenre.png", tracks: null},
+                         {tipo: "Genero", esPrivada: false, nombre: "Latin", cover: "assets/albumes/LatinGenre.png", tracks: null},
+                         {tipo: "Genero", esPrivada: false, nombre: "PopGenre", cover: "assets/albumes/PopGenre.png", tracks: null}];
+  
+  artistas: Playlist[] = [{tipo: "Artista", esPrivada: false, nombre: "Macklemore", cover: "assets/artistas/macklemore.jpg", tracks: null},
+                          {tipo: "Artista", esPrivada: false, nombre: "Eminem", cover: "assets/artistas/eminem.jpg", tracks: null},
+                          {tipo: "Artista", esPrivada: false, nombre: "Da Tweekaz", cover: "assets/artistas/datweekaz.jpg", tracks: null},
+                          {tipo: "Artista", esPrivada: false, nombre: "Timmy Trumpet", cover: "assets/artistas/timmytrumpet.jpg", tracks: null}];
 
   playlist: Track[];
   cola: Track[];
@@ -172,7 +207,22 @@ export class ReproductorService {
     return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=Rap&Usuario=Rodolfo');
   }
 
+  // TODO: usuario
   getCancionesByGenero(genero: string) {
-    return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=' + genero + '&Usuario=Rodolfo');
+    return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=' + genero + '&Usuario=pepe');
   }
+
+  getCancionesByArtista(artista: string) {
+    return this.http.get('https://playstack.azurewebsites.net/get/artist/albums?NombreArtista=' + artista);
+  }
+
+  // Devuelve 
+  getGeneros() {
+    return this.generos;
+  }
+
+  getArtistas() {
+    return this.artistas;
+  }
+
 }

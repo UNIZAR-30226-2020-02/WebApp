@@ -1,3 +1,4 @@
+import { Playlist } from './../../services/reproductor/reproductor.service';
 import { Component, OnInit } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor/reproductor.service';
 import { Observable } from 'rxjs';
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
 })
 
 export class HomePage implements OnInit {
+
   
   cancionesRap: Observable<any>;
   cancionesTechno: Observable<any>;
@@ -17,11 +19,11 @@ export class HomePage implements OnInit {
   showSpinner2: boolean = true;
 
 
-
   constructor(public rs: ReproductorService) {
   }
 
   ngOnInit() {
+
     this.cancionesRap = this.rs.getCancionesByGenero("Rap");
     this.cancionesRap.subscribe(() => this.showSpinner1 = false);
     this.cancionesTechno = this.rs.getCancionesByGenero("Techno");

@@ -1,11 +1,10 @@
-<ion-slides>
-  <ion-slide *ngFor="let cancion of listaCanciones | async | keyvalue"
-      (click)="rs.start(rs.constructTrack(cancion)); rs.addToPlaylistObservable(listaCanciones)">
-    <ion-card>
-      <img src="{{ cancion.value.ImagenesAlbum[0] }}"/>
+<ion-slides [options]="slideOpts">
+  <ion-slide *ngFor="let playlist of listaPlaylists">
+    <ion-card (click)="openPlaylist(playlist)">
+      <img src="{{ playlist.cover }}"/>
       <ion-card-header>
-        <ion-label [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'">
-          {{ cancion.key }}
+        <ion-label>
+          {{ playlist.nombre }}
         </ion-label>
       </ion-card-header>
     </ion-card>

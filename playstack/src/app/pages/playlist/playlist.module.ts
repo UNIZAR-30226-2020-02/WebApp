@@ -13,7 +13,7 @@ import { PlaylistPage } from './playlist.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    PlaylistPageRoutingModule
+    PlaylistPageRoutingModule,
   ],
   declarations: [PlaylistPage]
 })

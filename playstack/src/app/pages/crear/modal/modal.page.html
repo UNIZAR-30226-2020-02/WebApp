@@ -10,6 +10,7 @@
 </ion-header>
 
 <ion-content>
+
   <form #formuario="ngForm" (ngSubmit)="crearLista()">
     <ion-item>
       <ion-input required="true" [(ngModel)]="nombreLista" name="nombre" autocorrect="on" autofocus="on" clearInput="true" inputmode="text" placeholder="Nombre de la lista"></ion-input>
@@ -18,4 +19,5 @@
       <ion-button type="submit" color="light" style="--border-radius: 15px; width: 310px;"><b>Crear lista</b></ion-button>
     </div>
   </form>
+
 </ion-content>

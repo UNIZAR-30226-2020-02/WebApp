@@ -3,15 +3,15 @@
     <ion-buttons slot="start">
       <ion-back-button color="light" defaultHref="./home"></ion-back-button>
     </ion-buttons>
-    <ion-title><font size="-1">LISTA</font> </ion-title>
+    <ion-title><font size="-1">{{ playlist.tipo }}</font> </ion-title>
     
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!--img src="{{ listaCanciones.value[0] }}" style="width: 50px; height: 50px; border-radius: 5px; margin: 10px;"/-->
-  <p><ion-text>{{ name }}</ion-text></p>
-  <ion-text style="font-size: smaller;">
+  <p><ion-text>{{ playlist.nombre }}</ion-text></p>
+  <ion-text style="font-size: smaller;" *ngIf="playlist.tipo == 'Usuario'">
       Creado por: Usuario<!--{{ user.name}}--> | <!--{{ numCanciones }} --> x canciones, <!--{{ duracion }} -->
   </ion-text>
   <ion-grid>

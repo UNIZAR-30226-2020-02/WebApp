@@ -15,8 +15,9 @@ export class ModalPage implements OnInit {
   ngOnInit() {
   }
 
-  dismiss() : void{
-    this.modalCtrl.dismiss();
+  public async dismiss() {
+    const modal = await this.modalCtrl.getTop();
+    modal.dismiss();
   }
 
   async crearLista(){

@@ -35,16 +35,12 @@ export class ConfigurationPage implements OnInit {
   ngOnInit() {
     console.log("Entrado");
     // Obtener nombre de usuario desde el módulo de autenticación
-    this.auth.getUserName().then(value => {
+    this.nombreUsuario = this.auth.getUserName();
 
-      this.nombreUsuario = value;
-
-      // Obtener correo del usuario desde la BD
-      this.http.get("https://playstack.azurewebsites.net/user/get/info?NombreUsuario=" + this.nombreUsuario).subscribe(value => {
-        this.correoUsuario = value["Correo"];
-      });
+    // Obtener correo del usuario desde la BD
+    this.http.get("https://playstack.azurewebsites.net/user/get/info?NombreUsuario=" + this.nombreUsuario).subscribe(value => {
+      this.correoUsuario = value["Correo"];
     });
-
   }
 
 

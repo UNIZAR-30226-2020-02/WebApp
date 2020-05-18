@@ -57,18 +57,29 @@ export class AuthenticationService {
   //Tal como está devuelve el del Storage
   //Si se quiere cambiar cuál se devuelve creo que hay que comentar todo y poner "return this.authenticationID.value"
   //  y no sé si hay que cambiar lo de async y el tipo de la función a string, lo que importa es que esto funciona
+  /*
   async getUserName(): Promise<string>
   {
     return this.storage.get(TOKEN_KEY).then(res => {
       if (res) {
         //Comprobación de que en los dos sitios se almacena lo mismo, por si queréis probarlo
-        /*if(res.toString() === this.authenticationID.value.toString()){
+          if(res.toString() === this.authenticationID.value.toString()){
           console.log(this.authenticationID.value);
           console.log(res.toString());
-        }*/
+        }
         return res;
       }
     })
   }
-
+  */
+  getUserName(): string
+  {
+    let name: string;
+    this.storage.get(TOKEN_KEY).then(res => {
+      if (res) {
+        name = res;
+      }
+    })
+    return name;
+  }
 }

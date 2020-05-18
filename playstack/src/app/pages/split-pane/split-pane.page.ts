@@ -20,9 +20,7 @@ export class SplitPanePage implements OnInit {
   constructor(private router: Router, private auth: AuthenticationService) { }
 
     ngOnInit() {
-      this.auth.getUserName().then(value => {
-        this.nombreUsuario = value;
-      });
+      this.nombreUsuario = this.auth.getUserName();
     }
 
     open(id: string) {
