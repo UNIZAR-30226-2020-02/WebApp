@@ -101,6 +101,7 @@ export class ReproductorService {
         this.duracion = this.player.duration();
       },
       onend: () => {
+        this.next();
       }
     });
     console.log("Play: poniendo en marcha " + this.activeTrack.nombre);
