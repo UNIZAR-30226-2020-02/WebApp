@@ -4,19 +4,21 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PlaylistPageRoutingModule } from './playlist-routing.module';
+import { ColaReproduccionPageRoutingModule } from './cola-reproduccion-routing.module';
 
-import { PlaylistPage } from './playlist.page';
+import { ColaReproduccionPage } from './cola-reproduccion.page';
+
 import { ComponentsModule } from '../../components/components.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PlaylistPageRoutingModule,
+    ColaReproduccionPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [PlaylistPage]
+  declarations: [ColaReproduccionPage]
 })
-export class PlaylistPageModule {}
+export class ColaReproduccionPageModule {}

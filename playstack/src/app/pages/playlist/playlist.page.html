@@ -3,16 +3,23 @@
     <ion-buttons slot="start">
       <ion-back-button color="light" defaultHref="./home"></ion-back-button>
     </ion-buttons>
-    <ion-title><font size="-1">{{ playlist.tipo }}</font> </ion-title>
-    
+    <ion-title>
+      <font size="-1">{{ playlist.tipo }}</font>
+    </ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!--img src="{{ listaCanciones.value[0] }}" style="width: 50px; height: 50px; border-radius: 5px; margin: 10px;"/-->
-  <p><ion-text>{{ playlist.nombre }}</ion-text></p>
+  <p>
+    <ion-text>{{ playlist.nombre }}</ion-text>
+  </p>
   <ion-text style="font-size: smaller;" *ngIf="playlist.tipo == 'Usuario'">
-      Creado por: Usuario<!--{{ user.name}}--> | <!--{{ numCanciones }} --> x canciones, <!--{{ duracion }} -->
+    Creado por: Usuario
+    <!--{{ user.name}}--> |
+    <!--{{ numCanciones }} --> x canciones,
+    <!--{{ duracion }} -->
   </ion-text>
   <ion-grid>
     <ion-row style="font-size: large;">
@@ -30,18 +37,23 @@
     </div>
 
     <ion-row *ngFor="let cancion of listaCanciones | async | keyvalue; let i = index">
-        <ion-item button (click)="playSong(i)" style="width: 100%;">
+      <ion-item button (click)="playSong(i)" style="width: 100%;">
+        {{ addSong(cancion, i) }}
+        <ion-col>{{ i + 1 }}</ion-col>
 
-          <ion-col>{{ i + 1 }}</ion-col>
         <!-- <ion-col><img src="{{ cancion.value.ImagenesAlbum[0] }}"></ion-col> -->
-        {{ addSong(cancion) }}
+
         <ion-col>{{ cancion.key }}</ion-col>
         <ion-col>{{ cancion.value.Albumes?.join(", ") }}</ion-col>
         <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
         <ion-col>3:40</ion-col>
 
-        <ion-col *ngIf="cancion.value.EsFavorita"><ion-icon name="heart-outline"></ion-icon></ion-col>
-        <ion-col *ngIf="!cancion.value.EsFavorita"><ion-icon name="heart"></ion-icon></ion-col>
+        <ion-col *ngIf="cancion.value.EsFavorita">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-col>
+        <ion-col *ngIf="!cancion.value.EsFavorita">
+          <ion-icon name="heart"></ion-icon>
+        </ion-col>
         <!--
         <ion-col>{{ playlist.value.duracion }}</ion-col>
         <ion-col>{{ playlist.value.fecha }}</ion-col>
@@ -50,3 +62,9 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <app-reproductor></app-reproductor>
+  </ion-toolbar>
+</ion-footer>

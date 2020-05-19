@@ -19,16 +19,20 @@
         <ion-icon slot="icon-only" name="play-skip-back"></ion-icon>
       </ion-button>
 
-      <ion-button fill="clear" (click)="rs.togglePlayer(false)" *ngIf="!rs.isPlaying" color="light">
+      <ion-button fill="clear" (click)="rs.togglePlayer()" *ngIf="!rs.isPlaying" color="light">
         <ion-icon slot="icon-only" name="play"></ion-icon>
       </ion-button>
 
-      <ion-button fill="clear" (click)="rs.togglePlayer(true)" *ngIf="rs.isPlaying" color="light">
+      <ion-button fill="clear" (click)="rs.togglePlayer()" *ngIf="rs.isPlaying" color="light">
         <ion-icon slot="icon-only" name="pause"></ion-icon>
       </ion-button>
 
       <ion-button fill="clear" (click)="rs.next()" color="light">
         <ion-icon slot="icon-only" name="play-skip-forward"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="abrirColaReproduccion()" lines="none">
+        <ion-icon name="list" style="padding: 1px; zoom: 1.5;"></ion-icon>
       </ion-button>
 
     </ion-col>
