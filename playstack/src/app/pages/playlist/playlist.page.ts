@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Pipe, PipeTransform } from '@angular/core';
 import { ReproductorService, Playlist } from 'src/app/services/reproductor/reproductor.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-playlist',
@@ -20,36 +21,39 @@ export class PlaylistPage implements OnInit {
   showError: boolean = false;
   mensajeError: string = "La playlist está vacía";
 
-  constructor(public rs: ReproductorService, public http: HttpClient, 
-              private route: ActivatedRoute, private router: Router) {
+  constructor(public rs: ReproductorService, public http: HttpClient,
+    private route: ActivatedRoute, private router: Router) {
 
     this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.playlist = this.router.getCurrentNavigation().extras.state.playlist;
       }
     });
-    
+
   }
 
   ngOnInit() {
-    // Hay que asignarle nombre con un nuevo servicio
-    // this.listaCanciones = this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=rap&Usuario=Rodolfo');
-    // this.playlist = this.rs.recuperarTracks(this.playlist);
     this.listaCanciones = this.rs.recuperarTracks(this.playlist);
-    
-    this.listaCanciones.subscribe(canciones => {
-      console.log(canciones);
-      if (JSON.stringify(canciones) === '{}') {
-        this.showError = true;
-      }
-      this.showSpinner = false;
-    });
-    
+    this.cargarCanciones();
   }
 
-  addSong(cancion: any) {
-    this.playlist.tracks.push(this.rs.constructTrack(cancion));
-    console.log(this.playlist.tracks);
+  cargarCanciones() {
+    this.listaCanciones.subscribe(
+      canciones => {
+        this.showSpinner = false;
+      },
+      error => {
+        this.showSpinner = false;
+        this.showError = true;
+      }
+    );
+  }
+
+  addSong(cancion: any, indice: number) {
+    if (this.playlist.tracks[indice] === undefined) {
+      this.playlist.tracks[indice] = this.rs.constructTrack(cancion);
+      console.log(this.playlist.tracks);
+    }
   }
 
   playSong(indice: number) {

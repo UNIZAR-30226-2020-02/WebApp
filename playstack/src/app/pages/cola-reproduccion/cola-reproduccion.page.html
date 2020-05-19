@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="./home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Cola de Reproduccion
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--img src="{{ listaCanciones.value[0] }}" style="width: 50px; height: 50px; border-radius: 5px; margin: 10px;"/-->
+  <ion-title>Sonando</ion-title>
+  <ion-label *ngIf="rs?.activeTrack == null">No se está reproduciendo ninguna canción</ion-label>
+  <ion-grid *ngIf="rs?.activeTrack != null" >
+    <ion-row style="font-size: large;">
+      <ion-col></ion-col>
+      <ion-col>Titulo</ion-col>
+      <ion-col>Album</ion-col>
+      <ion-col>Artista</ion-col>
+      <ion-col>Duracion</ion-col>
+      <ion-col>Favorita</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-item button (click)="rs.togglePlayer()" style=" width: 100%;">
+
+        <ion-col>{{ rs.activeTrack.nombre }}</ion-col>
+        <ion-col>{{ rs.activeTrack.albumes?.join(", ") }}</ion-col>
+        <ion-col>{{ rs.activeTrack.artistas?.join(", ") }}</ion-col>
+        <ion-col>3:40</ion-col>
+
+        <ion-col *ngIf="rs.activeTrack.esFavorita">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-col>
+        <ion-col *ngIf="!rs.activeTrack.esFavorita">
+          <ion-icon name="heart"></ion-icon>
+        </ion-col>
+        <!--
+        <ion-col>{{ playlist.value.duracion }}</ion-col>
+        <ion-col>{{ playlist.value.fecha }}</ion-col>
+        -->
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+
+  <ion-title>A continuación en la cola</ion-title>
+  <ion-label *ngIf="rs?.cola.length === 0">No hay música en la cola</ion-label>
+  <ion-grid *ngIf="rs?.cola.length > 0" >
+    <ion-row style="font-size: large;">
+      <ion-col>#</ion-col>
+      <ion-col>Titulo</ion-col>
+      <ion-col>Album</ion-col>
+      <ion-col>Artista</ion-col>
+      <ion-col>Duracion</ion-col>
+      <ion-col>Favorita</ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let track of rs.cola; let i = index">
+      <ion-item button (click)="playSongCola(i)" style=" width: 100%;">
+        <ion-col>{{ i + 1 }}</ion-col>
+
+        <ion-col>{{ track.nombre }}</ion-col>
+        <ion-col>{{ track.albumes?.join(", ") }}</ion-col>
+        <ion-col>{{ track.artistas?.join(", ") }}</ion-col>
+        <ion-col>3:40</ion-col>
+
+        <ion-col *ngIf="track.esFavorita">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-col>
+        <ion-col *ngIf="!track.esFavorita">
+          <ion-icon name="heart"></ion-icon>
+        </ion-col>
+        <!--
+        <ion-col>{{ playlist.value.duracion }}</ion-col>
+        <ion-col>{{ playlist.value.fecha }}</ion-col>
+        -->
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-title>A continuación</ion-title>
+  <ion-label *ngIf="rs?.playlist.length === 0">No se está reproduciendo ninguna playlist</ion-label>
+  <ion-grid *ngIf="rs?.playlist.length > 0">
+    <ion-row style="font-size: large;">
+      <ion-col>#</ion-col>
+      <ion-col>Titulo</ion-col>
+      <ion-col>Album</ion-col>
+      <ion-col>Artista</ion-col>
+      <ion-col>Duracion</ion-col>
+      <ion-col>Favorita</ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let track of rs.playlist; let i = index">
+      <ion-item button (click)="playSongPlaylist(i);" style=" width: 100%;">
+        <ion-col>{{ i + 1 }}</ion-col>
+
+        <ion-col>{{ track.nombre }}</ion-col>
+        <ion-col>{{ track.albumes?.join(", ") }}</ion-col>
+        <ion-col>{{ track.artistas?.join(", ") }}</ion-col>
+        <ion-col>3:40</ion-col>
+
+        <ion-col *ngIf="track.esFavorita">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-col>
+        <ion-col *ngIf="!track.esFavorita">
+          <ion-icon name="heart"></ion-icon>
+        </ion-col>
+        <!--
+        <ion-col>{{ playlist.value.duracion }}</ion-col>
+        <ion-col>{{ playlist.value.fecha }}</ion-col>
+        -->
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <app-reproductor></app-reproductor>
+  </ion-toolbar>
+</ion-footer>
