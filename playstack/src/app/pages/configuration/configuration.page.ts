@@ -32,10 +32,10 @@ export class ConfigurationPage implements OnInit {
   nuevaPasswdConfirm: string;
 
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log("Entrado");
     // Obtener nombre de usuario desde el módulo de autenticación
-    this.nombreUsuario = this.auth.getUserName();
+    this.nombreUsuario = await this.auth.getUserName();
 
     // Obtener correo del usuario desde la BD
     this.http.get("https://playstack.azurewebsites.net/user/get/info?NombreUsuario=" + this.nombreUsuario).subscribe(value => {
