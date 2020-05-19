@@ -26,9 +26,11 @@ export class ReproductorComponent implements OnInit {
   seek()
   {
     let newValue = +this.range.value;
-    let duration = this.rs.player.duration();
+    let duration : number = this.rs.getDuration();
     console.log(duration * (newValue / 100));
-    this.rs.player.seek(duration * (newValue / 100));
+    this.rs.player.pause();
+    setTimeout(() => { this.rs.player.seek(duration * (newValue / 100)); }, 20)
+    setTimeout(() => { this.rs.player.play(); }, 50);
   }
 
   abrirColaReproduccion() {

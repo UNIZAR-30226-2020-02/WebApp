@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { pairs } from 'rxjs';
 import { KeyValuePipe, KeyValue } from '@angular/common';
 import { stringify } from 'querystring';
+import { NumericValueAccessor } from '@ionic/angular';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 export interface Track {
   nombre: string;
@@ -55,8 +57,14 @@ export class ReproductorService {
   isPlaying = false;
   progress = 0;
   duracion: Number;
+  idCancion: Number;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth : AuthenticationService) { }
+
+  getDuration(): number
+  {
+    return this.player.duration();
+  }
 
   addToPlaylist(track: Track[]) {
   }
@@ -95,7 +103,7 @@ export class ReproductorService {
       }
     });
     console.log("Play: poniendo en marcha " + this.activeTrack.nombre);
-    this.player.play();
+    this.player.play();    
   }
 
   togglePlayer() {
@@ -103,7 +111,7 @@ export class ReproductorService {
       this.player.pause();
     }
     else {
-      this.player.play();
+      this.player.play();   
     }
     this.isPlaying = !this.isPlaying;
   }
@@ -130,7 +138,7 @@ export class ReproductorService {
       this.start(this.playlist[index - 1]);
     }
     else {
-      console.log("Poniendo canción " + (this.playlist.length - 1));
+      console.log("Poniendo canciónN " + (this.playlist.length - 1));
       console.log("Se titula: " + this.playlist[this.playlist.length - 1].nombre);
       this.start(this.playlist[this.playlist.length - 1]);
     }
@@ -195,13 +203,14 @@ export class ReproductorService {
 
   // TODO: usuario
   getCancionesByGenero(genero: string) {
-    let params = new HttpParams().append('NombreGenero', genero).append('Usuario', 'pepe');
+    let user = this.auth.getUserName();
+    let params = new HttpParams().append('NombreGenero', genero).append('Usuario', user);
     //return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=' + genero + '&Usuario=pepo');
     return this.http.get(this.ROOT_URL + '/get/song/bygenre', { params });
   }
 
   getCancionesByArtista(artista: string) {
-    let params = new HttpParams().set('NombreArtista', artista);
+    let params = new HttpParams().set('NombreArtista', artista);    //TODO esto no sería append?
     // const request: string = 'https://playstack.azurewebsites.net/get/artist/albums?NombreArtista=' + artista
     return this.http.get(this.ROOT_URL + '/get/artist/albums', { params });
   }

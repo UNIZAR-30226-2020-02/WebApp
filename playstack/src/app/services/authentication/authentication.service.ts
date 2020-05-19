@@ -15,8 +15,8 @@ const TOKEN_KEY = 'auth-token';
  */
 export class AuthenticationService {
  
-  authenticationState = new BehaviorSubject(false);
-  authenticationID = new BehaviorSubject(null);
+  private authenticationState = new BehaviorSubject(false);
+  private authenticationID = new BehaviorSubject(null);
   
   constructor(private storage: Storage, private plt: Platform) { 
     this.plt.ready().then(() => {
@@ -71,6 +71,7 @@ export class AuthenticationService {
     })
   }
   */
+ /*
  async getUserName(): Promise<string>
   {
     return this.storage.get(TOKEN_KEY).then(res => {
@@ -79,10 +80,13 @@ export class AuthenticationService {
           /*if(res.toString() === this.authenticationID.value.toString()){
           console.log(this.authenticationID.value);
           console.log(res.toString());
-        }*/
+        }//
         return res;
       }
     })
+  }*/
+  getUserName(): string
+  {
+    return this.authenticationID.value.toString();
   }
-
 }
