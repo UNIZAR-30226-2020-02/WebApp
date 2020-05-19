@@ -35,6 +35,10 @@ const routes: Routes = [
       {
         path: 'playlist',
         loadChildren: () => import('../playlist/playlist.module').then(m => m.PlaylistPageModule)
+      },
+      {
+        path: 'cola-reproduccion',
+        loadChildren: () => import('../cola-reproduccion/cola-reproduccion.module').then(m => m.ColaReproduccionPageModule)
       }
     ]
   }  

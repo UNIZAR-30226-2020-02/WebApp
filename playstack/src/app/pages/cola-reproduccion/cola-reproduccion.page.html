@@ -94,7 +94,7 @@
       <ion-col>Favorita</ion-col>
     </ion-row>
 
-    <ion-row *ngFor="let track of rs.playlist; let i = index">
+    <ion-row *ngFor="let track of getNextPlaylistSongs(); let i = index">
       <ion-item button (click)="playSongPlaylist(i);" style=" width: 100%;">
         <ion-col>{{ i + 1 }}</ion-col>
 

@@ -48,6 +48,7 @@ export class ReproductorService {
   readonly ROOT_URL = 'https://playstack.azurewebsites.net';
 
   playlist: Track[] = [];
+  
   cola: Track[] = [];
 
   activeTrack: Track = null;
@@ -195,7 +196,7 @@ export class ReproductorService {
 
   // TODO: usuario
   getCancionesByGenero(genero: string) {
-    let params = new HttpParams().append('NombreGenero', genero).append('Usuario', 'pepe');
+    let params = new HttpParams().append('NombreGenero', genero).append('Usuario', 'pepo');
     //return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=' + genero + '&Usuario=pepo');
     return this.http.get(this.ROOT_URL + '/get/song/bygenre', { params });
   }
