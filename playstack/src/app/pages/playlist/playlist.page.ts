@@ -60,7 +60,7 @@ export class PlaylistPage implements OnInit {
     console.log("Poner cancion", indice);
     // Establece la lista de reproducción del reproductor como las
     // canciones que hay después de la que se pone (incluida).
-    this.rs.setPlaylist(this.playlist.tracks.slice(indice));
+    this.rs.setPlaylist(this.playlist.tracks);
     this.rs.start(this.playlist.tracks[indice]);
   }
 

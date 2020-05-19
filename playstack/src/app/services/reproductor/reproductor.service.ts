@@ -50,6 +50,7 @@ export class ReproductorService {
   readonly ROOT_URL = 'https://playstack.azurewebsites.net';
 
   playlist: Track[] = [];
+  
   cola: Track[] = [];
 
   activeTrack: Track = null;

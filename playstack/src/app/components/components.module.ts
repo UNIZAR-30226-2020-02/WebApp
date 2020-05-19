@@ -6,6 +6,7 @@ import { ReproductorComponent } from './reproductor/reproductor.component';
 import { ScrollhorizontalComponent} from './scrollhorizontal/scrollhorizontal.component';
 import { ModalPageModule } from '../pages/crear/modal/modal.module';
 
+
 @NgModule({
   declarations: [ReproductorComponent,ScrollhorizontalComponent],
   imports: [
