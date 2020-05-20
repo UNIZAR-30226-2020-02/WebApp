@@ -38,7 +38,11 @@ const routes: Routes = [
       },
       {
         path: 'cola-reproduccion',
-        loadChildren: () => import('../cola-reproduccion/cola-reproduccion.module').then(m => m.ColaReproduccionPageModule)
+        loadChildren: () => import('../cola-reproduccion/cola-reproduccion.module').then( m => m.ColaReproduccionPageModule)
+      },
+      {
+        path: 'creador-contenido',
+        loadChildren: () => import('../creador-contenido/creador-contenido.module').then( m => m.CreadorContenidoPageModule)
       }
     ]
   }  

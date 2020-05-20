@@ -26,17 +26,8 @@ const routes: Routes = [
     // canActivate: [AuthGuardService]
   },
   {
-    path: 'playlist',
-    loadChildren: () => import('./pages/playlist/playlist.module').then( m => m.PlaylistPageModule),
-    // canActivate: [AuthGuardService]
-  },
-  {
     path: 'configuration',
     loadChildren: () => import('./pages/configuration/configuration.module').then( m => m.ConfigurationPageModule)
-  },
-  {
-    path: 'cola-reproduccion',
-    loadChildren: () => import('./pages/cola-reproduccion/cola-reproduccion.module').then( m => m.ColaReproduccionPageModule)
   }
 ];
 

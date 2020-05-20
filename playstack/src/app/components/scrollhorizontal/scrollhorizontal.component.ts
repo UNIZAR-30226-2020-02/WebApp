@@ -40,6 +40,7 @@ export class ScrollhorizontalComponent implements OnInit {
         playlist: playlist
       }
     };
+    console.log(this.activatedRoute);
     this.router.navigate(['../../playlist'], navigationExtras);
   }
 }
