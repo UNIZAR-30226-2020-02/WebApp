@@ -11,12 +11,12 @@ const TOKEN_KEY = 'auth-token';
 /*
  * Este servicio almacena si el usuario está logeado,
  *  así como su nombre de usuario, para poder recuperarlo
- *  y poder hacer peticiones a BD en su nombre como playlists
+ *  y poder hacer peticiones a BD en su nombre, como playlists
  */
 export class AuthenticationService {
  
-  authenticationState = new BehaviorSubject(false);
-  authenticationID = new BehaviorSubject(null);
+  private authenticationState = new BehaviorSubject(false);
+  private authenticationID = new BehaviorSubject(null);
   
   constructor(private storage: Storage, private plt: Platform) { 
     this.plt.ready().then(() => {
@@ -38,11 +38,10 @@ export class AuthenticationService {
     this.authenticationID.next(user);
   }
  
-  logout() {
-    return this.storage.remove(TOKEN_KEY).then(() => {
-      this.authenticationState.next(false);
-      this.authenticationID.next(null);
-    });
+  async logout() {
+    await this.storage.remove(TOKEN_KEY);
+    this.authenticationState.next(false);
+    this.authenticationID.next(null);
   }
  
   isAuthenticated() {
@@ -72,14 +71,22 @@ export class AuthenticationService {
     })
   }
   */
-  getUserName(): string
+ /*
+ async getUserName(): Promise<string>
   {
-    let name: string;
-    this.storage.get(TOKEN_KEY).then(res => {
+    return this.storage.get(TOKEN_KEY).then(res => {
       if (res) {
-        name = res;
+        //Comprobación de que en los dos sitios se almacena lo mismo, por si queréis probarlo
+          /*if(res.toString() === this.authenticationID.value.toString()){
+          console.log(this.authenticationID.value);
+          console.log(res.toString());
+        }//
+        return res;
       }
     })
-    return name;
+  }*/
+  getUserName(): string
+  {
+    return this.authenticationID.value.toString();
   }
 }

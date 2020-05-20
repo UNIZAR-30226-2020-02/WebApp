@@ -26,7 +26,14 @@ export class ColaReproduccionPage implements OnInit {
   // Reproduce la canción que ha pedido el usuario y
   // avanza la playlist hasta ese punto
   playSongPlaylist(indice: number) {
-    this.rs.start(this.rs.playlist[indice]);
-    this.rs.playlist.splice(0, indice + 1);
+    this.rs.start(this.getNextPlaylistSongs()[indice]);
   }
+
+  getNextPlaylistSongs() {
+    let indiceActual: number = this.rs.playlist.indexOf(this.rs.activeTrack);
+    let nextSongs = this.rs.playlist.slice(indiceActual + 1);
+    console.log("Reproduciendo cancion", indiceActual);
+    return nextSongs;
+  }
+  
 }

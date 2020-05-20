@@ -13,8 +13,8 @@ import { ModalPage } from './modal.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ModalPageRoutingModule
+    //ModalPageRoutingModule
   ],
-  declarations: [ModalPage]
+  //declarations: [ModalPage]
 })
 export class ModalPageModule {}
