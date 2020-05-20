@@ -1,3 +1,6 @@
+import { SplitPanePageModule } from './../../pages/split-pane/split-pane.module';
+import { SplitPanePage } from './../../pages/split-pane/split-pane.page';
+import { SplitPanePageRouterModule } from './../../pages/split-pane/split-pane.routing';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ColaReproduccionPageRoutingModule } from './../../pages/cola-reproduccion/cola-reproduccion-routing.module';
 import { ColaReproduccionPage } from './../../pages/cola-reproduccion/cola-reproduccion.page';
@@ -17,7 +20,7 @@ export class ReproductorComponent implements OnInit {
   @ViewChild('range', {static: false}) range: IonRange;
 
 
-  constructor(public rs: ReproductorService, public router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(public rs: ReproductorService, public router: Router, private activatedRoute: ActivatedRoute, private sp: SplitPanePage) { }
   
   seek()
   {
@@ -31,14 +34,8 @@ export class ReproductorComponent implements OnInit {
 
   abrirColaReproduccion() {
     console.log("Abrir cola");
-    // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
     
-    let navigationExtras: NavigationExtras = {
-      relativeTo: this.activatedRoute
-    };
-    console.log(this.activatedRoute);
-    this.router.navigate(['../../cola-reproduccion']), navigationExtras;
+    this.sp.open('/app/cola-reproduccion');
   }
   ngOnInit() {}
-
 }

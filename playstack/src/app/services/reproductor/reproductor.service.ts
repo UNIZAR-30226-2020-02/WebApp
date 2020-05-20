@@ -7,6 +7,7 @@ import { KeyValuePipe, KeyValue } from '@angular/common';
 import { stringify } from 'querystring';
 import { NumericValueAccessor } from '@ionic/angular';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { BrowserStack } from 'protractor/built/driverProviders';
 
 export interface Track {
   nombre: string;
@@ -170,6 +171,7 @@ export class ReproductorService {
     return this.generos;
   }
 
+  /*
   artistas: Playlist[] = [{ tipo: "Artista", esPrivada: false, nombre: "Macklemore", cover: "assets/artistas/macklemore.jpg", tracks: [] },
   { tipo: "Artista", esPrivada: false, nombre: "Eminem", cover: "assets/artistas/eminem.jpg", tracks: [] },
   { tipo: "Artista", esPrivada: false, nombre: "Da tweekaz", cover: "assets/artistas/datweekaz.jpg", tracks: [] },
@@ -177,6 +179,7 @@ export class ReproductorService {
   getArtistas() {
     return this.artistas;
   }
+  */
 
   constructTrack(cancion: any) {
     let track = {
@@ -206,16 +209,28 @@ export class ReproductorService {
   // TODO: usuario
   getCancionesByGenero(genero: string) {
     let user = this.auth.getUserName();
-    let params = new HttpParams().append('NombreGenero', genero).append('Usuario', user);
-    //return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=' + genero + '&Usuario=pepo');
+    let params = new HttpParams().set('NombreGenero', genero).append('Usuario', user);
     return this.http.get(this.ROOT_URL + '/get/song/bygenre', { params });
   }
 
   getCancionesByArtista(artista: string) {
-    let params = new HttpParams().set('NombreArtista', artista);    //TODO esto no sería append?
-    // const request: string = 'https://playstack.azurewebsites.net/get/artist/albums?NombreArtista=' + artista
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreArtista', artista);
     return this.http.get(this.ROOT_URL + '/get/artist/albums', { params });
   }
+
+  getCancionesByAlbum(album: string) {
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreUsuario', user).append('NombreAlbum', album);
+    return this.http.get(this.ROOT_URL + '/get/song/bygenre', { params });
+  }
+
+  getCancionesByPlaylist(playlist: string) {
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreUsuario', user).append('NombrePlayList', playlist);
+    return this.http.get(this.ROOT_URL + '/get/playlist/songs', { params });
+  }
+
 
   // TODO arreglar todo esto
   recuperarTracks(playlist: Playlist): any {
@@ -233,14 +248,33 @@ export class ReproductorService {
         break;
       }
       case "Album": {
-        // TODO
+        canciones = this.getCancionesByAlbum(playlist.nombre);
+        break;
       }
       case "Playlist": {
-        // TODO
+        canciones = this.getCancionesByPlaylist(playlist.nombre);
+        break;
       }
     }
 
     return canciones;
 
   }
+
+  getUserPlaylists() {
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreUsuario', user);
+    console.log("Recuperar playlists", user, params);
+    return this.http.get(this.ROOT_URL + '/get/playlists', { params });
+  }
+
+  getArtistas() {
+    return this.http.get(this.ROOT_URL + '/get/allartists');
+  }
+
+  getRandomAbums() {
+    return this.http.get(this.ROOT_URL + '/get/randomalbums');
+  }
+
+
 }
