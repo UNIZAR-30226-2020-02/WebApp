@@ -55,7 +55,28 @@
           <ion-col>Fecha</ion-col>
         </ion-row>
         <ion-row *ngFor="let playlist of playlists | async | keyvalue" style="margin: 20px; align-items: center;">
-          <img src="{{ playlist.value[0] }}" style="width: 50px; height: 50px; border-radius: 5px; margin: 10px;" />
+          <ion-col *ngIf="playlist.value.Fotos.length == 0">
+            <div class="img-playlist">
+              <img src="../../../assets/albumes/defaultCover.png" />
+            </div>
+          </ion-col>
+          <ion-col *ngIf="playlist.value.Fotos.length < 4">
+            <div class="img-playlist">
+              <img src="{{ playlist.value.Fotos[0] }}" />
+            </div>
+          </ion-col>
+          <ion-col *ngIf="playlist.value.Fotos.length >= 4">
+            <div class="img-playlist">
+              <span>
+                <img src="{{ playlist.value.Fotos[0] }}" />
+                <img src="{{ playlist.value.Fotos[1] }}" />
+              </span>
+              <span>
+                <img src="{{ playlist.value.Fotos[2] }}" />
+                <img src="{{ playlist.value.Fotos[3] }}" />
+              </span>
+            </div>
+          </ion-col>
           <ion-col>{{ playlist.key }}</ion-col>
           <!--
           <ion-col>{{ playlist.value.duracion }}</ion-col>
@@ -69,12 +90,12 @@
 
     <ion-content *ngIf="currentTabMusica == 'Artistas'">
       <ion-grid>
-        <ion-row *ngFor="let artista of listado | async | keyvalue">
+        <ion-row *ngFor="let artista of artistas | async | keyvalue">
           <ion-col>
-            <!-- FALTA POR HACER<img src="{{ artista.value.imagen }}"/> -->
+            <img src="{{ artista.value }}" class="img-artista"/>
           </ion-col>
           <ion-col>
-            <!-- FALTA POR HACER {{ artista.key }} -->
+            {{ artista.key }}
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -82,18 +103,16 @@
 
     <ion-content *ngIf="currentTabMusica == 'Albumes'">
       <ion-grid>
-        <ion-row style="font-size: large;">
+        <ion-row>
           <ion-col>Nombre</ion-col>
           <ion-col>Artista</ion-col>
           <ion-col>Duración</ion-col>
           <ion-col>Fecha</ion-col>
         </ion-row>
-        <ion-row *ngFor="let cancion of listado | async | keyvalue"
-          (click)="rs.start(rs.constructTrack(cancion)); rs.addToPlaylistObservable(listado)">
+        <ion-row *ngFor="let album of albumes | async | keyvalue">
           <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
-          <img src="{{ cancion.value[0] }}" />
-          <ion-col>{{ cancion.key }}</ion-col>
-          <ion-col>{{ cancion.value.Artistas }}</ion-col>
+          <ion-col><img src="{{ album.value }}" class="img-album"/></ion-col>
+          <ion-col>{{ album.key }}</ion-col>
           <!-- Falta la duracion en el servicio <ion-col>{{ cancion.value.duracion}}</ion-col>-->
           <!-- Falta la fecha en el servicio <ion-col>{{ cancion.value.fecha}}</ion-col>-->
         </ion-row>

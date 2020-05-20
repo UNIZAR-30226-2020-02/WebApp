@@ -15,12 +15,14 @@ export class BibliotecaPage implements OnInit {
   currentTab: string;
   currentTabMusica: string;
   currentTabPodcasts: string;
-  listado: Observable<any>;
+  
+  playlists: Observable<any>;
+  artistas: Observable<any>;
+  albumes: Observable<any>;
+
 
   constructor(public rs: ReproductorService, public http: HttpClient, private modalController: ModalController) {
   }
-
-  playlists: Observable<any>;
 
   ngOnInit() {
     this.currentTab = "Musica";
@@ -40,15 +42,21 @@ export class BibliotecaPage implements OnInit {
     this.currentTabMusica = "Playlists";
 
     // Recuperar las playlists
-    this.playlists = this.http.get('https://playstack.azurewebsites.net/get/playlists?NombreUsuario=Rodolfo');
+    this.playlists = this.rs.getUserPlaylists();
   }
 
   setArtistas() {
     this.currentTabMusica = "Artistas";
+
+    // Recuperar artistas
+    this.artistas = this.rs.getArtistas();
   }
 
   setAlbumes() {
     this.currentTabMusica = "Albumes";
+
+    // Recuperar albumes
+    this.albumes = this.rs.getRandomAbums();
   }
 
   setEpisodios() {
