@@ -3,6 +3,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { HttpClient } from '@angular/common/http';
 
 import { ReproductorService } from '../../services/reproductor/reproductor.service';
+import { UserInfoService } from 'src/app/services/user-info/user-info.service';
 
 
 
@@ -11,9 +12,10 @@ import { ReproductorService } from '../../services/reproductor/reproductor.servi
   templateUrl: './configuration.page.html',
   styleUrls: ['./configuration.page.scss'],
 })
+
 export class ConfigurationPage implements OnInit {
 
-  constructor(private auth: AuthenticationService, private http: HttpClient) { }
+  constructor(private auth: AuthenticationService, private info : UserInfoService) { }
 
   nombreUsuario: string;
   correoUsuario: string;
@@ -24,7 +26,6 @@ export class ConfigurationPage implements OnInit {
   passwordConfirmToggleIcon: string = 'eye';
 
   mensajeCambioDatos: string = "";
-  mensajeCambioContrasena: string = "";
 
   nuevoCorreo: string;
   nuevoNombreUsuario: string;
@@ -32,14 +33,17 @@ export class ConfigurationPage implements OnInit {
   nuevaPasswdConfirm: string;
 
 
-  async ngOnInit() {
+  ngOnInit() {
     console.log("Entrado");
     // Obtener nombre de usuario desde el módulo de autenticación
-    this.nombreUsuario = await this.auth.getUserName();
+    this.nombreUsuario = this.auth.getUserName();
 
     // Obtener correo del usuario desde la BD
-    this.http.get("https://playstack.azurewebsites.net/user/get/info?NombreUsuario=" + this.nombreUsuario).subscribe(value => {
+    let wasd = this.info.getUserInfo(this.nombreUsuario);
+    console.log("MATADME POR FAVOR");
+    wasd.subscribe(value => {
       this.correoUsuario = value["Correo"];
+      console.log(this.correoUsuario);
     });
   }
 
@@ -86,71 +90,44 @@ export class ConfigurationPage implements OnInit {
     }
   }
 
-
   async cambiarDatos() {
-    this.mensajeCambioDatos = "";
-    if (!this.nuevoNombreUsuario == null) {
-      this.mensajeCambioDatos = "El nombre de usuario está vacío";
+    let parValidos : Boolean;
+    if(this.nuevoNombreUsuario == null && this.nuevoCorreo == null)
+    {
+      this.mensajeCambioDatos = "Por favor, introduce alguno de los campos que quieras actualizar";
+      parValidos = false;
     }
-    else if (!this.checkCorreo(this.nuevoCorreo)) {
-      this.mensajeCambioDatos = "La dirección de correo introducida no es válida";
-    }
-    else {
-      console.log("Los datos son correctos, ahora hay que cambiarlos en la BD");
-    }
-    /*
-    let regExpValida = this.checkParams(this.usuario.correo, this.usuario.nombre, this.usuario.passwd, this.usuario.passwdConfirm);
-    switch (regExpValida) {
-      case 0:
+    else
+    {
+      parValidos = true;
+      if (this.nuevoNombreUsuario == null) {
+        this.nuevoNombreUsuario = this.nombreUsuario;
+      }
+      else if(this.nuevoCorreo == null)
+      {
+        this.nuevoCorreo = this.correoUsuario;
+      }
+      if (!this.checkCorreo(this.nuevoCorreo)) 
+      {
+        this.mensajeCambioDatos = "La dirección de correo introducida no es válida";
+        parValidos = false;
+      }
+      else if(this.checkPasswd(this.nuevaPasswd, this.nuevaPasswdConfirm))
+      {
+        this.mensajeCambioDatos = "Las contraseñas que has introducido no coinciden";
+        parValidos = false;
+      }
+      else
+      {
+        if(parValidos)
         {
-          let resp: number = await this.register.hacerRegisterUsuario(this.usuario.nombre, this.usuario.passwd, this.usuario.correo);
-          switch (resp) {
-            case 201: { await this.auth.login(this.usuario.nombre); this.open("app"); break; }
-            case 400: { this.mensajeFormulario = 'El usuario ya existe'; break; }
-            case 406: { this.mensajeFormulario = 'Error en la petición a la BD'; break; }
-            default: { this.mensajeFormulario = 'Error inesperado durante el proceso'; break; }
-          }
-          break;
+          let resp = await this.info.updateUserInfo(this.nombreUsuario, this.nuevoNombreUsuario, this.nuevoCorreo, this.nuevaPasswd);
+          console.log("Datos cambiados, o eso creo");
+          //switch(resp);
         }
-      case 1: { this.mensajeFormulario = 'Las contraseñas no coinciden'; break; }
-      case 2: { this.mensajeFormulario = 'La dirección de correo introducida no es válida'; break; }
-      case 3: { this.mensajeFormulario = 'La contraseña debe tener como mínimo 8 caracteres de longitud'; break; }
-      default: { this.mensajeFormulario = 'Los campos introducidos no son válidos'; break; }
+      }
     }
-    */
   }
-
-  async cambiarPasswd() {
-    this.mensajeCambioContrasena = "";
-    switch(this.checkPasswd(this.nuevaPasswd, this.nuevaPasswdConfirm)) {
-      case 0: { console.log("Las contraseñas son correctas y coinciden, ahora habría que actualizarlo en la BD"); break; }
-      case 1: { this.mensajeCambioContrasena = "La contraseña debe tener como mínimo 8 caracteres de longitud"; break; };
-      case 2: { this.mensajeCambioContrasena = "Las contraseñas no coinciden"; break; };
-    }
-
-    /*
-    let regExpValida = this.checkParams(this.usuario.correo, this.usuario.nombre, this.usuario.passwd, this.usuario.passwdConfirm);
-    switch (regExpValida) {
-      case 0:
-        {
-          let resp: number = await this.register.hacerRegisterUsuario(this.usuario.nombre, this.usuario.passwd, this.usuario.correo);
-          switch (resp) {
-            case 201: { await this.auth.login(this.usuario.nombre); this.open("app"); break; }
-            case 400: { this.mensajeFormulario = 'El usuario ya existe'; break; }
-            case 406: { this.mensajeFormulario = 'Error en la petición a la BD'; break; }
-            default: { this.mensajeFormulario = 'Error inesperado durante el proceso'; break; }
-          }
-          break;
-        }
-      case 1: { this.mensajeFormulario = 'Las contraseñas no coinciden'; break; }
-      case 2: { this.mensajeFormulario = 'La dirección de correo introducida no es válida'; break; }
-      case 3: { this.mensajeFormulario = 'La contraseña debe tener como mínimo 8 caracteres de longitud'; break; }
-      default: { this.mensajeFormulario = 'Los campos introducidos no son válidos'; break; }
-    }
-    */
-  }
-
-
 
   actualizar() {
     console.log("Actualizar datos")
@@ -167,7 +144,51 @@ export class ConfigurationPage implements OnInit {
 
   ionViewDidLeave() {
     this.mensajeCambioDatos = "";
-    this.mensajeCambioContrasena = "";
   }
+
+    /*
+    let regExpValida = this.checkParams(this.usuario.correo, this.usuario.nombre, this.usuario.passwd, this.usuario.passwdConfirm);
+    switch (regExpValida) {
+      case 0:
+        {
+          let resp: number = await this.register.hacerRegisterUsuario(this.usuario.nombre, this.usuario.passwd, this.usuario.correo);
+          switch (resp) {
+            case 201: { await this.auth.login(this.usuario.nombre); this.open("app"); break; }
+            case 400: { this.mensajeFormulario = 'El usuario ya existe'; break; }
+            case 406: { this.mensajeFormulario = 'Error en la petición a la BD'; break; }
+            default: { this.mensajeFormulario = 'Error inesperado durante el proceso'; break; }
+          }
+          break;
+        }
+      case 1: { this.mensajeFormulario = 'Las contraseñas no coinciden'; break; }
+      case 2: { this.mensajeFormulario = 'La dirección de correo introducida no es válida'; break; }
+      case 3: { this.mensajeFormulario = 'La contraseña debe tener como mínimo 8 caracteres de longitud'; break; }
+      default: { this.mensajeFormulario = 'Los campos introducidos no son válidos'; break; }
+    }
+    
+  }*/
+
+
+    /*
+    let regExpValida = this.checkParams(this.usuario.correo, this.usuario.nombre, this.usuario.passwd, this.usuario.passwdConfirm);
+    switch (regExpValida) {
+      case 0:
+        {
+          let resp: number = await this.register.hacerRegisterUsuario(this.usuario.nombre, this.usuario.passwd, this.usuario.correo);
+          switch (resp) {
+            case 201: { await this.auth.login(this.usuario.nombre); this.open("app"); break; }
+            case 400: { this.mensajeFormulario = 'El usuario ya existe'; break; }
+            case 406: { this.mensajeFormulario = 'Error en la petición a la BD'; break; }
+            default: { this.mensajeFormulario = 'Error inesperado durante el proceso'; break; }
+          }
+          break;
+        }
+      case 1: { this.mensajeFormulario = 'Las contraseñas no coinciden'; break; }
+      case 2: { this.mensajeFormulario = 'La dirección de correo introducida no es válida'; break; }
+      case 3: { this.mensajeFormulario = 'La contraseña debe tener como mínimo 8 caracteres de longitud'; break; }
+      default: { this.mensajeFormulario = 'Los campos introducidos no son válidos'; break; }
+    }
+    
+  }*/
 
 }
