@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ColaReproduccionPageRoutingModule } from './../../pages/cola-reproduccion/cola-reproduccion-routing.module';
 import { ColaReproduccionPage } from './../../pages/cola-reproduccion/cola-reproduccion.page';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -21,7 +21,7 @@ export class ReproductorComponent implements OnInit {
   @ViewChild('range', {static: false}) range: IonRange;
 
 
-  constructor(public rs: ReproductorService, public router: Router) { }
+  constructor(public rs: ReproductorService, public router: Router, private activatedRoute: ActivatedRoute) { }
   
   seek()
   {
@@ -33,9 +33,14 @@ export class ReproductorComponent implements OnInit {
 
   abrirColaReproduccion() {
     console.log("Abrir cola");
-    this.router.navigate(['/cola-reproduccion']);
+    // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
+    
+    let navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute
+    };
+    console.log(this.activatedRoute);
+    this.router.navigate(['../../cola-reproduccion']), navigationExtras;
   }
-
   ngOnInit() {}
 
 }
