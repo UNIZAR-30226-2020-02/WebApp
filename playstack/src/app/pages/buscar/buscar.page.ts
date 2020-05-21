@@ -85,15 +85,15 @@ export class BuscarPage implements OnInit {
         console.log("playlists", this.isEmpty(res.PlayLists));
         console.log("albumes", res.Albumes);
         console.log("albumes", res.Albumes === {});
-        this.isEmpty(res.Canciones) ? this.errorCanciones = true : this.canciones = res.Canciones;
+        this.isEmpty(res.Canciones) ? this.errorCanciones = true : ( this.canciones = res.Canciones, this.errorCanciones = false )
         this.buscandoCanciones = false;
-        this.isEmpty(res.PlayLists) ? this.errorPlaylists = true : this.playlists = res.PlayLists;
+        this.isEmpty(res.PlayLists) ? this.errorPlaylists = true : ( this.playlists = res.PlayLists, this.errorPlaylists = false )
         this.buscandoPlaylists = false;
-        this.isEmpty(res.Albumes) ? this.errorAlbumes = true : this.albumes = res.Albumes;
+        this.isEmpty(res.Albumes) ? this.errorAlbumes = true : ( this.albumes = res.Albumes, this.errorAlbumes = false )
         this.buscandoAlbumes = false;
-        this.isEmpty(res.Podcasts) ? this.errorPodcasts = true : this.podcasts = res.Podcasts;
-        this.buscandoPodcasts = false;
-        this.isEmpty(res.Usuarios) ? this.errorUsuarios = true : this.usuarios = res.Usuarios;
+        this.isEmpty(res.Podcasts) ? this.errorPodcasts = true : ( this.podcasts = res.Podcasts, this.errorPodcasts = false )
+        this.buscandoPodcasts = false; 
+        this.isEmpty(res.Usuarios) ? this.errorUsuarios = true : ( this.usuarios = res.Usuarios, this.errorUsuarios = false )
         this.buscandoUsuarios = false;
       }
     )
