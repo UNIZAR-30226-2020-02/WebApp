@@ -7,6 +7,7 @@ import { KeyValuePipe, KeyValue } from '@angular/common';
 import { stringify } from 'querystring';
 import { NumericValueAccessor } from '@ionic/angular';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { BrowserStack } from 'protractor/built/driverProviders';
 
 export interface Track {
   nombre: string;
@@ -28,19 +29,13 @@ export interface Playlist {
   tipo: string;
   esPrivada: boolean;
   nombre: string;
-  cover: string;
+  covers: string[];
   tracks: Track[];
 }
 
 export interface ColaReproduccion {
   tracks: Track[];
 }
-
-export interface Genero {
-  nombre: string;
-  cover: string;
-}
-
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +45,7 @@ export class ReproductorService {
   readonly ROOT_URL = 'https://playstack.azurewebsites.net';
 
   playlist: Track[] = [];
-  
+
   cola: Track[] = [];
 
   activeTrack: Track = null;
@@ -60,10 +55,9 @@ export class ReproductorService {
   duracion: Number;
   idCancion: Number;
 
-  constructor(private http: HttpClient, private auth : AuthenticationService) { }
+  constructor(private http: HttpClient, private auth: AuthenticationService) { }
 
-  getDuration(): number
-  {
+  getDuration(): number {
     return this.player.duration();
   }
 
@@ -105,7 +99,7 @@ export class ReproductorService {
       }
     });
     console.log("Play: poniendo en marcha " + this.activeTrack.nombre);
-    this.player.play();    
+    this.player.play();
   }
 
   togglePlayer() {
@@ -113,7 +107,7 @@ export class ReproductorService {
       this.player.pause();
     }
     else {
-      this.player.play();   
+      this.player.play();
     }
     this.isPlaying = !this.isPlaying;
   }
@@ -162,14 +156,15 @@ export class ReproductorService {
 
   /* Búsqueda y construcción de listas de reproducción */
 
-  generos: Playlist[] = [{ tipo: "Genero", esPrivada: false, nombre: "Rap", cover: "assets/albumes/RapGenre.png", tracks: [] },
-  { tipo: "Genero", esPrivada: false, nombre: "Techno", cover: "assets/albumes/TechnoGenre.png", tracks: [] },
-  { tipo: "Genero", esPrivada: false, nombre: "Latin", cover: "assets/albumes/LatinGenre.png", tracks: [] },
-  { tipo: "Genero", esPrivada: false, nombre: "Pop", cover: "assets/albumes/PopGenre.png", tracks: [] }];
+  generos: Playlist[] = [{ tipo: "Genero", esPrivada: false, nombre: "Rap", covers: ["assets/albumes/RapGenre.png"], tracks: [] },
+  { tipo: "Genero", esPrivada: false, nombre: "Techno", covers: ["assets/albumes/TechnoGenre.png"], tracks: [] },
+  { tipo: "Genero", esPrivada: false, nombre: "Latin", covers: ["assets/albumes/LatinGenre.png"], tracks: [] },
+  { tipo: "Genero", esPrivada: false, nombre: "Pop", covers: ["assets/albumes/PopGenre.png"], tracks: [] }];
   getGeneros() {
     return this.generos;
   }
 
+  /*
   artistas: Playlist[] = [{ tipo: "Artista", esPrivada: false, nombre: "Macklemore", cover: "assets/artistas/macklemore.jpg", tracks: [] },
   { tipo: "Artista", esPrivada: false, nombre: "Eminem", cover: "assets/artistas/eminem.jpg", tracks: [] },
   { tipo: "Artista", esPrivada: false, nombre: "Da tweekaz", cover: "assets/artistas/datweekaz.jpg", tracks: [] },
@@ -177,9 +172,10 @@ export class ReproductorService {
   getArtistas() {
     return this.artistas;
   }
+  */
 
   constructTrack(cancion: any) {
-    let track = {
+    let track: Track = {
       nombre: cancion.key,
       artistas: cancion.value.Artistas,
       albumes: cancion.value.Albumes,
@@ -192,7 +188,7 @@ export class ReproductorService {
   }
 
   constructTrack2(key: string, value: any) {
-    let track = {
+    let track: Track = {
       nombre: key,
       artistas: value.Artistas,
       albumes: value.Albumes,
@@ -203,19 +199,42 @@ export class ReproductorService {
     return track;
   }
 
+  constructPlaylist(tipo: string, esPrivada: boolean, nombre: string, covers: string[], tracks: Track[]) {
+    let playlist: Playlist = {
+      tipo: tipo,
+      esPrivada: esPrivada,
+      nombre: nombre,
+      covers: covers,
+      tracks: tracks
+    };
+    return playlist;
+  }
+
   // TODO: usuario
   getCancionesByGenero(genero: string) {
     let user = this.auth.getUserName();
-    let params = new HttpParams().append('NombreGenero', genero).append('Usuario', user);
-    //return this.http.get('https://playstack.azurewebsites.net/get/song/bygenre?NombreGenero=' + genero + '&Usuario=pepo');
+    let params = new HttpParams().set('NombreGenero', genero).append('Usuario', user);
     return this.http.get(this.ROOT_URL + '/get/song/bygenre', { params });
   }
 
   getCancionesByArtista(artista: string) {
-    let params = new HttpParams().set('NombreArtista', artista);    //TODO esto no sería append?
-    // const request: string = 'https://playstack.azurewebsites.net/get/artist/albums?NombreArtista=' + artista
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreArtista', artista);
     return this.http.get(this.ROOT_URL + '/get/artist/albums', { params });
   }
+
+  getCancionesByAlbum(album: string) {
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreUsuario', user).append('NombreAlbum', album);
+    return this.http.get(this.ROOT_URL + '/get/song/byalbum', { params });
+  }
+
+  getCancionesByPlaylist(playlist: string) {
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreUsuario', user).append('NombrePlayList', playlist);
+    return this.http.get(this.ROOT_URL + '/get/playlist/songs', { params });
+  }
+
 
   // TODO arreglar todo esto
   recuperarTracks(playlist: Playlist): any {
@@ -233,14 +252,33 @@ export class ReproductorService {
         break;
       }
       case "Album": {
-        // TODO
+        canciones = this.getCancionesByAlbum(playlist.nombre);
+        break;
       }
       case "Playlist": {
-        // TODO
+        canciones = this.getCancionesByPlaylist(playlist.nombre);
+        break;
       }
     }
 
     return canciones;
 
   }
+
+  getUserPlaylists() {
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreUsuario', user);
+    console.log("Recuperar playlists", user, params);
+    return this.http.get(this.ROOT_URL + '/get/playlists', { params });
+  }
+
+  getArtistas() {
+    return this.http.get(this.ROOT_URL + '/get/allartists');
+  }
+
+  getRandomAbums() {
+    return this.http.get(this.ROOT_URL + '/get/randomalbums');
+  }
+
+
 }

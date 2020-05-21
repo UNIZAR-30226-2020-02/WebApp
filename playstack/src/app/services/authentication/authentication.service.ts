@@ -16,7 +16,8 @@ const TOKEN_KEY = 'auth-token';
 export class AuthenticationService {
  
   private authenticationState = new BehaviorSubject(false);
-  private authenticationID = new BehaviorSubject(null);
+  // private authenticationID = new BehaviorSubject(null);
+  private authenticationID = new BehaviorSubject("Freeman");
   
   constructor(private storage: Storage, private plt: Platform) { 
     this.plt.ready().then(() => {
