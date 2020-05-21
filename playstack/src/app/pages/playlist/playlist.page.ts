@@ -35,18 +35,26 @@ export class PlaylistPage implements OnInit {
   ngOnInit() {
     this.listaCanciones = this.rs.recuperarTracks(this.playlist);
     this.cargarCanciones();
+    console.log("playlist", this.playlist);
   }
 
   cargarCanciones() {
     this.listaCanciones.subscribe(
       canciones => {
         this.showSpinner = false;
+        if (this.isEmpty(canciones)) {
+          this.showError = true;
+        }
       },
       error => {
         this.showSpinner = false;
         this.showError = true;
       }
     );
+  }
+
+  private isEmpty(obj) {
+    return Object.keys(obj).length === 0;
   }
 
   addSong(cancion: any, indice: number) {

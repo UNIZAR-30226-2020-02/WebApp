@@ -114,6 +114,19 @@ export class BibliotecaPage implements OnInit {
     this.router.navigate(['../../playlist'], navigationExtras);
   }
 
+  openFavoritas(nombre: string, esPrivada: boolean, covers: string[]) {
+    let playlist = this.rs.constructPlaylist("Favoritas", esPrivada, nombre, covers, []);
+    // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
+    let navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute,
+      state: {
+        playlist: playlist
+      }
+    };
+    console.log(this.activatedRoute);
+    this.router.navigate(['../../playlist'], navigationExtras);
+  }
+
   /*
   openArtist() {
     console.log("Abrir playlist: ", playlist.tipo, playlist.esPrivada, playlist.nombre);
