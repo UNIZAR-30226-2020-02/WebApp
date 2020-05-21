@@ -28,6 +28,10 @@ const routes: Routes = [
   {
     path: 'configuration',
     loadChildren: () => import('./pages/configuration/configuration.module').then( m => m.ConfigurationPageModule)
+  },
+  {
+    path: 'social',
+    loadChildren: () => import('./pages/social/social.module').then( m => m.SocialPageModule)
   }
 
 ];

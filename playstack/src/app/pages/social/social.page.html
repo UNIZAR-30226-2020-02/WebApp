@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Social</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-toolbar>
+    <ion-segment color="light" [value]="currentTab">
+      <ion-segment-button value="Siguiendo" (click)="setSiguiendo()">
+        Siguiendo
+      </ion-segment-button>
+      <ion-segment-button value="Seguidores" (click)="setSeguidores()">
+        Seguidores
+      </ion-segment-button>
+      <ion-segment-button value="Solicitudes" (click)="setSolicitudes()">
+        Solicitudes
+      </ion-segment-button>
+      <ion-segment-button layout="icon-start" value="Buscar" (click)="setBuscar()">
+        <ion-icon item-start name="search" style="padding-right: 10px;"></ion-icon>
+        Buscar usuarios
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div *ngIf="currentTab == 'Siguiendo'" class="list-container">
+    <!-- Si la lista de pokemon tiene longitud 0, mostramos un esqueleto de los resultados -->
+    <ion-list *ngIf="siguiendo.length == 0">
+      <ion-item *ngFor="let siguiendo of [1,2,3,4,5]">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label class="ion-text-capitalize">
+          <h2>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h2>
+          <p>
+            <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <!--
+      <ion-list>
+        routerLink concatena el valor a nuestra url. En las reglas de routing hemos definido
+         que la página de detalles está en home/:index, así que cargaremos la página de detalles
+
+        <ion-item *ngFor="let usuario of siguiendo;" [routerLink]="usuario.nombre">
+          <ion-avatar slot="start">
+            <img [src]="usuario.imagen" style="background: #f2f2f2;">
+          </ion-avatar>
+          <ion-label class="ion-text-capitalize">
+            <h2>{{ usuario.nombre }}</h2>
+            <p>{{ usuario.info }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    -->
+  </div>
+
+  <div *ngIf="currentTab == 'Seguidores'" class="list-container">
+    <!-- Si la lista de pokemon tiene longitud 0, mostramos un esqueleto de los resultados -->
+    <ion-list *ngIf="siguiendo.length == 0">
+      <ion-item *ngFor="let siguiendo of [1,2,3,4,5]">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label class="ion-text-capitalize">
+          <h2>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h2>
+          <p>
+            <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="currentTab == 'Solicitudes'" class="list-container">
+    <!-- Si la lista de pokemon tiene longitud 0, mostramos un esqueleto de los resultados -->
+    <ion-list *ngIf="siguiendo.length == 0">
+      <ion-item *ngFor="let siguiendo of [1,2,3,4,5]">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label class="ion-text-capitalize">
+          <h2>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h2>
+          <p>
+            <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+          </p>
+        </ion-label>
+        <h2 slot="end"><ion-skeleton-text animated style="width: 100px; height: 20px;"></ion-skeleton-text></h2>
+        <!-- <ion-button class="boton-seguir">Aceptar</ion-button> -->
+      </ion-item>
+    </ion-list>
+  </div>
+
+
+</ion-content>

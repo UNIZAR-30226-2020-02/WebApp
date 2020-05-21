@@ -57,10 +57,6 @@
           <ion-col>Duración</ion-col>
           <ion-col>Fecha</ion-col>
         </ion-row>
-        <div expand="full">
-          <ion-spinner *ngIf="showSpinner"></ion-spinner>
-          <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
-        </div>
         <ion-row style="margin: 20px; align-items: center;">
           <ion-item button (click)="openFavoritas('Favoritas', false, ['../../../assets/albumes/Favs_cover.jpg'])" cass="item-playlist">
           <ion-col>
@@ -71,6 +67,10 @@
           <ion-col>Favoritas</ion-col>
         </ion-item>
         </ion-row>
+        <div expand="full">
+          <ion-spinner *ngIf="showSpinner"></ion-spinner>
+          <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
+        </div>
         <ion-row *ngFor="let playlist of playlists | async | keyvalue" style="margin: 20px; align-items: center;">
           <ion-item button (click)="openPlaylist(playlist.key, playlist.value.Privado, playlist.value.Fotos)"
             class="item-playlist">

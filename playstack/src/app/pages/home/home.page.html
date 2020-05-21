@@ -8,13 +8,13 @@
 
 
 <ion-content>
-  <div expand="full">
+  <div class="div-horizontal-scroll">
     <h1>Generos</h1>
     <ion-spinner *ngIf="showSpinner1"></ion-spinner>
     <app-scrollhorizontal [listaPlaylists]="rs.getGeneros()"></app-scrollhorizontal>
   </div>
 
-  <div expand="full">
+  <div class="div-horizontal-scroll">
     <h1>Artistas</h1>
     <ion-spinner *ngIf="showSpinner2"></ion-spinner>
     <app-scrollhorizontal [listaPlaylists]="rs.getArtistasHome()"></app-scrollhorizontal>

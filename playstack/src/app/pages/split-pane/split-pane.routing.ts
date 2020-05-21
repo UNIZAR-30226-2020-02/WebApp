@@ -47,6 +47,10 @@ const routes: Routes = [
       {
         path: 'perfil',
         loadChildren: () => import('../perfil/perfil.module').then( m => m.PerfilPageModule)
+      },
+      {
+        path: 'social',
+        loadChildren: () => import('../social/social.module').then( m => m.SocialPageModule)
       }
     ]
   }  
