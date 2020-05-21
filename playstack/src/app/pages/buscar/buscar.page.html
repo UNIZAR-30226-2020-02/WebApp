@@ -2,52 +2,111 @@
   <ion-toolbar>
     <ion-title>Buscar</ion-title>
   </ion-toolbar>
-
-  <ion-toolbar style="padding: 20px;">
-    <ion-searchbar color="light" animated placeholder="Buscar"></ion-searchbar>
-  </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  <ion-list>
-    <ion-item>Amsterdam</ion-item>
-    <ion-item>Bogota</ion-item>
-    <ion-item>Buenos Aires</ion-item>
-    <ion-item>Cairo</ion-item>
-    <ion-item>Dhaka</ion-item>
-    <ion-item>Edinburgh</ion-item>
-    <ion-item>Geneva</ion-item>
-    <ion-item>Genoa</ion-item>
-    <ion-item>Glasgow</ion-item>
-    <ion-item>Hanoi</ion-item>
-    <ion-item>Hong Kong</ion-item>
-    <ion-item>Islamabad</ion-item>
-    <ion-item>Istanbul</ion-item>
-    <ion-item>Jakarta</ion-item>
-    <ion-item>Kiel</ion-item>
-    <ion-item>Kyoto</ion-item>
-    <ion-item>Le Havre</ion-item>
-    <ion-item>Lebanon</ion-item>
-    <ion-item>Lhasa</ion-item>
-    <ion-item>Lima</ion-item>
-    <ion-item>London</ion-item>
-    <ion-item>Los Angeles</ion-item>
-    <ion-item>Madrid</ion-item>
-    <ion-item>Manila</ion-item>
-    <ion-item>New York</ion-item>
-    <ion-item>Olympia</ion-item>
-    <ion-item>Oslo</ion-item>
-    <ion-item>Panama City</ion-item>
-    <ion-item>Peking</ion-item>
-    <ion-item>Philadelphia</ion-item>
-    <ion-item>San Francisco</ion-item>
-    <ion-item>Seoul</ion-item>
-    <ion-item>Taipeh</ion-item>
-    <ion-item>Tel Aviv</ion-item>
-    <ion-item>Tokio</ion-item>
-    <ion-item>Uelzen</ion-item>
-    <ion-item>Washington</ion-item>
-  </ion-list>
+<ion-content>
+  <ion-searchbar placeholder="Buscar en PlayStack" color="light" debounce="500" (ionChange)="onSearchChange($event)">
+  </ion-searchbar>
+
+  <ion-grid>
+    <ion-row style="font-size: large;">
+      <ion-col>Canciones</ion-col>
+      <ion-col>Playlists</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label *ngIf="buscando">No se han encontrado canciones</ion-label>
+        <ion-list>
+          <ion-row *ngFor="let cancion of canciones | async | keyvalue; let i = index;"
+            style="margin: 20px; align-items: center;">
+            <ion-col *ngIf="i <= 5">
+              <img src="{{ cancion.value.ImagenesAlbum[0] }}" style="width: 100px;" />
+            </ion-col>
+            <ion-col>
+              {{ cancion.key }}
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+      <ion-col>
+        <ion-list>
+          <ion-label *ngIf="errorPlaylists">No se han encontrado playlists</ion-label>
+          <ion-row *ngFor="let playlist of playlists | async | keyvalue; let i = index;"
+            style="margin: 20px; align-items: center;">
+            <ion-col *ngIf="i <= 5">
+              <img src="{{ playlist.value.Fotos[0] }}" style="width: 100px;" />
+            </ion-col>
+            <ion-col>
+              {{ playlist.key }}
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="font-size: large;">
+      <ion-col>Albumes</ion-col>
+      <ion-col>Podcasts</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label *ngIf="buscando">No se han encontrado albumes</ion-label>
+        <ion-list>
+          <ion-row *ngFor="let album of albumes | async | keyvalue; let i = index;"
+            style="margin: 20px; align-items: center;">
+            <ion-col *ngIf="i <= 5">
+              <img src="{{ album.value }}" style="width: 100px;" />
+            </ion-col>
+            <ion-col>
+              {{ album.key }}
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+      <ion-col>
+        <ion-list>
+          <ion-label *ngIf="errorPlaylists">No se han encontrado podcasts</ion-label>
+          <ion-row *ngFor="let podcast of podcasts | async | keyvalue; let i = index;"
+            style="margin: 20px; align-items: center;">
+            <ion-col *ngIf="i <= 5">
+              <img src="{{ podcast.value }}" style="width: 100px;" />
+            </ion-col>
+            <ion-col>
+              {{ podcast.key }}
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row style="font-size: large;">
+      <ion-col>Usuarios</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label *ngIf="buscando">No se han encontrado albumes</ion-label>
+        <ion-list>
+          <ion-row *ngFor="let usuario of usuarios | async; let i = index;"
+            style="margin: 20px; align-items: center;">
+            <ion-col *ngIf="i <= 5">
+             <!-- <img src="{{ album.value }}" style="width: 100px;" /> -->
+            </ion-col>
+            <ion-col>
+              {{ usuario }}
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <!--
+    <div expand="full">
+      <ion-spinner *ngIf="showSpinner"></ion-spinner>
+      <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
+    </div>
+    -->
+
+  </ion-grid>
 </ion-content>
 
 <ion-footer>
