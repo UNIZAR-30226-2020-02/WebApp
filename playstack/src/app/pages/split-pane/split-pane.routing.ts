@@ -43,6 +43,10 @@ const routes: Routes = [
       {
         path: 'creador-contenido',
         loadChildren: () => import('../creador-contenido/creador-contenido.module').then( m => m.CreadorContenidoPageModule)
+      },
+      {
+        path: 'perfil',
+        loadChildren: () => import('../perfil/perfil.module').then( m => m.PerfilPageModule)
       }
     ]
   }  
