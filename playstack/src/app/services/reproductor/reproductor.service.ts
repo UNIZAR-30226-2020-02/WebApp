@@ -29,19 +29,13 @@ export interface Playlist {
   tipo: string;
   esPrivada: boolean;
   nombre: string;
-  cover: string;
+  covers: string[];
   tracks: Track[];
 }
 
 export interface ColaReproduccion {
   tracks: Track[];
 }
-
-export interface Genero {
-  nombre: string;
-  cover: string;
-}
-
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +45,7 @@ export class ReproductorService {
   readonly ROOT_URL = 'https://playstack.azurewebsites.net';
 
   playlist: Track[] = [];
-  
+
   cola: Track[] = [];
 
   activeTrack: Track = null;
@@ -61,10 +55,9 @@ export class ReproductorService {
   duracion: Number;
   idCancion: Number;
 
-  constructor(private http: HttpClient, private auth : AuthenticationService) { }
+  constructor(private http: HttpClient, private auth: AuthenticationService) { }
 
-  getDuration(): number
-  {
+  getDuration(): number {
     return this.player.duration();
   }
 
@@ -106,7 +99,7 @@ export class ReproductorService {
       }
     });
     console.log("Play: poniendo en marcha " + this.activeTrack.nombre);
-    this.player.play();    
+    this.player.play();
   }
 
   togglePlayer() {
@@ -114,7 +107,7 @@ export class ReproductorService {
       this.player.pause();
     }
     else {
-      this.player.play();   
+      this.player.play();
     }
     this.isPlaying = !this.isPlaying;
   }
@@ -163,10 +156,10 @@ export class ReproductorService {
 
   /* Búsqueda y construcción de listas de reproducción */
 
-  generos: Playlist[] = [{ tipo: "Genero", esPrivada: false, nombre: "Rap", cover: "assets/albumes/RapGenre.png", tracks: [] },
-  { tipo: "Genero", esPrivada: false, nombre: "Techno", cover: "assets/albumes/TechnoGenre.png", tracks: [] },
-  { tipo: "Genero", esPrivada: false, nombre: "Latin", cover: "assets/albumes/LatinGenre.png", tracks: [] },
-  { tipo: "Genero", esPrivada: false, nombre: "Pop", cover: "assets/albumes/PopGenre.png", tracks: [] }];
+  generos: Playlist[] = [{ tipo: "Genero", esPrivada: false, nombre: "Rap", covers: ["assets/albumes/RapGenre.png"], tracks: [] },
+  { tipo: "Genero", esPrivada: false, nombre: "Techno", covers: ["assets/albumes/TechnoGenre.png"], tracks: [] },
+  { tipo: "Genero", esPrivada: false, nombre: "Latin", covers: ["assets/albumes/LatinGenre.png"], tracks: [] },
+  { tipo: "Genero", esPrivada: false, nombre: "Pop", covers: ["assets/albumes/PopGenre.png"], tracks: [] }];
   getGeneros() {
     return this.generos;
   }
@@ -182,7 +175,7 @@ export class ReproductorService {
   */
 
   constructTrack(cancion: any) {
-    let track = {
+    let track: Track = {
       nombre: cancion.key,
       artistas: cancion.value.Artistas,
       albumes: cancion.value.Albumes,
@@ -195,7 +188,7 @@ export class ReproductorService {
   }
 
   constructTrack2(key: string, value: any) {
-    let track = {
+    let track: Track = {
       nombre: key,
       artistas: value.Artistas,
       albumes: value.Albumes,
@@ -204,6 +197,17 @@ export class ReproductorService {
       esFavorita: value.EsFavorita
     };
     return track;
+  }
+
+  constructPlaylist(tipo: string, esPrivada: boolean, nombre: string, covers: string[], tracks: Track[]) {
+    let playlist: Playlist = {
+      tipo: tipo,
+      esPrivada: esPrivada,
+      nombre: nombre,
+      covers: covers,
+      tracks: tracks
+    };
+    return playlist;
   }
 
   // TODO: usuario
@@ -222,7 +226,7 @@ export class ReproductorService {
   getCancionesByAlbum(album: string) {
     let user = this.auth.getUserName();
     let params = new HttpParams().set('NombreUsuario', user).append('NombreAlbum', album);
-    return this.http.get(this.ROOT_URL + '/get/song/bygenre', { params });
+    return this.http.get(this.ROOT_URL + '/get/song/byalbum', { params });
   }
 
   getCancionesByPlaylist(playlist: string) {

@@ -1,7 +1,7 @@
 <ion-slides [options]="slideOpts">
   <ion-slide *ngFor="let playlist of listaPlaylists">
     <ion-card (click)="openPlaylist(playlist)">
-      <img src="{{ playlist.cover }}"/>
+      <img src="{{ playlist.covers[0] }}"/>
       <ion-card-header>
         <ion-label>
           {{ playlist.nombre }}
