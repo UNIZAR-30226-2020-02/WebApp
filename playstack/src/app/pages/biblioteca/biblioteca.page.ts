@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor/reproductor.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
-import { ModalController } from '@ionic/angular';
-import { ModalPage } from '../crear/modal/modal.page';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 
 
@@ -26,7 +24,7 @@ export class BibliotecaPage implements OnInit {
   mensajeError: string = "";
 
 
-  constructor(public rs: ReproductorService, public http: HttpClient, private modalController: ModalController,
+  constructor(public rs: ReproductorService, public http: HttpClient,
      private router: Router, private activatedRoute: ActivatedRoute) {
   }
 

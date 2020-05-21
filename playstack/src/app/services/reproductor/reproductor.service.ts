@@ -236,7 +236,6 @@ export class ReproductorService {
   }
 
 
-  // TODO arreglar todo esto
   recuperarTracks(playlist: Playlist): any {
     // Dependiendo del tipo de la playlist, realizar una consulta u otra para recuperar sus canciones de la BD
     let canciones: Observable<any>;
@@ -278,6 +277,12 @@ export class ReproductorService {
 
   getRandomAbums() {
     return this.http.get(this.ROOT_URL + '/get/randomalbums');
+  }
+
+  getSearch(keyword: string) {
+    let params = new HttpParams().set('KeyWord', keyword);
+    console.log("consulta busqueda", this.ROOT_URL + '/search?KeyWord=' + keyword);
+    return this.http.get(this.ROOT_URL + '/search', { params });
   }
 
 
