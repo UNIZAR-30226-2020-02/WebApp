@@ -40,7 +40,6 @@ export class ConfigurationPage implements OnInit {
 
     // Obtener correo del usuario desde la BD
     let wasd = this.info.getUserInfo(this.nombreUsuario);
-    console.log("MATADME POR FAVOR");
     wasd.subscribe(value => {
       this.correoUsuario = value["Correo"];
       console.log(this.correoUsuario);

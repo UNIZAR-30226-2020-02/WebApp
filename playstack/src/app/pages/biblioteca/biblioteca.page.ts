@@ -3,7 +3,6 @@ import { ReproductorService } from '../../services/reproductor/reproductor.servi
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 import { ModalController } from '@ionic/angular';
-import { ModalPage } from '../crear/modal/modal.page';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 
 

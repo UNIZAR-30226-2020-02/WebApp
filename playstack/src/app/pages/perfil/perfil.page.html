@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="./home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil de</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+      <ion-grid>
+        <ion-row class="ion-text-center">
+          {{ user }}
+        </ion-row>
+        <ion-row class="ion-text-center">
+          <ion-icon slot="icon-only" name="person-circle-outline" class="foto-perfil"></ion-icon>
+        </ion-row>
+        <ion-row>
+          <ion-item lines="none" style="padding: 10px;">
+            <ion-button type="submit" color="light" style="--border-radius: 15px; width: 310px;">
+              <b>Siguiendo</b>
+            </ion-button>
+          </ion-item>
+        </ion-row>
+
+        <ion-row class="ion-text-center">
+          Canciones y podcasts más escuchadas:
+        </ion-row>
+        <ion-row style="padding-bottom: 40px;"  *ngFor="let cancion of listaCanciones | async | keyvalue;">
+          <ion-col>{{ cancion.key }}</ion-col>
+          <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
+        </ion-row>
+        <ion-row class="ion-text-center">
+          Generos más escuchados
+        </ion-row>
+        <ion-row style="padding-bottom: 40px;"  *ngFor="let genero of listaGeneros | async | keyvalue;">
+          <ion-col>{{ genero.key }}</ion-col>
+        </ion-row>
+        <ion-row class="ion-text-center">
+          Ultimas canciones y podcasts escuchados:
+        </ion-row>
+        <ion-row style="padding-bottom: 40px;"  *ngFor="let cancion of lastSongs | async | keyvalue;">
+          <ion-col>{{ cancion.key }}</ion-col>
+          <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
+        </ion-row>
+      </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <app-reproductor></app-reproductor>
+  </ion-toolbar>
+</ion-footer>
