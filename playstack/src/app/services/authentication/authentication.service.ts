@@ -2,6 +2,7 @@ import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Storage } from '@ionic/storage';
+import { UserInfoService } from '../user-info/user-info.service';
 
 const TOKEN_KEY = 'auth-token';
  
@@ -16,10 +17,10 @@ const TOKEN_KEY = 'auth-token';
 export class AuthenticationService {
  
   private authenticationState = new BehaviorSubject(false);
-  // private authenticationID = new BehaviorSubject(null);
-  private authenticationID = new BehaviorSubject("Freeman");
+  private authenticationID = new BehaviorSubject(null);
+  private authenticationMail = new BehaviorSubject(null);
   
-  constructor(private storage: Storage, private plt: Platform) { 
+  constructor(private storage: Storage, private plt: Platform,private info : UserInfoService) { 
     this.plt.ready().then(() => {
       this.checkToken();
     });
@@ -34,15 +35,18 @@ export class AuthenticationService {
   }
  
   async login(user: string) {
-    await this.storage.set(TOKEN_KEY, user);
-    this.authenticationState.next(true);
-    this.authenticationID.next(user);
+    // Obtener correo del usuario desde la BD
+    let wasd = await this.info.getUserInfo(user);
+    //TODO
+    this.authenticationID.next(wasd[0]);
+    this.authenticationMail.next(wasd[1]);
   }
  
   async logout() {
     await this.storage.remove(TOKEN_KEY);
     this.authenticationState.next(false);
     this.authenticationID.next(null);
+    this.authenticationMail.next(null);
   }
  
   isAuthenticated() {
@@ -89,5 +93,10 @@ export class AuthenticationService {
   getUserName(): string
   {
     return this.authenticationID.value.toString();
+  }
+
+  getUserMail(): string
+  {
+    return this.authenticationMail.value.toString();
   }
 }

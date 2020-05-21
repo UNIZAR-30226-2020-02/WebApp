@@ -29,31 +29,25 @@
             <!-- Configuración -->
             <form ngForm (ngSubmit)="cambiarDatos()">
               <ion-item lines="none" style="padding-top: 20px; padding-left: -10px;">
-                <ion-text color="light">Cambia aquí tus datos, o deja en blanco los campos que no quieras cambiar</ion-text>
+                <ion-text color="light">Cambia aquí tu nombre de usuario, ¡es gratis!</ion-text>
               </ion-item>
               <ion-item>
                 <ion-input [(ngModel)]="nuevoNombreUsuario" name="correo" autocorrect="on"
                   autofocus="on" clearInput="true" inputmode="text" placeholder="Nuevo nombre de usuario"></ion-input>
                 <ion-icon name="person-circle-outline"></ion-icon>
               </ion-item>
-              <ion-item>
-                <ion-input [(ngModel)]="nuevoCorreo" name="nombre" clearInput="true" inputmode="text"
-                  placeholder="Nueva dirección de correo electrónico"></ion-input>
-                <ion-icon name="mail-outline"></ion-icon>
-              </ion-item>
               <ion-item lines="none" style="padding-top: 20px; padding-left: -10px;">
                 <ion-text color="light">Por favor, confírmanos que eres tú</ion-text>
               </ion-item>
               <ion-item>
-                <ion-input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="nuevaPasswd"
-                  name="passwd" clearInput="true" placeholder="Introduce tu contraseña"></ion-input>
-                <ion-icon [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
+                <ion-input [(ngModel)]="correo" name="nombre" clearInput="true" inputmode="text"
+                  placeholder="Introduce tu dirección de correo electrónico"></ion-input>
+                <ion-icon name="mail-outline"></ion-icon>
               </ion-item>
               <ion-item>
-                <ion-input [type]="showPasswordConfirm ? 'text' : 'password'"
-                  [(ngModel)]="nuevaPasswdConfirm" name="passwdConfirm" clearInput="true"
-                  placeholder="Confirmar contraseña"></ion-input>
-                <ion-icon [name]="passwordConfirmToggleIcon" (click)="togglePassword2()"></ion-icon>
+                <ion-input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="passwd"
+                  name="passwd" clearInput="true" placeholder="Introduce tu contraseña"></ion-input>
+                <ion-icon [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
               </ion-item>
               <ion-text color="danger">{{ mensajeCambioDatos }}</ion-text>
               <ion-item lines="none" class="boton-aceptar">
