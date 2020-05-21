@@ -21,29 +21,31 @@ export class ConfigurationPage implements OnInit {
   correoUsuario: string;
 
   showPassword: boolean = false;
-  showPasswordConfirm: boolean = false;
   passwordToggleIcon: string = 'eye';
   passwordConfirmToggleIcon: string = 'eye';
 
   mensajeCambioDatos: string = "";
 
-  nuevoCorreo: string;
+  correo: string;
   nuevoNombreUsuario: string;
-  nuevaPasswd: string;
-  nuevaPasswdConfirm: string;
+  passwd: string;
 
 
   ngOnInit() {
     console.log("Entrado");
     // Obtener nombre de usuario desde el módulo de autenticación
     this.nombreUsuario = this.auth.getUserName();
+    this.correoUsuario = this.auth.getUserMail();
 
-    // Obtener correo del usuario desde la BD
-    let wasd = this.info.getUserInfo(this.nombreUsuario);
-    wasd.subscribe(value => {
-      this.correoUsuario = value["Correo"];
-      console.log(this.correoUsuario);
-    });
+
+    //TODO implementar
+    //this.fotoUsuario = this.auth.getUserImage();
+    //TODO se implementa con:
+    /*
+    https://playstack.azurewebsites.net/user/get/profilephoto?Usuario=Freeman
+    Respuesta:
+    {"FotoDePerfil": "https://playstack.azurewebsites.net/media/images/image_picker_6A1AD014-925D-4A9D-940F-D14C10867A7D-8724-0000015C58F7DF06.jpg" }
+    */
   }
 
 
@@ -54,16 +56,6 @@ export class ConfigurationPage implements OnInit {
     }
     else {
       this.passwordToggleIcon = 'eye';
-    }
-  }
-
-  togglePassword2(): void {
-    this.showPasswordConfirm = !(this.showPasswordConfirm);
-    if (this.passwordConfirmToggleIcon == 'eye') {
-      this.passwordConfirmToggleIcon = 'eye-off';
-    }
-    else {
-      this.passwordConfirmToggleIcon = 'eye';
     }
   }
 
@@ -91,45 +83,42 @@ export class ConfigurationPage implements OnInit {
 
   async cambiarDatos() {
     let parValidos : Boolean;
-    if(this.nuevoNombreUsuario == null && this.nuevoCorreo == null)
+    if(this.nuevoNombreUsuario == null)
     {
-      this.mensajeCambioDatos = "Por favor, introduce alguno de los campos que quieras actualizar";
+      this.mensajeCambioDatos = "Por favor, introduce un nuevo nombre de usuario";
       parValidos = false;
     }
     else
     {
       parValidos = true;
-      if (this.nuevoNombreUsuario == null) {
-        this.nuevoNombreUsuario = this.nombreUsuario;
-      }
-      else if(this.nuevoCorreo == null)
-      {
-        this.nuevoCorreo = this.correoUsuario;
-      }
-      if (!this.checkCorreo(this.nuevoCorreo)) 
+      //let res = await this.info.getUserInfo(this.nombreUsuario);
+      console.log("CORREO USUARIO: ", this.correoUsuario);
+      let correoRecuperado = this.auth.getUserMail();
+      console.log("CORREO RECUPERADO: ", correoRecuperado);
+      if (!this.checkCorreo(this.correo) ||  !(correoRecuperado === this.correoUsuario)) 
       {
         this.mensajeCambioDatos = "La dirección de correo introducida no es válida";
-        parValidos = false;
-      }
-      else if(this.checkPasswd(this.nuevaPasswd, this.nuevaPasswdConfirm))
-      {
-        this.mensajeCambioDatos = "Las contraseñas que has introducido no coinciden";
         parValidos = false;
       }
       else
       {
         if(parValidos)
         {
-          let resp = await this.info.updateUserInfo(this.nombreUsuario, this.nuevoNombreUsuario, this.nuevoCorreo, this.nuevaPasswd);
+          let resp = await this.info.updateUserInfo(this.nombreUsuario, this.nuevoNombreUsuario, this.correo, this.passwd);
           console.log("Datos cambiados, o eso creo");
-          //switch(resp);
+          this.correo = null;
+          this.nuevoNombreUsuario = null;
+          if(resp = 201)
+          {
+            this.mensajeCambioDatos = "¡Tu perfil se ha actualizado correctamente!";
+          }
+          else
+          {
+            this.mensajeCambioDatos = "Algo salió mal, por favor, vuelve a intentarlo.";
+          }
         }
       }
     }
-  }
-
-  actualizar() {
-    console.log("Actualizar datos")
   }
 
   cambiarImagen() {
