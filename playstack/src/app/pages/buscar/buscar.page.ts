@@ -1,9 +1,11 @@
+import { Track } from './../../services/reproductor/reproductor.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor/reproductor.service';
 import { IonSearchbar, IonList, IonItem } from '@ionic/angular';
 import { FormControl } from '@angular/forms';
+import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-buscar',
@@ -12,7 +14,7 @@ import { FormControl } from '@angular/forms';
 })
 export class BuscarPage implements OnInit {
 
-  constructor(private rs:ReproductorService) { }
+  constructor(private rs:ReproductorService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   buscando: boolean;
 
@@ -61,6 +63,12 @@ export class BuscarPage implements OnInit {
 
     this.buscando = true;
 
+    this.errorCanciones = false;
+    this.errorPlaylists = false;
+    this.errorAlbumes = false;
+    this.errorPodcasts = false;
+    this.errorUsuarios = false;
+    
     this.buscandoCanciones = true;
     this.buscandoPlaylists = true;
     this.buscandoAlbumes = true;
@@ -102,4 +110,55 @@ export class BuscarPage implements OnInit {
   private isEmpty(obj) {
     return Object.keys(obj).length === 0;
   }
+
+
+
+  playTrack(key: string, value: any) {
+    let track: Track = this.rs.constructTrack2(key, value)
+    this.rs.start(track);
+  }
+
+  openPlaylist(nombre: string, esPrivada: boolean, covers: string[]) {
+    let playlist = this.rs.constructPlaylist("Playlist", esPrivada, nombre, covers, []);
+    // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
+    let navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute,
+      state: {
+        playlist: playlist
+      }
+    };
+    console.log(this.activatedRoute);
+    this.router.navigate(['../../playlist'], navigationExtras);
+  }
+
+  /*
+  openArtist() {
+    console.log("Abrir playlist: ", playlist.tipo, playlist.esPrivada, playlist.nombre);
+
+    // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
+    let navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute,
+      state: {
+        playlist: playlist
+      }
+    };
+    console.log(this.activatedRoute);
+    this.router.navigate(['../../playlist'], navigationExtras);
+  }
+  */
+
+  openAlbum(nombre: string, cover: string) {
+    let playlist = this.rs.constructPlaylist("Album", false, nombre, [cover], []);
+    // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
+    let navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute,
+      state: {
+        playlist: playlist
+      }
+    };
+    console.log(this.activatedRoute);
+    this.router.navigate(['../../playlist'], navigationExtras);
+  }
+
+  
 }
