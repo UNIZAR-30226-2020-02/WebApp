@@ -21,10 +21,12 @@ export class PerfilPage implements OnInit {
     /* FALTA las canciones, generos y ultimas canciones más escuchados en la BD */
     // Obtener correo del usuario desde la BD
     let wasd = this.info.getUserInfo(this.nombreUsuario);
-    wasd.subscribe(value => {
+    /*wasd.subscribe(value => {
       this.correoUsuario = value["Correo"];
       console.log(this.correoUsuario);
-    });
+    });*/
+    //Ahora getUserInfo devuelve un array de dos componentes, la primera es el 
+    //  nombre de usuario de la bd, y la segunda el correo recuperado de la bd
   }
 
 }
