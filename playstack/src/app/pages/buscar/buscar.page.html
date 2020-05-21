@@ -8,97 +8,236 @@
   <ion-searchbar placeholder="Buscar en PlayStack" color="light" debounce="500" (ionChange)="onSearchChange($event)">
   </ion-searchbar>
 
-  <ion-grid>
+  <ion-text *ngIf="!buscando">Puedes buscar canciones, playlists, albumes, podcasts y usuarios.</ion-text> 
+
+  <ion-grid *ngIf="buscando">
     <ion-row style="font-size: large;">
-      <ion-col>Canciones</ion-col>
-      <ion-col>Playlists</ion-col>
-    </ion-row>
-    <ion-row>
       <ion-col>
-        <ion-label *ngIf="buscando">No se han encontrado canciones</ion-label>
-        <ion-list>
-          <ion-row *ngFor="let cancion of canciones | async | keyvalue; let i = index;"
-            style="margin: 20px; align-items: center;">
-            <ion-col *ngIf="i <= 5">
-              <img src="{{ cancion.value.ImagenesAlbum[0] }}" style="width: 100px;" />
-            </ion-col>
-            <ion-col>
-              {{ cancion.key }}
-            </ion-col>
-          </ion-row>
-        </ion-list>
+        <ion-card>
+          <ion-card-title color="light">
+            Canciones
+          </ion-card-title>
+          <ion-card-content>
+            <ion-label *ngIf="errorCanciones">No se han encontrado canciones</ion-label>
+            
+            <ion-list *ngIf="buscandoCanciones">
+              <ion-item *ngFor="let item of [1,2,3,4,5]">
+                <ion-thumbnail slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-thumbnail>
+                <ion-label>
+                  <div>
+                    <h3>
+                      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                    </h3>
+                    <p>
+                      <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+                    </p>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+            <ion-list lines="inset">
+              <ion-item *ngFor="let cancion of canciones | keyvalue; let i = index;">
+                <ion-thumbnail *ngIf="i <= 5" slot="start">
+                  <img src="{{ cancion.value.ImagenesAlbum[0] }}" />
+                </ion-thumbnail>
+                <ion-label *ngIf="i <= 5">
+                  <div>
+                    <h2 style="display: inline;">{{ cancion.key }}</h2>
+                    <h3 style="display: inline; padding-left: 20px;">{{ cancion.value.Albumes.join(', ') }}</h3>
+                    <p>{{ cancion.value.Artistas.join(', ') }}</p>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+          </ion-card-content>
+        </ion-card>
       </ion-col>
       <ion-col>
-        <ion-list>
-          <ion-label *ngIf="errorPlaylists">No se han encontrado playlists</ion-label>
-          <ion-row *ngFor="let playlist of playlists | async | keyvalue; let i = index;"
-            style="margin: 20px; align-items: center;">
-            <ion-col *ngIf="i <= 5">
-              <img src="{{ playlist.value.Fotos[0] }}" style="width: 100px;" />
-            </ion-col>
-            <ion-col>
-              {{ playlist.key }}
-            </ion-col>
-          </ion-row>
-        </ion-list>
+        <ion-card>
+          <ion-card-title color="light">
+            Playlist
+          </ion-card-title>
+          <ion-card-content>
+            <ion-label *ngIf="errorPlaylists">No se han encontrado playlists</ion-label>
+
+            <ion-list *ngIf="buscandoPlaylists">
+              <ion-item *ngFor="let item of [1,2,3,4,5]">
+                <ion-thumbnail slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-thumbnail>
+                <ion-label>
+                  <div>
+                    <h3>
+                      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                    </h3>
+                    <p>
+                      <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+                    </p>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+
+            <ion-list lines="inset">
+              <ion-item *ngFor="let playlist of playlists | keyvalue; let i = index;">
+                <ion-thumbnail *ngIf="i <= 5" slot="start">
+                  <img src="{{ playlist.value.Fotos[0] }}" />
+                </ion-thumbnail>
+                <ion-label *ngIf="i <= 5">
+                  <div>
+                    <h2 style="display: inline;">{{ playlist.key }}</h2>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
 
+
+
+
     <ion-row style="font-size: large;">
-      <ion-col>Albumes</ion-col>
-      <ion-col>Podcasts</ion-col>
-    </ion-row>
-    <ion-row>
       <ion-col>
-        <ion-label *ngIf="buscando">No se han encontrado albumes</ion-label>
-        <ion-list>
-          <ion-row *ngFor="let album of albumes | async | keyvalue; let i = index;"
-            style="margin: 20px; align-items: center;">
-            <ion-col *ngIf="i <= 5">
-              <img src="{{ album.value }}" style="width: 100px;" />
-            </ion-col>
-            <ion-col>
-              {{ album.key }}
-            </ion-col>
-          </ion-row>
-        </ion-list>
+        <ion-card>
+          <ion-card-title color="light">
+            Albumes
+          </ion-card-title>
+          <ion-card-content>
+            <ion-label *ngIf="errorAlbumes">No se han encontrado álbumes</ion-label>
+
+            <ion-list *ngIf="buscandoAlbumes">
+              <ion-item *ngFor="let item of [1,2,3,4,5]">
+                <ion-thumbnail slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-thumbnail>
+                <ion-label>
+                  <div>
+                    <h3>
+                      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                    </h3>
+                    <p>
+                      <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+                    </p>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+            <ion-list lines="inset">
+              <ion-item *ngFor="let album of albumes | keyvalue; let i = index;">
+                <ion-thumbnail *ngIf="i <= 5" slot="start">
+                  <img src="{{ album.value }}" />
+                </ion-thumbnail>
+                <ion-label *ngIf="i <= 5">
+                  <div>
+                    <h2 style="display: inline;">{{ album.key }}</h2>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+          </ion-card-content>
+        </ion-card>
       </ion-col>
       <ion-col>
-        <ion-list>
-          <ion-label *ngIf="errorPlaylists">No se han encontrado podcasts</ion-label>
-          <ion-row *ngFor="let podcast of podcasts | async | keyvalue; let i = index;"
-            style="margin: 20px; align-items: center;">
-            <ion-col *ngIf="i <= 5">
-              <img src="{{ podcast.value }}" style="width: 100px;" />
-            </ion-col>
-            <ion-col>
-              {{ podcast.key }}
-            </ion-col>
-          </ion-row>
-        </ion-list>
+        <ion-card>
+          <ion-card-title color="light">
+            Podcasts
+          </ion-card-title>
+          <ion-card-content>
+            <ion-label *ngIf="errorPodcasts">No se han encontrado podcasts</ion-label>
+
+            <ion-list *ngIf="buscandoPodcasts">
+              <ion-item *ngFor="let item of [1,2,3,4,5]">
+                <ion-thumbnail slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-thumbnail>
+                <ion-label>
+                  <div>
+                    <h3>
+                      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                    </h3>
+                    <p>
+                      <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+                    </p>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+            <ion-list lines="inset">
+              <ion-item *ngFor="let podcast of podcasts | keyvalue; let i = index;">
+                <ion-thumbnail *ngIf="i <= 5" slot="start">
+                  <img src="{{ podcast.value }}" />
+                </ion-thumbnail>
+                <ion-label *ngIf="i <= 5">
+                  <div>
+                    <h2 style="display: inline;">{{ podcast.key }}</h2>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
 
 
     <ion-row style="font-size: large;">
-      <ion-col>Usuarios</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-label *ngIf="buscando">No se han encontrado albumes</ion-label>
-        <ion-list>
-          <ion-row *ngFor="let usuario of usuarios | async; let i = index;"
-            style="margin: 20px; align-items: center;">
-            <ion-col *ngIf="i <= 5">
-             <!-- <img src="{{ album.value }}" style="width: 100px;" /> -->
-            </ion-col>
-            <ion-col>
-              {{ usuario }}
-            </ion-col>
-          </ion-row>
-        </ion-list>
+      <ion-col size-md="6">
+        <ion-card>
+          <ion-card-title color="light">
+            Usuarios
+          </ion-card-title>
+          <ion-card-content>
+            <ion-label *ngIf="errorUsuarios">No se han encontrado usuarios</ion-label>
+
+            <ion-list *ngIf="buscandoUsuarios">
+              <ion-item *ngFor="let item of [1,2,3,4,5]">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                  <div>
+                    <h3>
+                      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                    </h3>
+                    <p>
+                      <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+                    </p>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+            <ion-list lines="inset">
+              <ion-item *ngFor="let usuario of usuarios; let i = index;">
+                <ion-thumbnail *ngIf="i <= 5" slot="start">
+                  <img src="{{ usuario.Foto }}" /> -->
+                </ion-thumbnail>
+                <ion-label *ngIf="i <= 5">
+                  <div>
+                    <h2 style="display: inline;">{{ usuario.Nombre }}</h2>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
+
+
     <!--
     <div expand="full">
       <ion-spinner *ngIf="showSpinner"></ion-spinner>

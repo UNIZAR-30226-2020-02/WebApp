@@ -16,23 +16,28 @@ export class BuscarPage implements OnInit {
 
   buscando: boolean;
 
-  resultado: Observable<any>;
+  resultados: Observable<any>;
   
 
-  canciones: Observable<any>;
-  errorCanciones: boolean;
-  playlists: Observable<any>;
-  errorPlaylists: boolean;
+  canciones: any;
+  errorCanciones: boolean = false;
+  buscandoCanciones: boolean = false;
+  playlists: any;
+  errorPlaylists: boolean = false;
+  buscandoPlaylists: boolean = false;
 
 
-  albumes: Observable<any>;
-  errorAlbumes: boolean;
-  podcasts: Observable<any>;
-  errorPodcasts: boolean;
+  albumes: any;
+  errorAlbumes: boolean = false;
+  buscandoAlbumes: boolean = false;
+  podcasts: any;
+  errorPodcasts: boolean = false;
+  buscandoPodcasts: boolean = false;
 
 
-  usuarios: Observable<any>;
-  errorUsuarios: boolean;
+  usuarios: any;
+  errorUsuarios: boolean = false;
+  buscandoUsuarios: boolean = false;
 
 
   ngOnInit() {
@@ -46,32 +51,55 @@ export class BuscarPage implements OnInit {
 
     if (value == '') {
       this.buscando = false;
+      this.errorCanciones = false;
+      this.errorPlaylists = false;
+      this.errorAlbumes = false;
+      this.errorPodcasts = false;
+      this.errorUsuarios = false;
       return;
     }
 
     this.buscando = true;
-    this.resultado = this.rs.getSearch(value)
-    this.resultado.subscribe(
-      res => { console.log("result busqueda", res) }
-    )
-    console.log("resul busqueda", this.resultado);
 
-    this.canciones = this.buscarTipo("Canciones");
-    this.canciones.subscribe(
-      res => { console.log("resul canciones", res); }
-    )
-    this.playlists = this.buscarTipo("PlayLists");
+    this.buscandoCanciones = true;
+    this.buscandoPlaylists = true;
+    this.buscandoAlbumes = true;
+    this.buscandoPodcasts = true;
+    this.buscandoUsuarios = true;
 
-    this.albumes = this.buscarTipo("Albumes");
-    this.podcasts = this.buscarTipo("Podcasts");
+    this.canciones = undefined;
+    this.playlists = undefined;
+    this.albumes = undefined;
+    this.podcasts = undefined;
+    this.usuarios = undefined;
 
-    this.usuarios = this.buscarTipo("Usuarios");
-
+    this.resultados = this.rs.getSearch(value)
+    this.procesarResultados();
   }
 
-  buscarTipo(tipo: string): Observable<any> {
-    return this.resultado.pipe(
-      map( res => { return res[tipo] })
+  procesarResultados() {
+    this.resultados.subscribe(
+      res => {
+        console.log("resultado busquda", res);
+        console.log("playlists", res.PlayLists);
+        console.log("playlists", this.isEmpty(res.PlayLists));
+        console.log("albumes", res.Albumes);
+        console.log("albumes", res.Albumes === {});
+        this.isEmpty(res.Canciones) ? this.errorCanciones = true : this.canciones = res.Canciones;
+        this.buscandoCanciones = false;
+        this.isEmpty(res.PlayLists) ? this.errorPlaylists = true : this.playlists = res.PlayLists;
+        this.buscandoPlaylists = false;
+        this.isEmpty(res.Albumes) ? this.errorAlbumes = true : this.albumes = res.Albumes;
+        this.buscandoAlbumes = false;
+        this.isEmpty(res.Podcasts) ? this.errorPodcasts = true : this.podcasts = res.Podcasts;
+        this.buscandoPodcasts = false;
+        this.isEmpty(res.Usuarios) ? this.errorUsuarios = true : this.usuarios = res.Usuarios;
+        this.buscandoUsuarios = false;
+      }
     )
+  }
+
+  private isEmpty(obj) {
+    return Object.keys(obj).length === 0;
   }
 }
