@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-text-center">
   <ion-searchbar placeholder="Buscar en PlayStack" color="light" debounce="500" (ionChange)="onSearchChange($event)">
   </ion-searchbar>
 
@@ -20,7 +20,7 @@
           <ion-card-content>
             <ion-label *ngIf="errorCanciones">No se han encontrado canciones</ion-label>
             
-            <ion-list *ngIf="buscandoCanciones">
+            <ion-list *ngIf="buscandoCanciones" lines="none">
               <ion-item *ngFor="let item of [1,2,3,4,5]">
                 <ion-thumbnail slot="start">
                   <ion-skeleton-text animated></ion-skeleton-text>
@@ -38,12 +38,12 @@
               </ion-item>
             </ion-list>
 
-            <ion-list lines="inset">
-              <ion-item *ngFor="let cancion of canciones | keyvalue; let i = index;">
-                <ion-thumbnail *ngIf="i <= 5" slot="start">
+            <ion-list lines="none">
+              <ion-item *ngFor="let cancion of canciones | keyvalue; let i = index;" button (click)="playTrack(cancion.key, cancion.value)">
+                <ion-thumbnail *ngIf="i < 5" slot="start">
                   <img src="{{ cancion.value.ImagenesAlbum[0] }}" />
                 </ion-thumbnail>
-                <ion-label *ngIf="i <= 5">
+                <ion-label *ngIf="i < 5">
                   <div>
                     <h2 style="display: inline;">{{ cancion.key }}</h2>
                     <h3 style="display: inline; padding-left: 20px;">{{ cancion.value.Albumes.join(', ') }}</h3>
@@ -64,7 +64,7 @@
           <ion-card-content>
             <ion-label *ngIf="errorPlaylists">No se han encontrado playlists</ion-label>
 
-            <ion-list *ngIf="buscandoPlaylists">
+            <ion-list *ngIf="buscandoPlaylists" lines="none">
               <ion-item *ngFor="let item of [1,2,3,4,5]">
                 <ion-thumbnail slot="start">
                   <ion-skeleton-text animated></ion-skeleton-text>
@@ -83,12 +83,12 @@
             </ion-list>
 
 
-            <ion-list lines="inset">
-              <ion-item *ngFor="let playlist of playlists | keyvalue; let i = index;">
-                <ion-thumbnail *ngIf="i <= 5" slot="start">
+            <ion-list lines="none">
+              <ion-item *ngFor="let playlist of playlists | keyvalue; let i = index;" button (click)="openPlaylist(playlist.key, playlist.value.Fotos)">
+                <ion-thumbnail *ngIf="i < 5" slot="start">
                   <img src="{{ playlist.value.Fotos[0] }}" />
                 </ion-thumbnail>
-                <ion-label *ngIf="i <= 5">
+                <ion-label *ngIf="i < 5">
                   <div>
                     <h2 style="display: inline;">{{ playlist.key }}</h2>
                   </div>
@@ -113,7 +113,7 @@
           <ion-card-content>
             <ion-label *ngIf="errorAlbumes">No se han encontrado álbumes</ion-label>
 
-            <ion-list *ngIf="buscandoAlbumes">
+            <ion-list *ngIf="buscandoAlbumes" lines="none">
               <ion-item *ngFor="let item of [1,2,3,4,5]">
                 <ion-thumbnail slot="start">
                   <ion-skeleton-text animated></ion-skeleton-text>
@@ -131,12 +131,12 @@
               </ion-item>
             </ion-list>
 
-            <ion-list lines="inset">
-              <ion-item *ngFor="let album of albumes | keyvalue; let i = index;">
-                <ion-thumbnail *ngIf="i <= 5" slot="start">
+            <ion-list lines="none">
+              <ion-item *ngFor="let album of albumes | keyvalue; let i = index;" button (click)="openAlbum(album.key, [album.value])">
+                <ion-thumbnail *ngIf="i < 5" slot="start">
                   <img src="{{ album.value }}" />
                 </ion-thumbnail>
-                <ion-label *ngIf="i <= 5">
+                <ion-label *ngIf="i < 5">
                   <div>
                     <h2 style="display: inline;">{{ album.key }}</h2>
                   </div>
@@ -155,7 +155,7 @@
           <ion-card-content>
             <ion-label *ngIf="errorPodcasts">No se han encontrado podcasts</ion-label>
 
-            <ion-list *ngIf="buscandoPodcasts">
+            <ion-list *ngIf="buscandoPodcasts" lines="none">
               <ion-item *ngFor="let item of [1,2,3,4,5]">
                 <ion-thumbnail slot="start">
                   <ion-skeleton-text animated></ion-skeleton-text>
@@ -173,12 +173,12 @@
               </ion-item>
             </ion-list>
 
-            <ion-list lines="inset">
+            <ion-list lines="none">
               <ion-item *ngFor="let podcast of podcasts | keyvalue; let i = index;">
-                <ion-thumbnail *ngIf="i <= 5" slot="start">
+                <ion-thumbnail *ngIf="i < 5" slot="start">
                   <img src="{{ podcast.value }}" />
                 </ion-thumbnail>
-                <ion-label *ngIf="i <= 5">
+                <ion-label *ngIf="i < 5">
                   <div>
                     <h2 style="display: inline;">{{ podcast.key }}</h2>
                   </div>
@@ -201,7 +201,7 @@
           <ion-card-content>
             <ion-label *ngIf="errorUsuarios">No se han encontrado usuarios</ion-label>
 
-            <ion-list *ngIf="buscandoUsuarios">
+            <ion-list *ngIf="buscandoUsuarios" lines="none">
               <ion-item *ngFor="let item of [1,2,3,4,5]">
                 <ion-avatar slot="start">
                   <ion-skeleton-text animated></ion-skeleton-text>
@@ -219,12 +219,12 @@
               </ion-item>
             </ion-list>
 
-            <ion-list lines="inset">
+            <ion-list lines="none">
               <ion-item *ngFor="let usuario of usuarios; let i = index;">
-                <ion-thumbnail *ngIf="i <= 5" slot="start">
+                <ion-thumbnail *ngIf="i < 5" slot="start">
                   <img src="{{ usuario.Foto }}" /> -->
                 </ion-thumbnail>
-                <ion-label *ngIf="i <= 5">
+                <ion-label *ngIf="i < 5">
                   <div>
                     <h2 style="display: inline;">{{ usuario.Nombre }}</h2>
                   </div>

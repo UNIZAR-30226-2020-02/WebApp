@@ -61,29 +61,15 @@ export class ReproductorService {
     return this.player.duration();
   }
 
-  addToPlaylist(track: Track[]) {
-  }
-
   setPlaylist(playlist: Track[]) {
-    this.playlist = playlist;
-  }
-
-  addToPlaylistObservable(cancionesObservable: Observable<any>) {
-    let playlist: Track[] = [];
-    cancionesObservable.subscribe(mapCanciones => {
-
-      for (let cancion in mapCanciones) {
-        let track: Track = this.constructTrack2(cancion, mapCanciones[cancion]);
-        playlist.push(track);
-      }
-    })
     this.playlist = playlist;
   }
 
   start(track: Track) {
     if (this.player) {
       this.player.stop();
-    }
+      delete this.player;
+    }   
     this.activeTrack = track;
     this.player = new Howl({
       src: track.path,
@@ -134,7 +120,7 @@ export class ReproductorService {
       this.start(this.playlist[index - 1]);
     }
     else {
-      console.log("Poniendo canciónN " + (this.playlist.length - 1));
+      console.log("Poniendo canción " + (this.playlist.length - 1));
       console.log("Se titula: " + this.playlist[this.playlist.length - 1].nombre);
       this.start(this.playlist[this.playlist.length - 1]);
     }
@@ -164,15 +150,14 @@ export class ReproductorService {
     return this.generos;
   }
 
-  /*
-  artistas: Playlist[] = [{ tipo: "Artista", esPrivada: false, nombre: "Macklemore", cover: "assets/artistas/macklemore.jpg", tracks: [] },
-  { tipo: "Artista", esPrivada: false, nombre: "Eminem", cover: "assets/artistas/eminem.jpg", tracks: [] },
-  { tipo: "Artista", esPrivada: false, nombre: "Da tweekaz", cover: "assets/artistas/datweekaz.jpg", tracks: [] },
-  { tipo: "Artista", esPrivada: false, nombre: "Timmy trumpet", cover: "assets/artistas/timmytrumpet.jpg", tracks: [] }];
-  getArtistas() {
+  artistas: Playlist[] = [{ tipo: "Artista", esPrivada: false, nombre: "Macklemore", covers: ["assets/artistas/macklemore.jpg"], tracks: [] },
+  { tipo: "Artista", esPrivada: false, nombre: "Eminem", covers: ["assets/artistas/eminem.jpg"], tracks: [] },
+  { tipo: "Artista", esPrivada: false, nombre: "Da tweekaz", covers: ["assets/artistas/datweekaz.jpg"], tracks: [] },
+  { tipo: "Artista", esPrivada: false, nombre: "Timmy trumpet", covers: ["assets/artistas/timmytrumpet.jpg"], tracks: [] }];
+  getArtistasHome() {
     return this.artistas;
   }
-  */
+
 
   constructTrack(cancion: any) {
     let track: Track = {
@@ -219,20 +204,26 @@ export class ReproductorService {
 
   getCancionesByArtista(artista: string) {
     let user = this.auth.getUserName();
-    let params = new HttpParams().set('NombreArtista', artista);
-    return this.http.get(this.ROOT_URL + '/get/artist/albums', { params });
+    let params = new HttpParams().set('NombreArtista', artista).append('NombreUsuario', user);
+    return this.http.get(this.ROOT_URL + '/get/song/byartist', { params });
   }
 
   getCancionesByAlbum(album: string) {
     let user = this.auth.getUserName();
-    let params = new HttpParams().set('NombreUsuario', user).append('NombreAlbum', album);
+    let params = new HttpParams().set('NombreAlbum', album).append('NombreUsuario', user);
     return this.http.get(this.ROOT_URL + '/get/song/byalbum', { params });
   }
 
   getCancionesByPlaylist(playlist: string) {
     let user = this.auth.getUserName();
-    let params = new HttpParams().set('NombreUsuario', user).append('NombrePlayList', playlist);
+    let params = new HttpParams().set('NombrePlayList', playlist).append('NombreUsuario', user);
     return this.http.get(this.ROOT_URL + '/get/playlist/songs', { params });
+  }
+
+  getCancionesFavoritas() {
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreUsuario', user);
+    return this.http.get(this.ROOT_URL + '/get/favoritesongs', { params });
   }
 
 
@@ -258,6 +249,10 @@ export class ReproductorService {
         canciones = this.getCancionesByPlaylist(playlist.nombre);
         break;
       }
+      case "Favoritas": {
+        canciones = this.getCancionesFavoritas();
+        break;
+      }
     }
 
     return canciones;
@@ -280,7 +275,8 @@ export class ReproductorService {
   }
 
   getSearch(keyword: string) {
-    let params = new HttpParams().set('KeyWord', keyword);
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('KeyWord', keyword).append('NombreUsuario', user);
     console.log("consulta busqueda", this.ROOT_URL + '/search?KeyWord=' + keyword);
     return this.http.get(this.ROOT_URL + '/search', { params });
   }
