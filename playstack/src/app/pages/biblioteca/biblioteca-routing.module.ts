@@ -7,10 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: BibliotecaPage
-  },
-  {
-    path: 'modal',
-    loadChildren: () => import('../crear/modal/modal.module').then( m => m.ModalPageModule)
   }
 ];
 

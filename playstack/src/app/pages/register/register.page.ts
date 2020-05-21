@@ -63,7 +63,7 @@ export class RegisterPage implements OnInit {
     {
       if(passwd === passwdCheck)
       {
-        if(passwd.length == 8)
+        if(passwd.length >= 8)
         {
           return 0;   //OK
         }

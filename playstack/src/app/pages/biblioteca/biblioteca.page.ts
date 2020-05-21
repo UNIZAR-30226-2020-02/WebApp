@@ -3,7 +3,6 @@ import { ReproductorService } from '../../services/reproductor/reproductor.servi
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 import { ModalController } from '@ionic/angular';
-import { ModalPage } from '../crear/modal/modal.page';
 
 
 @Component({
@@ -60,10 +59,10 @@ export class BibliotecaPage implements OnInit {
   }
 
   /* Esto es para una ventana emergente para crear la playlist */
-  async presentModal() {
+  /*async presentModal() {
     const modal = await this.modalController.create({
       component: ModalPage
     });
     return await modal.present();
-  }
+  }*/
 }
