@@ -37,9 +37,9 @@ export class BuscarPage implements OnInit {
   buscandoPodcasts: boolean = false;
 
 
-  usuarios: any;
-  errorUsuarios: boolean = false;
-  buscandoUsuarios: boolean = false;
+  artistas: any;
+  errorArtistas: boolean = false;
+  buscandoArtistas: boolean = false;
 
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class BuscarPage implements OnInit {
       this.errorPlaylists = false;
       this.errorAlbumes = false;
       this.errorPodcasts = false;
-      this.errorUsuarios = false;
+      this.errorArtistas = false;
       return;
     }
 
@@ -67,19 +67,19 @@ export class BuscarPage implements OnInit {
     this.errorPlaylists = false;
     this.errorAlbumes = false;
     this.errorPodcasts = false;
-    this.errorUsuarios = false;
+    this.errorArtistas = false;
     
     this.buscandoCanciones = true;
     this.buscandoPlaylists = true;
     this.buscandoAlbumes = true;
     this.buscandoPodcasts = true;
-    this.buscandoUsuarios = true;
+    this.buscandoArtistas = true;
 
     this.canciones = undefined;
     this.playlists = undefined;
     this.albumes = undefined;
     this.podcasts = undefined;
-    this.usuarios = undefined;
+    this.artistas = undefined;
 
     this.resultados = this.rs.getSearch(value)
     this.procesarResultados();
@@ -101,8 +101,8 @@ export class BuscarPage implements OnInit {
         this.buscandoAlbumes = false;
         this.isEmpty(res.Podcasts) ? this.errorPodcasts = true : ( this.podcasts = res.Podcasts, this.errorPodcasts = false )
         this.buscandoPodcasts = false; 
-        this.isEmpty(res.Usuarios) ? this.errorUsuarios = true : ( this.usuarios = res.Usuarios, this.errorUsuarios = false )
-        this.buscandoUsuarios = false;
+        this.isEmpty(res.Artistas) ? this.errorArtistas = true : ( this.artistas = res.Artistas, this.errorArtistas = false )
+        this.buscandoArtistas = false;
       }
     )
   }

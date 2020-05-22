@@ -199,12 +199,12 @@
       <ion-col size-md="6">
         <ion-card>
           <ion-card-title color="light">
-            Usuarios
+            Artistas
           </ion-card-title>
           <ion-card-content>
-            <ion-label *ngIf="errorUsuarios">No se han encontrado usuarios</ion-label>
+            <ion-label *ngIf="errorArtistas">No se han encontrado usuarios</ion-label>
 
-            <ion-list *ngIf="buscandoUsuarios" lines="none">
+            <ion-list *ngIf="buscandoArtistas" lines="none">
               <ion-item *ngFor="let item of [1,2,3,4,5]">
                 <ion-avatar slot="start">
                   <ion-skeleton-text animated></ion-skeleton-text>

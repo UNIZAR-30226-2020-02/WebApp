@@ -281,5 +281,9 @@ export class ReproductorService {
     return this.http.get(this.ROOT_URL + '/search', { params });
   }
 
-
+  getArtistaAlbums(artista: string) {
+    let params = new HttpParams().set('NombreArtista', artista);
+    console.log("consulta artista", this.ROOT_URL + '/search?nombreArtista=' + artista);
+    return this.http.get(this.ROOT_URL + '/get/artist/albums', { params });
+  }
 }
