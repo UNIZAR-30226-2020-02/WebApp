@@ -24,9 +24,13 @@
     </ion-segment>
   </ion-toolbar>
 
+
+
+
+
   <div *ngIf="currentTab == 'Siguiendo'" class="list-container">
     <!-- Si la lista de pokemon tiene longitud 0, mostramos un esqueleto de los resultados -->
-    <ion-list *ngIf="siguiendo.length == 0">
+    <ion-list *ngIf="buscandoSiguiendo">
       <ion-item *ngFor="let siguiendo of [1,2,3,4,5]">
         <ion-avatar slot="start">
           <ion-skeleton-text animated></ion-skeleton-text>
@@ -35,35 +39,29 @@
           <h2>
             <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
           </h2>
-          <p>
-            <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
-          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-text *ngIf="errorSiguiendo">No sigues a nadie</ion-text>
+    <ion-list>
+      <ion-item *ngFor="let usuario of siguiendo | async | keyvalue;" button (click)="openPerfil(usuario.key)">
+        <ion-avatar slot="start">
+          <img [src]="usuario.value.FotoDePerfil" style="background: #f2f2f2;">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ usuario.key }}</h2>
         </ion-label>
       </ion-item>
     </ion-list>
 
-    <!--
-      <ion-list>
-        routerLink concatena el valor a nuestra url. En las reglas de routing hemos definido
-         que la página de detalles está en home/:index, así que cargaremos la página de detalles
-
-        <ion-item *ngFor="let usuario of siguiendo;" [routerLink]="usuario.nombre">
-          <ion-avatar slot="start">
-            <img [src]="usuario.imagen" style="background: #f2f2f2;">
-          </ion-avatar>
-          <ion-label class="ion-text-capitalize">
-            <h2>{{ usuario.nombre }}</h2>
-            <p>{{ usuario.info }}</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    -->
   </div>
+
+
 
   <div *ngIf="currentTab == 'Seguidores'" class="list-container">
     <!-- Si la lista de pokemon tiene longitud 0, mostramos un esqueleto de los resultados -->
-    <ion-list *ngIf="siguiendo.length == 0">
-      <ion-item *ngFor="let siguiendo of [1,2,3,4,5]">
+    <ion-list *ngIf="buscandoSeguidores">
+      <ion-item *ngFor="let seguidores of [1,2,3,4,5]">
         <ion-avatar slot="start">
           <ion-skeleton-text animated></ion-skeleton-text>
         </ion-avatar>
@@ -71,18 +69,29 @@
           <h2>
             <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
           </h2>
-          <p>
-            <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
-          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-text *ngIf="errorSeguidores">No te sigue nadie</ion-text>
+    <ion-list>
+      <ion-item *ngFor="let usuario of seguidores | async | keyvalue;" button (click)="openPerfil(usuario.key)">
+        <ion-avatar slot="start">
+          <img [src]="usuario.value.FotoDePerfil" style="background: #f2f2f2;">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ usuario.key }}</h2>
         </ion-label>
       </ion-item>
     </ion-list>
   </div>
 
+
+
+
   <div *ngIf="currentTab == 'Solicitudes'" class="list-container">
     <!-- Si la lista de pokemon tiene longitud 0, mostramos un esqueleto de los resultados -->
-    <ion-list *ngIf="siguiendo.length == 0">
-      <ion-item *ngFor="let siguiendo of [1,2,3,4,5]">
+    <ion-list *ngIf="buscandoSolicitudes">
+      <ion-item *ngFor="let solicitudes of [1,2,3,4,5]">
         <ion-avatar slot="start">
           <ion-skeleton-text animated></ion-skeleton-text>
         </ion-avatar>
@@ -90,12 +99,72 @@
           <h2>
             <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
           </h2>
-          <p>
-            <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
-          </p>
         </ion-label>
-        <h2 slot="end"><ion-skeleton-text animated style="width: 100px; height: 20px;"></ion-skeleton-text></h2>
+        <h2 slot="end">
+          <ion-skeleton-text animated style="width: 100px; height: 20px;"></ion-skeleton-text>
+        </h2>
+        <h2 slot="end">
+          <ion-skeleton-text animated style="width: 100px; height: 20px;"></ion-skeleton-text>
+        </h2>
         <!-- <ion-button class="boton-seguir">Aceptar</ion-button> -->
+      </ion-item>
+    </ion-list>
+    <ion-text *ngIf="errorSolicitudes">No tienes solicitudes</ion-text>
+    <ion-list>
+      <ion-grid *ngFor="let solicitud of solicitudes | async | keyvalue;">
+        <ion-row>
+          <ion-col size="8">
+            <ion-item button (click)="openPerfil(solicitud.key)">
+              <ion-avatar slot="start">
+                <img [src]="solicitud.value.FotoDePerfil" style="background: #f2f2f2;">
+              </ion-avatar>
+              <ion-label>
+                <h2>{{ solicitud.key }}</h2>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button color="success" (click)="aceptarSolicitud(solicitud.key)">Aceptar
+            </ion-button>
+            <ion-button color="danger" (click)="rechazarSolicitud(solicitud.key)">Rechazar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </div>
+
+
+
+  <div *ngIf="currentTab == 'Buscar'" class="list-container">
+    <!-- Si la lista de pokemon tiene longitud 0, mostramos un esqueleto de los resultados -->
+    <div class="ion-text-center">
+      <ion-searchbar placeholder="Buscar usuarios" color="light" debounce="500"
+        (ionChange)="onSearchChange($event)">
+      </ion-searchbar>
+      <ion-text *ngIf="!buscando">Introduce el usuario que quieres buscar</ion-text>
+    </div>
+    <ion-list *ngIf="buscandoUsuarios">
+      <ion-item *ngFor="let seguidores of [1,2,3,4,5]">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label class="ion-text-capitalize">
+          <h2>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h2>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-text *ngIf="errorBusqueda">No se han encontrado usuarios</ion-text>
+    <ion-list>
+      <ion-item *ngFor="let usuario of resultadosBusqueda | async | keyvalue;" button (click)="openPerfil(usuario.key)">
+        <ion-avatar slot="start">
+          <img [src]="usuario.value" style="background: #f2f2f2;">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ usuario.key }}</h2>
+        </ion-label>
       </ion-item>
     </ion-list>
   </div>

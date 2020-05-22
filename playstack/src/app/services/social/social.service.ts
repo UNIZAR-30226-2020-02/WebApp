@@ -28,4 +28,26 @@ export class SocialService {
     let params = new HttpParams().set('Usuario', user);
     return this.http.get(this.ROOT_URL + '/user/get/followrequests', { params });
   }
+
+  buscarUsuarios(keyword: string) {
+    let params = new HttpParams().set('KeyWord', keyword);
+    return this.http.get(this.ROOT_URL + '/user/search', { params });
+  }
+
+
+  aceptarSolicitud(usuarioPedido: string) {
+    console.log("aceptar: ", usuarioPedido);
+  }
+
+  rechazarSolicitud(usuarioPedido: string) {
+    console.log("rechazar: ", usuarioPedido);
+  }
+
+  // Devuelve la relación entre el usuario que utiliza la aplicación y <usuario>
+  //  Foto, Seguidor, Seguido, EnviadaSolicitud, RecibidaSolicitud
+  socialSearch(usuario: string) {
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreUsuario', user).append('NombreOtroUsuario', usuario);
+    return this.http.get(this.ROOT_URL + '/user/get/socialsearch', { params });
+  }
 }

@@ -17,7 +17,7 @@ const TOKEN_KEY = 'auth-token';
 export class AuthenticationService {
  
   private authenticationState = new BehaviorSubject(false);
-  private authenticationID = new BehaviorSubject(null);
+  private authenticationID = new BehaviorSubject('Freeman');
   private authenticationMail = new BehaviorSubject(null);
   
   constructor(private storage: Storage, private plt: Platform,private info : UserInfoService) { 

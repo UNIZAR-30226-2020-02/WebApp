@@ -1,12 +1,14 @@
+import { PerfilPage } from './../perfil/perfil.page';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { SocialPage } from './social.page';
 
 const routes: Routes = [
-  { path: '', component: SocialPage },
-  { path: 'social', loadChildren: './social/social.module#SocialPageModule' },
-  { path: 'social/:user', loadChildren: './perfil/perfil.module#PerfilPageModule' }
+  {
+    path: '',
+    component: SocialPage
+  }
 ];
 
 @NgModule({

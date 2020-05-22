@@ -8,7 +8,7 @@
   <ion-searchbar placeholder="Buscar en PlayStack" color="light" debounce="500" (ionChange)="onSearchChange($event)">
   </ion-searchbar>
 
-  <ion-text *ngIf="!buscando">Puedes buscar canciones, playlists, albumes, podcasts y usuarios.</ion-text> 
+  <ion-text *ngIf="!buscando">Puedes buscar canciones, playlists, albumes, podcasts y usuarios.</ion-text>
 
   <ion-grid *ngIf="buscando">
     <ion-row style="font-size: large;">
@@ -19,7 +19,7 @@
           </ion-card-title>
           <ion-card-content>
             <ion-label *ngIf="errorCanciones">No se han encontrado canciones</ion-label>
-            
+
             <ion-list *ngIf="buscandoCanciones" lines="none">
               <ion-item *ngFor="let item of [1,2,3,4,5]">
                 <ion-thumbnail slot="start">
@@ -39,7 +39,8 @@
             </ion-list>
 
             <ion-list lines="none">
-              <ion-item *ngFor="let cancion of canciones | keyvalue; let i = index;" button (click)="playTrack(cancion.key, cancion.value)">
+              <ion-item *ngFor="let cancion of canciones | keyvalue; let i = index;" button
+                (click)="playTrack(cancion.key, cancion.value)">
                 <ion-thumbnail *ngIf="i < 5" slot="start">
                   <img src="{{ cancion.value.ImagenesAlbum[0] }}" />
                 </ion-thumbnail>
@@ -84,7 +85,8 @@
 
 
             <ion-list lines="none">
-              <ion-item *ngFor="let playlist of playlists | keyvalue; let i = index;" button (click)="openPlaylist(playlist.key, playlist.value.Fotos)">
+              <ion-item *ngFor="let playlist of playlists | keyvalue; let i = index;" button
+                (click)="openPlaylist(playlist.key, playlist.value.Fotos)">
                 <ion-thumbnail *ngIf="i < 5" slot="start">
                   <img src="{{ playlist.value.Fotos[0] }}" />
                 </ion-thumbnail>
@@ -132,7 +134,8 @@
             </ion-list>
 
             <ion-list lines="none">
-              <ion-item *ngFor="let album of albumes | keyvalue; let i = index;" button (click)="openAlbum(album.key, [album.value])">
+              <ion-item *ngFor="let album of albumes | keyvalue; let i = index;" button
+                (click)="openAlbum(album.key, [album.value])">
                 <ion-thumbnail *ngIf="i < 5" slot="start">
                   <img src="{{ album.value }}" />
                 </ion-thumbnail>

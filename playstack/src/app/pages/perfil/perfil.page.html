@@ -3,47 +3,119 @@
     <ion-buttons slot="start">
       <ion-back-button color="light" defaultHref="./home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Perfil de</ion-title>
+    <ion-title>Perfil de {{ nombreUsuario }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-      <ion-grid>
-        <ion-row class="ion-text-center">
-          {{ user }}
-        </ion-row>
-        <ion-row class="ion-text-center">
-          <ion-icon slot="icon-only" name="person-circle-outline" class="foto-perfil"></ion-icon>
-        </ion-row>
-        <ion-row>
-          <ion-item lines="none" style="padding: 10px;">
-            <ion-button type="submit" color="light" style="--border-radius: 15px; width: 310px;">
-              <b>Siguiendo</b>
-            </ion-button>
-          </ion-item>
-        </ion-row>
+        <h2>
+          {{ nombreUsuario }}
+        </h2>
 
-        <ion-row class="ion-text-center">
-          Canciones y podcasts más escuchadas:
-        </ion-row>
-        <ion-row style="padding-bottom: 40px;"  *ngFor="let cancion of listaCanciones | async | keyvalue;">
-          <ion-col>{{ cancion.key }}</ion-col>
-          <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
-        </ion-row>
-        <ion-row class="ion-text-center">
-          Generos más escuchados
-        </ion-row>
-        <ion-row style="padding-bottom: 40px;"  *ngFor="let genero of listaGeneros | async | keyvalue;">
-          <ion-col>{{ genero.key }}</ion-col>
-        </ion-row>
-        <ion-row class="ion-text-center">
-          Ultimas canciones y podcasts escuchados:
-        </ion-row>
-        <ion-row style="padding-bottom: 40px;"  *ngFor="let cancion of lastSongs | async | keyvalue;">
-          <ion-col>{{ cancion.key }}</ion-col>
-          <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
-        </ion-row>
-      </ion-grid>
+        <ion-avatar>
+          <img [src]="foto">
+        </ion-avatar>
+
+        <ion-chip *ngIf="seguidor">
+          {{ nombreUsuario }} te sigue
+        </ion-chip>
+
+        <ion-button color="danger" *ngIf="seguido" (click)="dejarDeSeguir()">
+          Dejar de seguir
+        </ion-button>
+        <ion-button color="success" *ngIf="!seguido && !enviadaSolicitud" (click)="seguir()">
+          Seguir
+        </ion-button>
+
+        <ion-button color="success" *ngIf="enviadaSolicitud && !seguido">
+          Enviada solicitud
+        </ion-button>
+  
+        <div *ngIf="recibidaSolicitud">
+          Recibida solicitud
+          <ion-button color="success" (click)="aceptarSolicitud()">
+            Aceptar solicitud
+          </ion-button>
+          <ion-button color="danger" (click)="rechazarSolicitud()">
+            Rechazar solicitud
+          </ion-button>
+        </div>
+
+        <h2>Canciones y podcasts más escuchadas</h2>
+        <ion-list *ngIf="buscandoCancionesPodcasts" lines="none">
+          <ion-item *ngFor="let item of [1,2,3,4,5]">
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <div>
+                <h3>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                </h3>
+                <p>
+                  <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+                </p>
+              </div>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <h2> Generos más escuchados</h2>
+        <ion-list *ngIf="buscandoGeneros" lines="none">
+          <ion-item *ngFor="let item of [1,2,3,4,5]">
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <div>
+                <h3>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                </h3>
+                <p>
+                  <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+                </p>
+              </div>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <h2>Ultimas canciones y podcasts escuchados</h2>
+        <ion-list *ngIf="buscandoUltimas" lines="none">
+          <ion-item *ngFor="let item of [1,2,3,4,5]">
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <div>
+                <h3>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                </h3>
+                <p>
+                  <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+                </p>
+              </div>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <h2>Listas de reproducción públicas</h2>
+        <ion-list *ngIf="buscandoPlaylists" lines="none">
+          <ion-item *ngFor="let item of [1,2,3,4,5]">
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <div>
+                <h3>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                </h3>
+                <p>
+                  <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+                </p>
+              </div>
+            </ion-label>
+          </ion-item>
+        </ion-list>
 </ion-content>
 
 <ion-footer>

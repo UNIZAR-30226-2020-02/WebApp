@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserInfoService } from 'src/app/services/user-info/user-info.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SocialService } from 'src/app/services/social/social.service';
+import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'app-perfil',
@@ -8,25 +10,50 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-  correoUsuario: string;
   nombreUsuario: string;
-  constructor(private info : UserInfoService, private route: ActivatedRoute, private router: Router) {
+  foto: string;
+  seguidor: boolean;
+  seguido: boolean;
+  enviadaSolicitud: boolean;
+  recibidaSolicitud: boolean;
+
+  buscandoCancionesPodcasts: boolean = true;
+  buscandoGeneros: boolean = true;
+  buscandoUltimas: boolean = true;
+  buscandoPlaylists: boolean = true;
+
+  constructor(private social : SocialService, private route: ActivatedRoute, private router: Router) {
+  }
+
+  // Cargar datos pasados a la página
+  ngOnInit() {
     this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
-        this.nombreUsuario = this.router.getCurrentNavigation().extras.state.usuario;
+        let state = this.router.getCurrentNavigation().extras.state;
+        this.nombreUsuario = state.nombreUsuario;
+        this.foto = state.foto;
+        this.seguidor = state.seguidor;
+        this.seguido = state.seguido;
+        this.enviadaSolicitud = state.enviadaSolicitud;
+        this.recibidaSolicitud = state.recibidaSolicitud;
       }
-    });  }
+    });
+  }
 
-  ngOnInit() {
-    /* FALTA las canciones, generos y ultimas canciones más escuchados en la BD */
-    // Obtener correo del usuario desde la BD
-    let wasd = this.info.getUserInfo(this.nombreUsuario);
-    /*wasd.subscribe(value => {
-      this.correoUsuario = value["Correo"];
-      console.log(this.correoUsuario);
-    });*/
-    //Ahora getUserInfo devuelve un array de dos componentes, la primera es el 
-    //  nombre de usuario de la bd, y la segunda el correo recuperado de la bd
+  dejarDeSeguir() {
+    console.log("dejar de seguir a:", this.nombreUsuario);
+  }
+
+  seguir() {
+    console.log("seguir a:", this.nombreUsuario);
+  }
+
+  aceptarSolicitud() {
+    console.log("aceptar a:", this.nombreUsuario);
+  }
+
+  rechazarSolicitud() {
+    console.log("rechazar a:", this.nombreUsuario);
   }
 
 }
