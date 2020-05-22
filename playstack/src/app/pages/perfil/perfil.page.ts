@@ -1,8 +1,9 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { UserInfoService } from 'src/app/services/user-info/user-info.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SocialService } from 'src/app/services/social/social.service';
-//import { ConsoleReporter } from 'jasmine'; //Esto no funcionaba
+import { isEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-perfil',
@@ -17,10 +18,17 @@ export class PerfilPage implements OnInit {
   enviadaSolicitud: boolean;
   recibidaSolicitud: boolean;
 
-  buscandoCancionesPodcasts: boolean = true;
-  buscandoGeneros: boolean = true;
-  buscandoUltimas: boolean = true;
-  buscandoPlaylists: boolean = true;
+  buscandoAudiosMasEscuchados: boolean = true;
+  buscandoPlaylistsPublicas: boolean = true;
+  buscandoUltimosAudiosEscuchados: boolean = true;
+
+  errorAudiosMasEscuchados: boolean = false;
+  errorPlaylistsPublicas: boolean = false;
+  errorUltimosAudiosEscuchados: boolean = false;
+
+  audiosMasEscuchados: Observable<any>;
+  playlistsPublicas: Observable<any>;
+  ultimosAudiosEscuchados: Observable<any>;
 
   constructor(private social : SocialService, private route: ActivatedRoute, private router: Router) {
   }
@@ -38,6 +46,55 @@ export class PerfilPage implements OnInit {
         this.recibidaSolicitud = state.recibidaSolicitud;
       }
     });
+
+    this.audiosMasEscuchados = this.social.getAudiosMasEscuchados(this.nombreUsuario);
+    this.audiosMasEscuchados.subscribe(
+      res => {
+        console.log('audios mas escuchados:', res);
+        this.buscandoAudiosMasEscuchados = false;
+        if (this.isEmpty(res)) {
+          this.errorAudiosMasEscuchados = true;
+        }
+      },
+      error => {
+        this.buscandoAudiosMasEscuchados = false;
+        this.errorAudiosMasEscuchados = true;
+      }
+    )
+
+    this.playlistsPublicas = this.social.getPlaylistsPublicas(this.nombreUsuario);
+    this.playlistsPublicas.subscribe(
+      res => {
+        console.log('playlists publicas:', res);
+        this.buscandoPlaylistsPublicas = false;
+        if (this.isEmpty(res)) {
+          this.errorPlaylistsPublicas = true;
+        }
+      },
+      error => {
+        this.buscandoPlaylistsPublicas = false;
+        this.errorPlaylistsPublicas = true;
+      }
+    )
+
+    this.ultimosAudiosEscuchados = this.social.getUltimosAudiosEscuchados(this.nombreUsuario);
+    this.ultimosAudiosEscuchados.subscribe(
+      res => {
+        console.log('ultimos audios escuchados:', res);
+        this.buscandoUltimosAudiosEscuchados = false;
+        if (this.isEmpty(res)) {
+          this.errorUltimosAudiosEscuchados = true;
+        }
+      },
+      error => {
+        this.buscandoUltimosAudiosEscuchados = false;
+        this.errorUltimosAudiosEscuchados = true;
+      }
+    )
+  }
+
+  private isEmpty(obj) {
+    return Object.keys(obj).length === 0;
   }
 
   dejarDeSeguir() {

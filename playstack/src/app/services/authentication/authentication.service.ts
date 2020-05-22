@@ -21,7 +21,7 @@ export class AuthenticationService {
   }
  
   private authenticationState = new BehaviorSubject(false);
-  private authenticationID = new BehaviorSubject('Freeman');  //TODO Inicializar a null cuando no estemos en debug
+  private authenticationID = new BehaviorSubject(null);  //TODO Inicializar a null cuando no estemos en debug
   private authenticationMail = new BehaviorSubject(null);
   private userImageURL = new BehaviorSubject(null);
   private userAccount = new BehaviorSubject(null);
