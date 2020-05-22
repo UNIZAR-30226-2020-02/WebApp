@@ -296,14 +296,7 @@ export class ReproductorService {
     let user = this.auth.getUserName();
     let params = new HttpParams().set('KeyWord', keyword).append('NombreUsuario', user);
     console.log("consulta busqueda", this.ROOT_URL + '/search?KeyWord=' + keyword);
-    return this.http.get(this.ROOT_URL + '/search', { params }).pipe(
-      map(resultados => {
-        return resultados;
-      }),
-      map(resultados => {
-        console.log('resultados map', resultados);
-      })
-    );
+    return this.http.get(this.ROOT_URL + '/search', { params });
   }
 
   getArtistaAlbums(artista: string) {
