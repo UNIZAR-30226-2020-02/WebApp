@@ -156,7 +156,7 @@
     <!-- Falta por hacer acceso a BD-->
     <ion-content *ngIf="currentTabPodcasts == 'Episodios'">
       Sin escuchar:
-      <ion-card *ngFor="let episodio of albumes | async | keyvalue">
+      <ion-card *ngFor="let episodio of podcasts | async | keyvalue">
         <div expand="full">
           <ion-spinner *ngIf="showSpinner"></ion-spinner>
           <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
@@ -180,18 +180,20 @@
           <ion-spinner *ngIf="showSpinner"></ion-spinner>
           <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
         </div>
-        <!--
         <ion-row style="font-size: large;">
           <ion-col>Nombre</ion-col>
           <ion-col>Presentación</ion-col>
           <ion-col>Duración</ion-col>
         </ion-row>
-        <ion-row *ngFor="let programa of listado | async | keyvalue">
-          <ion-col>{{ programa.key }}</ion-col>
-          <ion-col>{{ programa.value.presentacion }}</ion-col>
-          <ion-col>{{ programa.value.duracion}}
+        <ion-row *ngFor="let programa of podcasts | async | keyvalue">
+          <ion-item button class="item-album">
+            <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
+            <ion-col><img src="{{ programa.value }}" class="img-album" /></ion-col>
+            <ion-col>{{ programa.key }}</ion-col>
+            <!-- Falta la duracion en el servicio <ion-col>{{ cancion.value.duracion}}</ion-col>-->
+            <!-- Falta la fecha en el servicio <ion-col>{{ cancion.value.fecha}}</ion-col>-->
+          </ion-item>
         </ion-row>
-      -->
       </ion-grid>
     </ion-content>
 

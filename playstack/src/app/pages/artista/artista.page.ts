@@ -45,4 +45,9 @@ export class ArtistaPage implements OnInit {
     this.router.navigate(['../../playlist'], navigationExtras);
   }
 
+  playSong(cancion: any){
+    let c = this.rs.constructTrack(cancion);
+    this.rs.start(c); 
+  }
+
 }
