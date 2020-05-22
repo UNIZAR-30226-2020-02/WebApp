@@ -142,8 +142,8 @@ export class ReproductorService {
 
   /* Búsqueda y construcción de listas de reproducción */
 
-  generos: Playlist[] = [{ tipo: "Genero", esPrivada: false, nombre: "Rap", covers: ["assets/albumes/RapGenre.png"], tracks: [] },
-  { tipo: "Genero", esPrivada: false, nombre: "Techno", covers: ["assets/albumes/TechnoGenre.png"], tracks: [] },
+  generos: Playlist[] = [{ tipo: "Genero", esPrivada: false, nombre: "Hip Hop", covers: ["assets/albumes/RapGenre.png"], tracks: [] },
+  { tipo: "Genero", esPrivada: false, nombre: "Dance", covers: ["assets/albumes/TechnoGenre.png"], tracks: [] },
   { tipo: "Genero", esPrivada: false, nombre: "Latin", covers: ["assets/albumes/LatinGenre.png"], tracks: [] },
   { tipo: "Genero", esPrivada: false, nombre: "Pop", covers: ["assets/albumes/PopGenre.png"], tracks: [] }];
   getGeneros() {
