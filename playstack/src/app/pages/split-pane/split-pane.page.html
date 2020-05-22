@@ -7,14 +7,16 @@
         <ion-grid>
           <ion-row>
             <ion-col size="2">
-              <ion-icon name="person-circle-outline" style="padding: 2px; zoom: 2;"></ion-icon>
+              <div class="image-cropper">
+                <img [src]="fotoUsuario" class="imagen-perfil"/>
+              </div>
             </ion-col>
             <ion-col size="6">
               <ion-row>
-                <ion-list-header>{{ nombreUsuario }}</ion-list-header>
+                <ion-list-header style="margin-left: 3px">{{ nombreUsuario }}</ion-list-header>
               </ion-row>
               <ion-row>
-                <ion-note>Cuenta premium</ion-note>
+                <ion-note style="margin-left: 3px">Cuenta {{tipoCuenta}}</ion-note>
               </ion-row>
             </ion-col>
             <ion-col size="4">
