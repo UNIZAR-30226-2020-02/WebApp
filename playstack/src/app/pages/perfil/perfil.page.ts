@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SocialService } from 'src/app/services/social/social.service';
 import { isEmpty } from 'rxjs/operators';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -29,7 +30,7 @@ export class PerfilPage implements OnInit {
   playlistsPublicas: Observable<any>;
   ultimosAudiosEscuchados: Observable<any>;
 
-  constructor(private social : SocialService, private route: ActivatedRoute, private router: Router) {
+  constructor(private social : SocialService, private route: ActivatedRoute, private router: Router, private toastController: ToastController) {
   }
 
   // Cargar datos pasados a la página
@@ -96,20 +97,71 @@ export class PerfilPage implements OnInit {
     return Object.keys(obj).length === 0;
   }
 
-  dejarDeSeguir() {
+  async dejarDeSeguir() {
     console.log("dejar de seguir a:", this.nombreUsuario);
+    let respuesta = await this.social.dejarDeSeguir(this.nombreUsuario)
+    if (respuesta == 200) {
+      this.presentToast('Has dejado de seguir a ' + this.nombreUsuario, 'success');
+      this.seguido = false;
+    } else {
+      this.presentToast('Ha habido un error', 'danger');
+    }
   }
 
-  seguir() {
+  async enviarSolicitud() {
     console.log("seguir a:", this.nombreUsuario);
+    let respuesta = await this.social.enviarSolicitud(this.nombreUsuario)
+    if (respuesta == 200) {
+      this.presentToast('Has enviado una solicitud a ' + this.nombreUsuario, 'success');
+      this.enviadaSolicitud = true;
+    } else {
+      this.presentToast('Ha habido un error', 'danger');
+    }
   }
 
-  aceptarSolicitud() {
+  async eliminarSolicitud() {
+    console.log("seguir a:", this.nombreUsuario);
+    let respuesta = await this.social.eliminarSolicitud(this.nombreUsuario)
+    if (respuesta == 200) {
+      this.presentToast('Has eliminado la solucitud para ' + this.nombreUsuario, 'success');
+      this.enviadaSolicitud = false;
+    } else {
+      this.presentToast('Ha habido un error', 'danger');
+    }
+  }
+
+
+
+  async aceptarSolicitud() {
     console.log("aceptar a:", this.nombreUsuario);
+    let respuesta = await this.social.aceptarSolicitud(this.nombreUsuario)
+    if (respuesta == 200) {
+      this.presentToast('Has aceptado la solicitud de ' + this.nombreUsuario, 'success');
+      this.seguidor = false;
+    } else {
+      this.presentToast('Ha habido un error', 'danger');
+    }
   }
 
-  rechazarSolicitud() {
+  async rechazarSolicitud() {
     console.log("rechazar a:", this.nombreUsuario);
+    let respuesta = await this.social.dejarDeSeguir(this.nombreUsuario)
+    if (respuesta == 200) {
+      this.presentToast('Has rechazado la solicitud de ' + this.nombreUsuario, 'success');
+      this.recibidaSolicitud = false;
+    } else {
+      this.presentToast('Ha habido un error', 'danger');
+    }
   }
 
+
+
+  async presentToast(mensaje: string, color: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 4000,
+      color: color
+    });
+    toast.present();
+  }
 }

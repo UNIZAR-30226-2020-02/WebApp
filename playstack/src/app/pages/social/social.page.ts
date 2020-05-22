@@ -2,6 +2,8 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { SocialService } from 'src/app/services/social/social.service';
 import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+import { BrowserStack } from 'protractor/built/driverProviders';
 
 @Component({
   selector: 'app-social',
@@ -28,10 +30,29 @@ export class SocialPage implements OnInit {
   buscandoUsuarios: boolean = false;
   errorBusqueda: boolean = false;
 
-  constructor(private social: SocialService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private social: SocialService, private router: Router, private activatedRoute: ActivatedRoute, private toastController: ToastController) { }
 
   ngOnInit() {
     this.setSiguiendo()
+  }
+
+  // Acualiza la pestaña al volver a carcar la página,
+  // por ejemplo al darle al botón de atrás para volver.
+  ionViewWillEnter() {
+    switch (this.currentTab) {
+      case "Siguiendo": {
+        this.setSiguiendo();
+        break;
+      }
+      case "Seguidores": {
+        this.setSeguidores();
+        break;
+      }
+      case "Solicitudes": {
+        this.setSolicitudes();
+        break;
+      }
+    }
   }
 
   /* Siguiendo, seguidores, y solicitudes */
@@ -127,12 +148,37 @@ export class SocialPage implements OnInit {
       })
   }
 
-  aceptarSolicitud(usuarioPedido: string) {
-    this.social.aceptarSolicitud(usuarioPedido);
+  async aceptarSolicitud(usuarioPedido: string) {
+    let respuesta = await this.social.aceptarSolicitud(usuarioPedido);
+    console.log("respuesta aceptar", respuesta);
+    if (respuesta == 200) {
+      console.log("Mostrar tostada");
+      this.presentToast('Aceptada solicitud de ' + usuarioPedido, 'success');
+    }
+    else {
+      this.presentToast('Ha habido un error al aceptar la solicitud', 'danger');
+    }
+    this.setSolicitudes();
   }
 
-  rechazarSolicitud(usuarioPedido: string) {
-    this.social.rechazarSolicitud(usuarioPedido);
+  async rechazarSolicitud(usuarioPedido: string) {
+    let respuesta = await this.social.rechazarSolicitud(usuarioPedido);
+    if (respuesta == 200) {
+      this.presentToast('Rechazada solicitud de ' + usuarioPedido, 'success');
+    }
+    else {
+      this.presentToast('Ha habido un error al aceptar la solicitud', 'danger');
+    }
+    this.setSolicitudes();
+  }
+
+  async presentToast(mensaje: string, color: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 4000,
+      color: color
+    });
+    toast.present();
   }
 
   private isEmpty(obj) {

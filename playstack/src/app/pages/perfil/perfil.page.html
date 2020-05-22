@@ -28,12 +28,12 @@
         <ion-button color="danger" *ngIf="seguido" (click)="dejarDeSeguir()">
           Dejar de seguir
         </ion-button>
-        <ion-button color="success" *ngIf="!seguido && !enviadaSolicitud" (click)="seguir()">
-          Seguir
+        <ion-button color="success" *ngIf="!seguido && !enviadaSolicitud" (click)="enviarSolicitud()">
+          Enviar solicitud
         </ion-button>
 
-        <ion-button color="success" *ngIf="enviadaSolicitud && !seguido">
-          Enviada solicitud
+        <ion-button color="success" *ngIf="enviadaSolicitud && !seguido" (click)="eliminarSolicitud()">
+          Eliminar solicitud
         </ion-button>
 
         <div *ngIf="recibidaSolicitud" style="margin-top: 10px;">
