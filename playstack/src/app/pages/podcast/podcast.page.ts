@@ -10,9 +10,12 @@ import { Observable } from 'rxjs';
   styleUrls: ['./podcast.page.scss'],
 })
 export class PodcastPage implements OnInit {
-  podcast: Podcast; // Falta por hacer una clase podcast
+  podcast: any; // Falta por hacer una clase podcast
   @Input()
   listaCapitulos: Observable<any>;
+
+  showSpinner: boolean = false;
+  showError : boolean = true;
 
   constructor(private rs: ReproductorService, private http: HttpClient,
     private route: ActivatedRoute, private router: Router) { 
@@ -24,8 +27,33 @@ export class PodcastPage implements OnInit {
     }
 
   ngOnInit() {
-    this.listaCapitulos = this.rs.recuperarTracks(this.podcast);
+    this.listaCapitulos = this.rs.getEpisodios(this.podcast.key);
     this.cargarCapitulos();
   }
 
+  cargarCapitulos() {
+    this.listaCapitulos.subscribe(
+      capitulos => {
+        this.showSpinner = false;
+        if (this.isEmpty(capitulos)) {
+          this.showError = true;
+        }
+      },
+      error => {
+        this.showSpinner = false;
+        this.showError = true;
+      }
+    );
+  }
+
+  private isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+  }
+
+  playChapter(capitulo: any) {
+    // Establece la lista de reproducción del reproductor como las
+    // canciones que hay después de la que se pone (incluida).
+    this.rs.setPlaylist(this.podcast.capitulos);
+    this.rs.start(capitulo);
+  }
 }
