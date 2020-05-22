@@ -55,6 +55,10 @@ const routes: Routes = [
       {
         path: 'artista',
         loadChildren: ()=> import('../artista/artista.module').then( m => m.ArtistaPageModule)
+      },
+      {
+        path: 'podcast',
+        loadChildren: ()=> import('../podcast/podcast.module').then( m => m.PodcastPageModule)
       }
     ]
   }  

@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="./home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{ podcast.tematica }}
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" class="ion-text-center" style="padding: 40px;">
+        <ion-img style="width: 50%; margin: 0 auto;" [src]="podcast.foto"></ion-img>
+        <h1>{{ podcast.nombre }}</h1>
+        <p>Número de episodios: {{ podcast.capitulos.length }}</p>
+      </ion-col>
+      <ion-col size="8" style="padding: 40px">
+        <ion-row class="ion-text-center">
+          <h2>Capítulos</h2>
+        </ion-row>
+        <ion-row style="font-size: large;">
+          <ion-col>Nº</ion-col>
+          <ion-col>Nombre</ion-col>
+          <ion-col>Fecha</ion-col>
+          <ion-col>Duración</ion-col>
+        </ion-row>
+
+        <div expand="full">
+          <ion-spinner *ngIf="showSpinner"></ion-spinner>
+          <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
+        </div>
+
+        <ion-row *ngFor="let capitulo of listaCapitulos | async | keyvalue;">
+          <ion-item button (click)="playSong(i)" style="width: 100%;">
+            <ion-col>{{ capitulo.value.numCap }}</ion-col>
+            <ion-col>{{ capitulo.nombre }}</ion-col>
+            <ion-col>{{ capitulo.value.fecha }}</ion-col>
+            <ion-col>{{ capitulo.value.duracion }}</ion-col>
+          </ion-item>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <app-reproductor></app-reproductor>
+  </ion-toolbar>
+</ion-footer>

@@ -115,7 +115,7 @@ export class BibliotecaPage implements OnInit {
     this.showSpinner = true;
     this.showError = false;
     // Recuperar podcasts
-    this.podcasts = this.rs.getAllPodcasts();
+    this.podcasts = this.rs.getPodcastsFollowed();
     this.podcasts.subscribe(
       resultado => {
         this.showSpinner = false;
