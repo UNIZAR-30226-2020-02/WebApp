@@ -10,20 +10,13 @@ ion-card {
     padding: 10px;
 }
 
-.image-cropper{
+ion-avatar{
     width: 280px;
-    height: 280px;
-    margin-left:auto;
-    margin-top: auto;
-    margin-right:auto;
-    overflow: hidden;
-    border-radius: 50%;
-}
-
-.imagen-perfil {
-    display: inline-block;
+    height : 280px;
+    margin-left: auto;
+    margin-right: auto;
     margin: 0 auto;
-}
+  }
 
 .ion-color-playstack-soft {
     --ion-color-base: var(--ion-color-playstack-soft);

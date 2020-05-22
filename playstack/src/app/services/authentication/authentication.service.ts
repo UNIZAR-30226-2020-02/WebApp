@@ -46,7 +46,6 @@ export class AuthenticationService {
     this.authenticationID.next(wasd[0]);
     this.authenticationMail.next(wasd[1]);
     let imgURL = await this.info.getUserImage(user);
-    console.log(imgURL);
     this.setUserImageURL(imgURL);
     let acc = await this.info.getPermissions(user);
     this.userAccount.next(acc);

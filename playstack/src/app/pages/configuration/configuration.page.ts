@@ -14,8 +14,9 @@ import { UserInfoService } from 'src/app/services/user-info/user-info.service';
 })
 
 export class ConfigurationPage implements OnInit {
+  colorSuccess: boolean = false;
 
-  constructor(private auth: AuthenticationService, private info : UserInfoService) { }
+  constructor(private auth: AuthenticationService, private info : UserInfoService, private rs : ReproductorService) { }
 
   nombreUsuario: string;
   correoUsuario: string;
@@ -80,18 +81,17 @@ export class ConfigurationPage implements OnInit {
     if(this.nuevoNombreUsuario == null)
     {
       this.mensajeCambioDatos = "Por favor, introduce un nuevo nombre de usuario";
+      this.colorSuccess = false;
       parValidos = false;
     }
     else
     {
       parValidos = true;
-      //let res = await this.info.getUserInfo(this.nombreUsuario);
-      console.log("CORREO USUARIO: ", this.correoUsuario);
       let correoRecuperado = this.auth.getUserMail();
-      console.log("CORREO RECUPERADO: ", correoRecuperado);
       if (!this.checkCorreo(this.correo) ||  !(correoRecuperado === this.correoUsuario)) 
       {
         this.mensajeCambioDatos = "La dirección de correo introducida no es válida";
+        this.colorSuccess = false;
         parValidos = false;
       }
       else
@@ -99,33 +99,39 @@ export class ConfigurationPage implements OnInit {
         if(parValidos)
         {
           let resp = await this.info.updateUserInfo(this.nombreUsuario, this.nuevoNombreUsuario, this.correo, this.passwd);
-          console.log("Datos cambiados, o eso creo");
           this.correo = null;
-          this.nuevoNombreUsuario = null;
+          
           if(resp = 201)
           {
             this.mensajeCambioDatos = "¡Tu perfil se ha actualizado correctamente!";
+            this.colorSuccess = true;
+            await this.auth.login(this.nuevoNombreUsuario);
+            this.nombreUsuario = this.nuevoNombreUsuario;
           }
           else
           {
             this.mensajeCambioDatos = "Algo salió mal, por favor, vuelve a intentarlo.";
+            this.colorSuccess = false;
           }
+          this.nuevoNombreUsuario = null;
         }
       }
     }
   }
 
   cambiarImagen() {
-    console.log("Cambiar imagen")
+    console.log("Cambiar imagen");
   }
 
   logout() {
     this.auth.logout();
+    this.rs.stop();
   }
 
 
   ionViewDidLeave() {
     this.mensajeCambioDatos = "";
+    this.colorSuccess = false;
   }
 
   actualizar()    //TODO

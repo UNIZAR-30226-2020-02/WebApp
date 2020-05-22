@@ -69,6 +69,12 @@ export class ReproductorService {
     this.playlist = playlist;
   }
 
+  stop()
+  {
+    this.player.stop();
+    delete this.player;
+  }
+
   start(track: Track) {
     if (this.player) {
       this.player.stop();
