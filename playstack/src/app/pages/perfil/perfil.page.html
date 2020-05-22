@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content>
+  <div class="perfil-container">
+    <ion-card>
+      <ion-card-header>
         <h2>
           {{ nombreUsuario }}
         </h2>
@@ -16,10 +19,12 @@
           <img [src]="foto">
         </ion-avatar>
 
-        <ion-chip *ngIf="seguidor">
+        <ion-chip *ngIf="seguidor" style="display: inline-block;">
           {{ nombreUsuario }} te sigue
         </ion-chip>
+      </ion-card-header>
 
+      <ion-card-content>
         <ion-button color="danger" *ngIf="seguido" (click)="dejarDeSeguir()">
           Dejar de seguir
         </ion-button>
@@ -30,38 +35,61 @@
         <ion-button color="success" *ngIf="enviadaSolicitud && !seguido">
           Enviada solicitud
         </ion-button>
-  
-        <div *ngIf="recibidaSolicitud">
-          Recibida solicitud
-          <ion-button color="success" (click)="aceptarSolicitud()">
-            Aceptar solicitud
+
+        <div *ngIf="recibidaSolicitud" style="margin-top: 10px;">
+          <p>Recibida solicitud</p>
+          <ion-button color="success" (click)="aceptarSolicitud()" slot="start">
+            Aceptar
           </ion-button>
-          <ion-button color="danger" (click)="rechazarSolicitud()">
-            Rechazar solicitud
+          <ion-button color="danger" (click)="rechazarSolicitud()" slot="end">
+            Rechazar
           </ion-button>
         </div>
+      </ion-card-content>
+    </ion-card>
 
-        <h2>Canciones y podcasts más escuchadas</h2>
-        <ion-list *ngIf="buscandoCancionesPodcasts" lines="none">
-          <ion-item *ngFor="let item of [1,2,3,4,5]">
-            <ion-thumbnail slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-thumbnail>
-            <ion-label>
-              <div>
-                <h3>
-                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                </h3>
-                <p>
-                  <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
-                </p>
-              </div>
-            </ion-label>
-          </ion-item>
-        </ion-list>
+    <h2>Canciones y podcasts más escuchadas</h2>
+    <ion-list *ngIf="buscandoAudiosMasEscuchados" lines="none">
+      <ion-item *ngFor="let item of [1,2,3,4,5]">
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <div>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-text *ngIf="errorAudiosMasEscuchados">No hay canciones y podcast más escuchados</ion-text>
+    <ion-list lines="none">
+      <ion-item *ngFor="let audio of audiosMasEscuchados | async | keyvalue">
+        <ion-thumbnail slot="start">
+          <img [src]="audio.value.ImagenesAlbums[0]">
+        </ion-thumbnail>
+        <ion-label>
+          <div>
+            <h3>
+              {{ audio.value.Titulo }}
+            </h3>
+            <p>
+              {{ audio.value.Albumes.join(', ') }}
+              {{ audio.value.Artistas.join(', ') }}
+              <ion-chip>{{ audio.value.Tipo }}</ion-chip>
+            </p>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
 
+    <!--
         <h2> Generos más escuchados</h2>
-        <ion-list *ngIf="buscandoGeneros" lines="none">
+        <ion-list *ngIf="buscandoPlaylistsPublicas" lines="none">
           <ion-item *ngFor="let item of [1,2,3,4,5]">
             <ion-thumbnail slot="start">
               <ion-skeleton-text animated></ion-skeleton-text>
@@ -78,44 +106,82 @@
             </ion-label>
           </ion-item>
         </ion-list>
+        -->
 
-        <h2>Ultimas canciones y podcasts escuchados</h2>
-        <ion-list *ngIf="buscandoUltimas" lines="none">
-          <ion-item *ngFor="let item of [1,2,3,4,5]">
-            <ion-thumbnail slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-thumbnail>
-            <ion-label>
-              <div>
-                <h3>
-                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                </h3>
-                <p>
-                  <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
-                </p>
-              </div>
-            </ion-label>
-          </ion-item>
-        </ion-list>
+    <h2>Ultimas canciones y podcasts escuchados</h2>
+    <ion-list *ngIf="buscandoUltimosAudiosEscuchados" lines="none">
+      <ion-item *ngFor="let item of [1,2,3,4,5]">
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <div>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-text *ngIf="errorUltimosAudiosEscuchados">No hay últimas canciones y podcasts escuchados</ion-text>
+    <ion-list lines="none">
+      <ion-item *ngFor="let audio of ultimosAudiosEscuchados | async | keyvalue">
+        <ion-thumbnail slot="start">
+          <img [src]="audio.value.ImagenesAlbums[0]">
+        </ion-thumbnail>
+        <ion-label>
+          <div>
+            <h3>
+              {{ audio.value.Titulo }}
+            </h3>
+            <p>
+              {{ audio.value.Albumes.join(', ') }}
+              {{ audio.value.Artistas.join(', ') }}
+              <ion-chip>{{ audio.value.Tipo }}</ion-chip>
+            </p>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
 
-        <h2>Listas de reproducción públicas</h2>
-        <ion-list *ngIf="buscandoPlaylists" lines="none">
-          <ion-item *ngFor="let item of [1,2,3,4,5]">
-            <ion-thumbnail slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-thumbnail>
-            <ion-label>
-              <div>
-                <h3>
-                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                </h3>
-                <p>
-                  <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
-                </p>
-              </div>
-            </ion-label>
-          </ion-item>
-        </ion-list>
+
+    <h2>Playlists públicas</h2>
+    <ion-list *ngIf="buscandoUltimosAudiosEscuchados" lines="none">
+      <ion-item *ngFor="let item of [1,2,3,4,5]">
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <div>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-text *ngIf="errorPlaylistsPublicas">No hay playlists públicas</ion-text>
+    <ion-list lines="none">
+      <ion-item *ngFor="let playlist of playlistsPublicas | async | keyvalue">
+        <ion-thumbnail slot="start">
+          <img [src]="playlist.value.Fotos[0]">
+        </ion-thumbnail>
+        <ion-label>
+          <div>
+            <h3>
+              {{ playlist.key }}
+            </h3>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
 
 <ion-footer>
