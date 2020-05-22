@@ -18,6 +18,7 @@ export class BibliotecaPage implements OnInit {
   playlists: Observable<any>;
   artistas: Observable<any>;
   albumes: Observable<any>;
+  podcasts: Observable<any>;
 
   showSpinner: boolean = false;
   showError: boolean = true;
@@ -95,10 +96,35 @@ export class BibliotecaPage implements OnInit {
 
   setEpisodios() {
     this.currentTabPodcasts = "Episodios";
-  }
+    this.showSpinner = true;
+    this.showError = false;
+    // Recuperar episodios
+    this.podcasts = this.rs.getEpisodios("Speak English now");
+    this.podcasts.subscribe(
+      resultado => {
+        this.showSpinner = false;
+      },
+      error => {
+        this.showSpinner = false;
+        this.mensajeError = "No hay podcasts"
+        this.showError = true;
+      })  }
 
   setProgramas() {
     this.currentTabPodcasts = "Programas";
+    this.showSpinner = true;
+    this.showError = false;
+    // Recuperar podcasts
+    this.podcasts = this.rs.getAllPodcasts();
+    this.podcasts.subscribe(
+      resultado => {
+        this.showSpinner = false;
+      },
+      error => {
+        this.showSpinner = false;
+        this.mensajeError = "No hay podcasts"
+        this.showError = true;
+      })
   }
 
   openPlaylist(nombre: string, esPrivada: boolean, covers: string[]) {
