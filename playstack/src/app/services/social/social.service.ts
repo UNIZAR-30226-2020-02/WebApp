@@ -48,6 +48,24 @@ export class SocialService {
   socialSearch(usuario: string) {
     let user = this.auth.getUserName();
     let params = new HttpParams().set('NombreUsuario', user).append('NombreOtroUsuario', usuario);
-    return this.http.get(this.ROOT_URL + '/user/get/socialsearch', { params });
+    return this.http.get(this.ROOT_URL + '/user/socialsearch', { params });
   }
+
+
+
+  getAudiosMasEscuchados(usuario: string) {
+    let params = new HttpParams().set('Usuario', usuario);
+    return this.http.get(this.ROOT_URL + '/get/mostListenedSongs', { params });
+  }
+
+  getPlaylistsPublicas(usuario: string) {
+    let params = new HttpParams().set('Usuario', usuario);
+    return this.http.get(this.ROOT_URL + '/get/publicplaylists', { params });
+  }
+
+  getUltimosAudiosEscuchados(usuario: string) {
+    let params = new HttpParams().set('Usuario', usuario);
+    return this.http.get(this.ROOT_URL + '/user/get/lastsongs', { params });
+  }
+
 }
