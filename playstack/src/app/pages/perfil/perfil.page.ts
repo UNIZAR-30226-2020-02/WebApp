@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserInfoService } from 'src/app/services/user-info/user-info.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SocialService } from 'src/app/services/social/social.service';
 //import { ConsoleReporter } from 'jasmine'; //Esto no funcionaba

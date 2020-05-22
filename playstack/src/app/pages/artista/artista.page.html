@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="./home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Artista {{ nombreArtista }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-avatar class="ion-text-center">
+    <img class="foto-artista" [src]="foto">
+  </ion-avatar>
+
+  <h2>Canciones de {{ nombreArtista }}</h2>
+  <ion-grid>
+    <ion-row style="font-size: large;">
+      <ion-col>#</ion-col>
+      <ion-col>Titulo</ion-col>
+      <ion-col>Album</ion-col>
+      <ion-col>Artista</ion-col>
+      <ion-col>Duracion</ion-col>
+      <ion-col>Favorita</ion-col>
+    </ion-row>
+
+    <div expand="full">
+      <ion-spinner></ion-spinner>
+    </div>
+
+    <ion-row *ngFor="let cancion of canciones | async | keyvalue;">
+      <ion-item button (click)="playSong(i)" style="width: 100%;">
+        {{ addSong(cancion, i) }}
+        <ion-col>{{ i + 1 }}</ion-col>
+
+        <ion-col>{{ cancion.key }}</ion-col>
+        <ion-col>{{ cancion.value.Albumes?.join(", ") }}</ion-col>
+        <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
+        <ion-col>3:40</ion-col>
+
+        <ion-col *ngIf="cancion.value.EsFavorita">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-col>
+        <ion-col *ngIf="!cancion.value.EsFavorita">
+          <ion-icon name="heart"></ion-icon>
+        </ion-col>
+
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+
+  <h2>Álbumes de {{ nombreArtista }}</h2>
+  <ion-grid>
+    <div expand="full">
+      <ion-spinner></ion-spinner>
+    </div>
+    <ion-row>
+      <ion-col>Nombre</ion-col>
+      <ion-col>Artista</ion-col>
+      <ion-col>Duración</ion-col>
+      <ion-col>Fecha</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let album of albumes | async | keyvalue">
+      <ion-item button (click)="openAlbum(album.key, album.value)" class="item-album">
+        <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
+        <ion-col><img src="{{ album.value }}" class="img-album" /></ion-col>
+        <ion-col>{{ album.key }}</ion-col>
+        <!-- Falta la duracion en el servicio <ion-col>{{ cancion.value.duracion}}</ion-col>-->
+        <!-- Falta la fecha en el servicio <ion-col>{{ cancion.value.fecha}}</ion-col>-->
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+<ion-toolbar>
+<app-reproductor></app-reproductor>
+</ion-toolbar>
+</ion-footer>
