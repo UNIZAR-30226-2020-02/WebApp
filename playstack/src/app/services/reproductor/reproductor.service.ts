@@ -9,6 +9,10 @@ import { NumericValueAccessor } from '@ionic/angular';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { BrowserStack } from 'protractor/built/driverProviders';
 
+export interface Audio {
+
+}
+
 export interface Track {
   nombre: string;
   artistas: string[];

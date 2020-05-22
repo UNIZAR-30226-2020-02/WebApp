@@ -6,22 +6,22 @@ ion-card {
     margin: 20px;
 }
 
-.foto-perfil {
-    zoom: 5;
-    width: 150px;
-    margin: 5px;
-    border-radius: 100px !important;
-    overflow: hidden;
-}
-
 .boton-aceptar {
     padding: 10px;
 }
 
-.boton-imagen {
-    --border-radius: 50%;
+.image-cropper{
     width: 280px;
     height: 280px;
+    margin-left:auto;
+    margin-right:auto;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.imagen-perfil {
+    display: inline-block;
+    margin: 0 auto;
 }
 
 .ion-color-playstack-soft {

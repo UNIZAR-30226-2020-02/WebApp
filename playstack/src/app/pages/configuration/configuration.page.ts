@@ -19,6 +19,7 @@ export class ConfigurationPage implements OnInit {
 
   nombreUsuario: string;
   correoUsuario: string;
+  URLimagenUsuario : string;
 
   showPassword: boolean = false;
   passwordToggleIcon: string = 'eye';
@@ -36,16 +37,8 @@ export class ConfigurationPage implements OnInit {
     // Obtener nombre de usuario desde el módulo de autenticación
     this.nombreUsuario = this.auth.getUserName();
     this.correoUsuario = this.auth.getUserMail();
+    this.URLimagenUsuario = this.auth.getUserImage();  //WIP
 
-
-    //TODO implementar
-    //this.fotoUsuario = this.auth.getUserImage();
-    //TODO se implementa con:
-    /*
-    https://playstack.azurewebsites.net/user/get/profilephoto?Usuario=Freeman
-    Respuesta:
-    {"FotoDePerfil": "https://playstack.azurewebsites.net/media/images/image_picker_6A1AD014-925D-4A9D-940F-D14C10867A7D-8724-0000015C58F7DF06.jpg" }
-    */
   }
 
 
@@ -134,49 +127,9 @@ export class ConfigurationPage implements OnInit {
     this.mensajeCambioDatos = "";
   }
 
-    /*
-    let regExpValida = this.checkParams(this.usuario.correo, this.usuario.nombre, this.usuario.passwd, this.usuario.passwdConfirm);
-    switch (regExpValida) {
-      case 0:
-        {
-          let resp: number = await this.register.hacerRegisterUsuario(this.usuario.nombre, this.usuario.passwd, this.usuario.correo);
-          switch (resp) {
-            case 201: { await this.auth.login(this.usuario.nombre); this.open("app"); break; }
-            case 400: { this.mensajeFormulario = 'El usuario ya existe'; break; }
-            case 406: { this.mensajeFormulario = 'Error en la petición a la BD'; break; }
-            default: { this.mensajeFormulario = 'Error inesperado durante el proceso'; break; }
-          }
-          break;
-        }
-      case 1: { this.mensajeFormulario = 'Las contraseñas no coinciden'; break; }
-      case 2: { this.mensajeFormulario = 'La dirección de correo introducida no es válida'; break; }
-      case 3: { this.mensajeFormulario = 'La contraseña debe tener como mínimo 8 caracteres de longitud'; break; }
-      default: { this.mensajeFormulario = 'Los campos introducidos no son válidos'; break; }
-    }
-    
-  }*/
-
-
-    /*
-    let regExpValida = this.checkParams(this.usuario.correo, this.usuario.nombre, this.usuario.passwd, this.usuario.passwdConfirm);
-    switch (regExpValida) {
-      case 0:
-        {
-          let resp: number = await this.register.hacerRegisterUsuario(this.usuario.nombre, this.usuario.passwd, this.usuario.correo);
-          switch (resp) {
-            case 201: { await this.auth.login(this.usuario.nombre); this.open("app"); break; }
-            case 400: { this.mensajeFormulario = 'El usuario ya existe'; break; }
-            case 406: { this.mensajeFormulario = 'Error en la petición a la BD'; break; }
-            default: { this.mensajeFormulario = 'Error inesperado durante el proceso'; break; }
-          }
-          break;
-        }
-      case 1: { this.mensajeFormulario = 'Las contraseñas no coinciden'; break; }
-      case 2: { this.mensajeFormulario = 'La dirección de correo introducida no es válida'; break; }
-      case 3: { this.mensajeFormulario = 'La contraseña debe tener como mínimo 8 caracteres de longitud'; break; }
-      default: { this.mensajeFormulario = 'Los campos introducidos no son válidos'; break; }
-    }
-    
-  }*/
+  actualizar()    //TODO
+  {
+    return;
+  }
 
 }

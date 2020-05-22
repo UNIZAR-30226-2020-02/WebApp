@@ -63,13 +63,24 @@ export class RegisterPage implements OnInit {
     {
       if(passwd === passwdCheck)
       {
-        if(passwd.length >= 8)
+        let tieneMayus : Boolean = false;
+        for (let i = 0; i < passwd.length; i++)
+        {
+          if(passwd.charAt(i) === passwd.charAt(i).toUpperCase())
+          {
+            tieneMayus = true;
+          }
+        }
+        if(passwd.length >= 8 && tieneMayus)  //TODO contiene mayúscula
         {
           return 0;   //OK
         }
-        else
+        else if(passwd.length < 8)
         {
           return 3; //Contraseña muy corta
+        }
+        else{
+          return 4; //Contraseña sin mayuscula
         }
       }
       else
@@ -103,6 +114,7 @@ export class RegisterPage implements OnInit {
       case 1: { this.mensajeFormulario='Las contraseñas no coinciden'; break; }
       case 2: { this.mensajeFormulario='La dirección de correo introducida no es válida'; break; }
       case 3: { this.mensajeFormulario='La contraseña debe tener como mínimo 8 caracteres de longitud'; break; }
+      case 4: { this.mensajeFormulario='La contraseña debe contener por lo menos una letra mayúscula'; break; }
       default:{ this.mensajeFormulario='Los campos introducidos no son válidos'; break; }
     }
   }

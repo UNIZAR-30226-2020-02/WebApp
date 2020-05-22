@@ -122,6 +122,20 @@ ion-menu ion-content {
     --color: var(--ion-color-primary);
   }
 
+  .image-cropper{
+    width: 50px;
+    height: 50px;
+    margin-left:auto;
+    margin-right:auto;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.imagen-perfil {
+    display: inline-block;
+    margin: 0 auto;
+}
+
   .ion-color-playstack-soft {
     --ion-color-base: var(--ion-color-playstack-soft);
     --ion-color-base-rgb: var(--ion-color-playstack-soft-rgb);

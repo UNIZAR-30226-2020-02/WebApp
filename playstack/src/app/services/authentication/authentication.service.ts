@@ -15,10 +15,16 @@ const TOKEN_KEY = 'auth-token';
  *  y poder hacer peticiones a BD en su nombre, como playlists
  */
 export class AuthenticationService {
+
+  getAccountClass() {
+    return this.userAccount.value.toString();
+  }
  
   private authenticationState = new BehaviorSubject(false);
-  private authenticationID = new BehaviorSubject('Freeman');
+  private authenticationID = new BehaviorSubject('Freeman');  //TODO Inicializar a null cuando no estemos en debug
   private authenticationMail = new BehaviorSubject(null);
+  private userImageURL = new BehaviorSubject(null);
+  private userAccount = new BehaviorSubject(null);
   
   constructor(private storage: Storage, private plt: Platform,private info : UserInfoService) { 
     this.plt.ready().then(() => {
@@ -35,11 +41,15 @@ export class AuthenticationService {
   }
  
   async login(user: string) {
-    // Obtener correo del usuario desde la BD
+    // Obtener datos del usuario logeado desde la BD
     let wasd = await this.info.getUserInfo(user);
-    //TODO
     this.authenticationID.next(wasd[0]);
     this.authenticationMail.next(wasd[1]);
+    let imgURL = await this.info.getUserImage(user);
+    console.log(imgURL);
+    this.setUserImageURL(imgURL);
+    let acc = await this.info.getPermissions(user);
+    this.userAccount.next(acc);
   }
  
   async logout() {
@@ -99,4 +109,15 @@ export class AuthenticationService {
   {
     return this.authenticationMail.value.toString();
   }
+
+  setUserImageURL(url : string)
+  {
+    this.userImageURL.next(url);
+  }
+  
+  getUserImage() : string
+  {
+    return this.userImageURL.value.toString();
+  }
+
 }
