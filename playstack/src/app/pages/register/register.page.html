@@ -21,7 +21,7 @@
         </ion-item>
         <ion-item>
           <ion-input [type]="showPassword ? 'text' : 'password'" required="true" [(ngModel)]="usuario.passwd"
-            name="passwd" clearInput="true" placeholder="Contraseña (Mínimo 8 caracteres)"></ion-input>
+            name="passwd" clearInput="true" placeholder="Contraseña (Mínimo 8 caracteres con una mayúscula)"></ion-input>
           <ion-icon [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
         </ion-item>
         <ion-item>

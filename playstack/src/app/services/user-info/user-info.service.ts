@@ -54,4 +54,28 @@ export class UserInfoService {
     return retVal;
   }
 
+
+  async getUserImage(nombreUser : string)
+  {
+    return await this.http.get("https://playstack.azurewebsites.net/user/get/profilephoto?Usuario="+nombreUser).toPromise()
+    .then(res => {
+      if(res)
+      {
+        return res["FotoDePerfil"];
+      }
+    })
+    .catch(msg => {console.log('Error en getUserImage: ' + msg.status + ' ' + msg.statusText);});
+  }
+
+  async getPermissions(user: string) {
+    return await this.http.get("https://playstack.azurewebsites.net/user/get/permissions?Usuario="+user).toPromise()
+    .then(res => {
+      if(res)
+      {
+        return res["Permiso"];
+      }
+    })
+    .catch(msg => {console.log('Error en getUserImage: ' + msg.status + ' ' + msg.statusText);});
+  }
+
 }

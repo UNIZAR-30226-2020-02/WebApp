@@ -17,10 +17,11 @@
       <ion-grid>
         <ion-row class="ion-text-center">
           <ion-col>
-            <ion-button (click)="cambiarImagen()" class="boton-imagen">
-              <ion-icon slot="icon-only" name="person-circle-outline" class="foto-perfil"></ion-icon>
-            </ion-button>
-            <ion-label style="display: block;">Cambiar imagen de usuario</ion-label>
+            <div class="image-cropper">
+              <img [src]="URLimagenUsuario" class="imagen-perfil"/>
+            </div>
+            <ion-label style="display: block;padding-top:25px;">{{nombreUsuario}}</ion-label>
+            <ion-label style="display: block;padding-top:25px;">{{correoUsuario}}</ion-label>
           </ion-col>
 
 

@@ -16,11 +16,14 @@ export class SplitPanePage implements OnInit {
   public playlists = ["Éxitos de España", "Canciones favoritas", "Mi Playlist"];
 
   nombreUsuario: string;
-
+  fotoUsuario : string;
+  tipoCuenta : string;
   constructor(private router: Router, private auth: AuthenticationService) { }
 
     async ngOnInit() {
       this.nombreUsuario = this.auth.getUserName();
+      this.fotoUsuario = this.auth.getUserImage();
+      this.tipoCuenta = this.auth.getAccountClass();
     }
 
     open(id: string) {
