@@ -240,7 +240,13 @@ export class ReproductorService {
   }
   getEpisodios(program: string){
     let params = new HttpParams().set('NombrePodcast', program);
-    return this.http.get(this.ROOT_URL + '/get/podcast/episodes', { params });
+    return this.http.get(this.ROOT_URL + '/get/podcastCaps', { params });
+  }
+
+  getPodcastsFollowed(){
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreUsuario', user);
+    return this.http.get(this.ROOT_URL + '/get/podcast/followed', { params });
   }
 
   recuperarTracks(playlist: Playlist): any {
