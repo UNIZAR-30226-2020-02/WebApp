@@ -224,7 +224,7 @@
 
             <ion-list lines="none">
               <ion-item *ngFor="let artista of artistas; let i = index;" button
-              (click)="openArtist(artista.Nombre)">
+              (click)="openArtist(artista.Nombre, artista.Foto)">
                 <ion-thumbnail *ngIf="i < 5" slot="start">
                   <img src="{{ artista.Foto }}" /> -->
                 </ion-thumbnail>

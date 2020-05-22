@@ -235,7 +235,13 @@ export class ReproductorService {
     let params = new HttpParams().set('NombreUsuario', user);
     return this.http.get(this.ROOT_URL + '/get/favoritesongs', { params });
   }
-
+  getAllPodcasts(){
+    return this.http.get(this.ROOT_URL + '/get/allpodcasts');
+  }
+  getEpisodios(program: string){
+    let params = new HttpParams().set('NombrePodcast', program);
+    return this.http.get(this.ROOT_URL + '/get/podcast/episodes', { params });
+  }
 
   recuperarTracks(playlist: Playlist): any {
     // Dependiendo del tipo de la playlist, realizar una consulta u otra para recuperar sus canciones de la BD

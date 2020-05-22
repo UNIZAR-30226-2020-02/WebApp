@@ -28,7 +28,7 @@
     </div>
 
     <ion-row *ngFor="let cancion of canciones | async | keyvalue;">
-      <!--ion-item button (click)="playSong(i)" style="width: 100%;"-->
+      <ion-item button (click)="playSong(cancion)" style="width: 100%;">
         <ion-col>{{ cancion.key }}</ion-col>
         <ion-col>{{ cancion.value.Albumes?.join(", ") }}</ion-col>
         <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
@@ -41,7 +41,7 @@
           <ion-icon name="heart"></ion-icon>
         </ion-col>
 
-      <!--/ion-item-->
+      </ion-item>
     </ion-row>
   </ion-grid>
 
