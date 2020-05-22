@@ -98,13 +98,15 @@
           <ion-spinner *ngIf="showSpinner"></ion-spinner>
           <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
         </div>
-        <ion-row *ngFor="let artista of artistas | async | keyvalue">
-          <ion-col>
-            <img src="{{ artista.value }}" class="img-artista" />
-          </ion-col>
-          <ion-col>
-            {{ artista.key }}
-          </ion-col>
+        <ion-row *ngFor="let artista of artistas | async | keyvalue" >
+          <ion-item button (click)="openArtist(artista.key, artista.value)">
+            <ion-col>
+              <img src="{{ artista.value }}" class="img-artista" />
+            </ion-col>
+            <ion-col>
+              {{ artista.key }}
+            </ion-col>
+          </ion-item>
         </ion-row>
       </ion-grid>
     </ion-content>

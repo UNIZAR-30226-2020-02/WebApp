@@ -51,6 +51,10 @@ const routes: Routes = [
       {
         path: 'social',
         loadChildren: () => import('../social/social.module').then( m => m.SocialPageModule)
+      },
+      {
+        path: 'artista',
+        loadChildren: ()=> import('../artista/artista.module').then( m => m.ArtistaPageModule)
       }
     ]
   }  

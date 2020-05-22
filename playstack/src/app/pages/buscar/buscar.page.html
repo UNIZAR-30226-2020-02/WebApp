@@ -8,7 +8,7 @@
   <ion-searchbar placeholder="Buscar en PlayStack" color="light" debounce="500" (ionChange)="onSearchChange($event)">
   </ion-searchbar>
 
-  <ion-text *ngIf="!buscando">Puedes buscar canciones, playlists, albumes, podcasts y usuarios.</ion-text>
+  <ion-text *ngIf="!buscando">Puedes buscar canciones, playlists, albumes, podcasts y artistas.</ion-text>
 
   <ion-grid *ngIf="buscando">
     <ion-row style="font-size: large;">
@@ -202,7 +202,7 @@
             Artistas
           </ion-card-title>
           <ion-card-content>
-            <ion-label *ngIf="errorArtistas">No se han encontrado usuarios</ion-label>
+            <ion-label *ngIf="errorArtistas">No se han encontrado artistas</ion-label>
 
             <ion-list *ngIf="buscandoArtistas" lines="none">
               <ion-item *ngFor="let item of [1,2,3,4,5]">
@@ -223,13 +223,14 @@
             </ion-list>
 
             <ion-list lines="none">
-              <ion-item *ngFor="let usuario of usuarios; let i = index;">
+              <ion-item *ngFor="let artista of artistas; let i = index;" button
+              (click)="openArtist(artista.Nombre)">
                 <ion-thumbnail *ngIf="i < 5" slot="start">
-                  <img src="{{ usuario.Foto }}" /> -->
+                  <img src="{{ artista.Foto }}" /> -->
                 </ion-thumbnail>
                 <ion-label *ngIf="i < 5">
                   <div>
-                    <h2 style="display: inline;">{{ usuario.Nombre }}</h2>
+                    <h2 style="display: inline;">{{ artista.Nombre }}</h2>
                   </div>
                 </ion-label>
               </ion-item>

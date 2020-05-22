@@ -127,21 +127,17 @@ export class BibliotecaPage implements OnInit {
     this.router.navigate(['../../playlist'], navigationExtras);
   }
 
-  /*
-  openArtist() {
-    console.log("Abrir playlist: ", playlist.tipo, playlist.esPrivada, playlist.nombre);
-
-    // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
+  openArtist(artista: string, foto: string) {
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
       state: {
-        playlist: playlist
+        nombreArtista: artista,
+        image: foto,
       }
     };
     console.log(this.activatedRoute);
-    this.router.navigate(['../../playlist'], navigationExtras);
+    this.router.navigate(['../../artista'], navigationExtras);
   }
-  */
 
   openAlbum(nombre: string, cover: string) {
     let playlist = this.rs.constructPlaylist("Album", false, nombre, [cover], []);

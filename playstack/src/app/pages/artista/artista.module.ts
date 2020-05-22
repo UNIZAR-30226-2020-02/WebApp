@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ArtistaPageRoutingModule } from './artista-routing.module';
 
 import { ArtistaPage } from './artista.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ArtistaPageRoutingModule
+    ArtistaPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [ArtistaPage]
 })

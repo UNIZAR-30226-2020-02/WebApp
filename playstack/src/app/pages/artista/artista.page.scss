@@ -1,8 +1,6 @@
-.foto-artista{
-    width: 100px;
-    height: 100px;
-    margin-left:auto;
-    margin-right:auto;
-    overflow: hidden;
+.img-artista {
+    width: inherit;
+    height: inherit;
     border-radius: 50%;
+    margin: 10px;
 }
