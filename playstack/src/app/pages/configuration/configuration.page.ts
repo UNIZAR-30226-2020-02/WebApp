@@ -20,6 +20,7 @@ export class ConfigurationPage implements OnInit {
   nombreUsuario: string;
   correoUsuario: string;
   URLimagenUsuario : string;
+  suscripcionUsuario : string;
 
   showPassword: boolean = false;
   passwordToggleIcon: string = 'eye';
@@ -37,8 +38,8 @@ export class ConfigurationPage implements OnInit {
     // Obtener nombre de usuario desde el módulo de autenticación
     this.nombreUsuario = this.auth.getUserName();
     this.correoUsuario = this.auth.getUserMail();
-    this.URLimagenUsuario = this.auth.getUserImage();  //WIP
-
+    this.URLimagenUsuario = this.auth.getUserImage();
+    this.suscripcionUsuario = this.auth.getAccountClass();
   }
 
 

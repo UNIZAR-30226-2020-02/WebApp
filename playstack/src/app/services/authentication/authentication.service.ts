@@ -57,6 +57,8 @@ export class AuthenticationService {
     this.authenticationState.next(false);
     this.authenticationID.next(null);
     this.authenticationMail.next(null);
+    this.userAccount.next(null);
+    this.userImageURL.next(null);
   }
  
   isAuthenticated() {

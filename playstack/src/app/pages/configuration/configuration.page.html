@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Configuracion</ion-title>
+    <ion-title>Configuración</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -53,8 +53,8 @@
               <ion-text color="danger">{{ mensajeCambioDatos }}</ion-text>
               <ion-item lines="none" class="boton-aceptar">
                 <div style="padding-top: 10px;">
-                  <ion-button type="submit" color="light" style="--border-radius: 15px; width: 310px;"><b>Guardar
-                    cambios</b>
+                  <ion-button type="submit" color="light" style="--border-radius: 15px; width: 310px;">
+                    <b>Guardar cambios</b>
                 </ion-button>
                 </div>
               </ion-item>
@@ -70,25 +70,18 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>
-        Cuenta
+        Suscripción y cuenta
       </ion-card-title>
     </ion-card-header>
 
     <ion-card-content class="ion-text-center">
-      <div>Tienes una subscripción</div>
-      <ion-chip style="width: 100px">Estándar</ion-chip>
-      <ion-button (click)="actualizar()" style="width: 200px">Hacerse premium</ion-button>
+      <ion-button *ngIf="suscripcionUsuario === 'No Premium'" (click)="actualizar()" style="width: 200px">Pásate a premium</ion-button>
+      <ion-button (click)="logout()" [routerLink]="['/login']" color="playstack-soft"
+        style="--border-radius: 15px;width:50%;margin-left: 15%;">
+        <b>Cerrar Sesión</b>
+      </ion-button>
     </ion-card-content>
   </ion-card>
-
-
-
-  <ion-button (click)="logout()" [routerLink]="['/login']" color="playstack-soft"
-    style="--border-radius: 15px; width: 400px; height: 70px; padding-top: 20px; padding-bottom: 10px; padding-left: 12%;">
-    <b>Cerrar Sesión</b>
-  </ion-button>
-
-
 </ion-content>
 
 <ion-footer>
