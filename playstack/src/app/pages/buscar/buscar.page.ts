@@ -132,11 +132,12 @@ export class BuscarPage implements OnInit {
   }
 
   
-  openArtist(artista: string) {
+  openArtist(artista: string, foto: string) {
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
       state: {
-        nombreArtista: artista
+        nombreArtista: artista,
+        image: foto,
       }
     };
     console.log(this.activatedRoute);
