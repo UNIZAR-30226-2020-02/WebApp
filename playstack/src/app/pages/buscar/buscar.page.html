@@ -41,10 +41,10 @@
             <ion-list lines="none">
               <ion-item *ngFor="let cancion of canciones | keyvalue; let i = index;" button
                 (click)="playTrack(cancion.key, cancion.value)">
-                <ion-thumbnail *ngIf="i < 5" slot="start">
+                <ion-thumbnail slot="start">
                   <img src="{{ cancion.value.ImagenesAlbum[0] }}" />
                 </ion-thumbnail>
-                <ion-label *ngIf="i < 5">
+                <ion-label>
                   <div>
                     <h2 style="display: inline;">{{ cancion.key }}</h2>
                     <h3 style="display: inline; padding-left: 20px;">{{ cancion.value.Albumes.join(', ') }}</h3>
@@ -87,10 +87,10 @@
             <ion-list lines="none">
               <ion-item *ngFor="let playlist of playlists | keyvalue; let i = index;" button
                 (click)="openPlaylist(playlist.key, playlist.value.Fotos)">
-                <ion-thumbnail *ngIf="i < 5" slot="start">
+                <ion-thumbnail slot="start">
                   <img src="{{ playlist.value.Fotos[0] }}" />
                 </ion-thumbnail>
-                <ion-label *ngIf="i < 5">
+                <ion-label>
                   <div>
                     <h2 style="display: inline;">{{ playlist.key }}</h2>
                   </div>
@@ -136,10 +136,10 @@
             <ion-list lines="none">
               <ion-item *ngFor="let album of albumes | keyvalue; let i = index;" button
                 (click)="openAlbum(album.key, [album.value])">
-                <ion-thumbnail *ngIf="i < 5" slot="start">
+                <ion-thumbnail slot="start">
                   <img src="{{ album.value }}" />
                 </ion-thumbnail>
-                <ion-label *ngIf="i < 5">
+                <ion-label >
                   <div>
                     <h2 style="display: inline;">{{ album.key }}</h2>
                   </div>
@@ -178,10 +178,10 @@
 
             <ion-list lines="none">
               <ion-item *ngFor="let podcast of podcasts | keyvalue; let i = index;">
-                <ion-thumbnail *ngIf="i < 5" slot="start">
+                <ion-thumbnail slot="start">
                   <img src="{{ podcast.value }}" />
                 </ion-thumbnail>
-                <ion-label *ngIf="i < 5">
+                <ion-label>
                   <div>
                     <h2 style="display: inline;">{{ podcast.key }}</h2>
                   </div>
@@ -225,10 +225,10 @@
             <ion-list lines="none">
               <ion-item *ngFor="let artista of artistas; let i = index;" button
               (click)="openArtist(artista.Nombre, artista.Foto)">
-                <ion-thumbnail *ngIf="i < 5" slot="start">
-                  <img src="{{ artista.Foto }}" /> -->
+                <ion-thumbnail slot="start">
+                  <img src="{{ artista.Foto }}" />
                 </ion-thumbnail>
-                <ion-label *ngIf="i < 5">
+                <ion-label>
                   <div>
                     <h2 style="display: inline;">{{ artista.Nombre }}</h2>
                   </div>
