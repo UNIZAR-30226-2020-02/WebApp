@@ -24,6 +24,7 @@ export class BibliotecaPage implements OnInit {
   showSpinner: boolean = false;
   showError: boolean = true;
   mensajeError: string = "";
+  firstTime: boolean = true;
 
 
   constructor(public rs: ReproductorService, public cs: ContenidoService, public http: HttpClient,
@@ -41,6 +42,10 @@ export class BibliotecaPage implements OnInit {
 
   setPodcasts() {
     this.currentTab = "Podcasts";
+    if (this.firstTime) {
+      this.firstTime = false;
+      this.setEpisodios();
+    }
   }
 
 

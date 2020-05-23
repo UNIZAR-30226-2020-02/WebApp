@@ -3,6 +3,7 @@ import { Playlist, Cancion } from '../reproductor/reproductor.service';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -102,7 +103,9 @@ export class ContenidoService {
   }
   getEpisodios(program: string){
     let params = new HttpParams().set('NombrePodcast', program);
-    return this.http.get(this.ROOT_URL + '/get/podcastCaps', { params });
+    return this.http.get(this.ROOT_URL + '/get/podcast/all', { params }).pipe(
+      pluck('capitulos')
+    );
   }
 
   getPodcastsFollowed(){
