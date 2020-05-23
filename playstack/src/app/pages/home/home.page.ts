@@ -2,6 +2,7 @@ import { Playlist } from './../../services/reproductor/reproductor.service';
 import { Component, OnInit } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor/reproductor.service';
 import { Observable } from 'rxjs';
+import { ContenidoService } from 'src/app/services/contenido/contenido.service';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomePage implements OnInit {
   showSpinner2: boolean = true;
 
 
-  constructor(public rs: ReproductorService) {
+  constructor(public rs: ReproductorService, public cs: ContenidoService) {
   }
 
   ngOnInit() {

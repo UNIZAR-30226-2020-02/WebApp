@@ -2,6 +2,7 @@ import { Playlist } from './../../services/reproductor/reproductor.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor/reproductor.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-scrollhorizontal',
@@ -11,7 +12,8 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 export class ScrollhorizontalComponent implements OnInit {
 
   @Input()
-  listaPlaylists: Playlist[];
+  listaConjuntos: Observable<any>;
+  tipoConjuntos: string;
 
   slideOpts = {
     slidesPerView: 4,
@@ -31,6 +33,7 @@ export class ScrollhorizontalComponent implements OnInit {
   }
 
   openPlaylist(playlist: Playlist) {
+    
     console.log("Abrir playlist: ", playlist.tipo, playlist.esPrivada, playlist.nombre);
 
     // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist

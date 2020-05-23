@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResolvedStaticSymbol } from '@angular/compiler';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,11 @@ export class SocialService {
   getAudiosMasEscuchados(usuario: string) {
     console.log('audios mas escuchados de', usuario);
     let params = new HttpParams().set('Usuario', usuario);
-    return this.http.get(this.ROOT_URL + '/user/get/mostListenedSongs', { params });
+    return this.http.get(this.ROOT_URL + '/user/get/mostListenedSongs', { params }).pipe(
+      map(resultado => {
+        console.log("audios mas escuchados", resultado);
+      })
+    );
   }
 
   getPlaylistsPublicas(usuario: string) {

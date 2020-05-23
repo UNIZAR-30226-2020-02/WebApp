@@ -1,4 +1,5 @@
-import { Track } from './../../services/reproductor/reproductor.service';
+import { ContenidoService } from './../../services/contenido/contenido.service';
+import { Cancion } from './../../services/reproductor/reproductor.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren } from '@angular/core';
@@ -14,7 +15,7 @@ import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
 })
 export class BuscarPage implements OnInit {
 
-  constructor(private rs:ReproductorService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private rs:ReproductorService, private cs:ContenidoService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   buscando: boolean;
 
@@ -81,7 +82,7 @@ export class BuscarPage implements OnInit {
     this.podcasts = undefined;
     this.artistas = undefined;
 
-    this.resultados = this.rs.getSearch(value)
+    this.resultados = this.cs.getSearch(value)
     this.procesarResultados();
   }
 
@@ -114,12 +115,12 @@ export class BuscarPage implements OnInit {
 
 
   playTrack(key: string, value: any) {
-    let track: Track = this.rs.constructTrack2(key, value)
+    let track: Cancion = this.cs.constructTrack2(key, value)
     this.rs.start(track);
   }
 
   openPlaylist(nombre: string, esPrivada: boolean, covers: string[]) {
-    let playlist = this.rs.constructPlaylist("Playlist", esPrivada, nombre, covers, []);
+    let playlist = this.cs.constructPlaylist("Playlist", esPrivada, nombre, covers, []);
     // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
@@ -146,7 +147,7 @@ export class BuscarPage implements OnInit {
   
 
   openAlbum(nombre: string, cover: string) {
-    let playlist = this.rs.constructPlaylist("Album", false, nombre, [cover], []);
+    let playlist = this.cs.constructPlaylist("Album", false, nombre, [cover], []);
     // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,

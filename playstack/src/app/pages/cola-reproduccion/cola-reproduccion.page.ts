@@ -30,8 +30,8 @@ export class ColaReproduccionPage implements OnInit {
   }
 
   getNextPlaylistSongs() {
-    let indiceActual: number = this.rs.playlist.indexOf(this.rs.activeTrack);
-    let nextSongs = this.rs.playlist.slice(indiceActual + 1);
+    let indiceActual: number = this.rs.listaAudio.indexOf(this.rs.activeTrack);
+    let nextSongs = this.rs.listaAudio.slice(indiceActual + 1);
     console.log("Reproduciendo cancion", indiceActual);
     return nextSongs;
   }

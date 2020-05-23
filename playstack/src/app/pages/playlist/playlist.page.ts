@@ -1,9 +1,9 @@
+import { ContenidoService } from './../../services/contenido/contenido.service';
 import { Component, OnInit, Input, Pipe, PipeTransform } from '@angular/core';
 import { ReproductorService, Playlist } from 'src/app/services/reproductor/reproductor.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-playlist',
@@ -21,7 +21,7 @@ export class PlaylistPage implements OnInit {
   showError: boolean = false;
   mensajeError: string = "La playlist está vacía";
 
-  constructor(public rs: ReproductorService, public http: HttpClient,
+  constructor(public rs: ReproductorService, public c: ContenidoService, public http: HttpClient,
     private route: ActivatedRoute, private router: Router) {
 
     this.route.queryParams.subscribe(() => {
@@ -33,7 +33,7 @@ export class PlaylistPage implements OnInit {
   }
 
   ngOnInit() {
-    this.listaCanciones = this.rs.recuperarTracks(this.playlist);
+    this.listaCanciones = this.c.recuperarTracks(this.playlist);
     this.cargarCanciones();
     console.log("playlist", this.playlist);
   }
@@ -59,7 +59,7 @@ export class PlaylistPage implements OnInit {
 
   addSong(cancion: any, indice: number) {
     if (this.playlist.tracks[indice] === undefined) {
-      this.playlist.tracks[indice] = this.rs.constructTrack(cancion);
+      this.playlist.tracks[indice] = this.c.constructTrack(cancion);
       console.log(this.playlist.tracks);
     }
   }
@@ -68,7 +68,7 @@ export class PlaylistPage implements OnInit {
     console.log("Poner cancion", indice);
     // Establece la lista de reproducción del reproductor como las
     // canciones que hay después de la que se pone (incluida).
-    this.rs.setPlaylist(this.playlist.tracks);
+    this.rs.setListaAudio(this.playlist.tracks);
     this.rs.start(this.playlist.tracks[indice]);
   }
 

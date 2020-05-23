@@ -3,6 +3,7 @@ import { ReproductorService } from '../../services/reproductor/reproductor.servi
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ContenidoService } from 'src/app/services/contenido/contenido.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class BibliotecaPage implements OnInit {
   mensajeError: string = "";
 
 
-  constructor(public rs: ReproductorService, public http: HttpClient,
+  constructor(public rs: ReproductorService, public cs: ContenidoService, public http: HttpClient,
      private router: Router, private activatedRoute: ActivatedRoute) {
   }
 
@@ -48,7 +49,7 @@ export class BibliotecaPage implements OnInit {
     this.showSpinner = true;
     this.showError = false;
     // Recuperar las playlists
-    this.playlists = this.rs.getUserPlaylists();
+    this.playlists = this.cs.getUserPlaylists();
     this.playlists.subscribe(
       resultado => {
         this.showSpinner = false;
@@ -57,7 +58,7 @@ export class BibliotecaPage implements OnInit {
         this.showSpinner = false;
         this.mensajeError = "No hay playlists"
         this.showError = true;
-      })
+      });
   }
 
   setArtistas() {
@@ -65,7 +66,7 @@ export class BibliotecaPage implements OnInit {
     this.showSpinner = true;
     this.showError = false;
     // Recuperar artistas
-    this.artistas = this.rs.getArtistas();
+    this.artistas = this.cs.getArtistas();
     this.artistas.subscribe(
       resultado => {
         this.showSpinner = false;
@@ -74,7 +75,7 @@ export class BibliotecaPage implements OnInit {
         this.showSpinner = false;
         this.mensajeError = "No hay artistas"
         this.showError = true;
-      })
+      });
   }
 
   setAlbumes() {
@@ -82,7 +83,7 @@ export class BibliotecaPage implements OnInit {
     this.showSpinner = true;
     this.showError = false;
     // Recuperar albumes
-    this.albumes = this.rs.getRandomAbums();
+    this.albumes = this.cs.getRandomAbums();
     this.albumes.subscribe(
       resultado => {
         this.showSpinner = false;
@@ -91,31 +92,15 @@ export class BibliotecaPage implements OnInit {
         this.showSpinner = false;
         this.mensajeError = "No hay albumes"
         this.showError = true;
-      })
+      });
   }
-
-  setEpisodios() {
-    this.currentTabPodcasts = "Episodios";
-    this.showSpinner = true;
-    this.showError = false;
-    // Recuperar episodios
-    this.podcasts = this.rs.getEpisodios("Speak English now");
-    this.podcasts.subscribe(
-      resultado => {
-        this.showSpinner = false;
-      },
-      error => {
-        this.showSpinner = false;
-        this.mensajeError = "No hay podcasts"
-        this.showError = true;
-      })  }
 
   setProgramas() {
     this.currentTabPodcasts = "Programas";
     this.showSpinner = true;
     this.showError = false;
     // Recuperar podcasts
-    this.podcasts = this.rs.getPodcastsFollowed();
+    this.podcasts = this.cs.getPodcastsFollowed();
     this.podcasts.subscribe(
       resultado => {
         this.showSpinner = false;
@@ -124,11 +109,28 @@ export class BibliotecaPage implements OnInit {
         this.showSpinner = false;
         this.mensajeError = "No hay podcasts"
         this.showError = true;
-      })
+      });
+    }
+
+  setEpisodios() {
+    this.currentTabPodcasts = "Episodios";
+    this.showSpinner = true;
+    this.showError = false;
+    // Recuperar episodios
+    this.podcasts = this.cs.getEpisodios("Speak English now");
+    this.podcasts.subscribe(
+      resultado => {
+        this.showSpinner = false;
+      },
+      error => {
+        this.showSpinner = false;
+        this.mensajeError = "No hay podcasts"
+        this.showError = true;
+      });
   }
 
   openPlaylist(nombre: string, esPrivada: boolean, covers: string[]) {
-    let playlist = this.rs.constructPlaylist("Playlist", esPrivada, nombre, covers, []);
+    let playlist = this.cs.constructPlaylist("Playlist", esPrivada, nombre, covers, []);
     // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
@@ -141,7 +143,7 @@ export class BibliotecaPage implements OnInit {
   }
 
   openFavoritas(nombre: string, esPrivada: boolean, covers: string[]) {
-    let playlist = this.rs.constructPlaylist("Favoritas", esPrivada, nombre, covers, []);
+    let playlist = this.cs.constructPlaylist("Favoritas", esPrivada, nombre, covers, []);
     // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
@@ -166,7 +168,7 @@ export class BibliotecaPage implements OnInit {
   }
 
   openAlbum(nombre: string, cover: string) {
-    let playlist = this.rs.constructPlaylist("Album", false, nombre, [cover], []);
+    let playlist = this.cs.constructPlaylist("Album", false, nombre, [cover], []);
     // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,

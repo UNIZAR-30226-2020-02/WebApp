@@ -1,3 +1,4 @@
+import { ContenidoService } from './../../services/contenido/contenido.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ReproductorService } from 'src/app/services/reproductor/reproductor.service';
@@ -16,7 +17,7 @@ export class ArtistaPage implements OnInit {
   showSpinner: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router,
-      private rs: ReproductorService) {
+      private rs: ReproductorService, private cs: ContenidoService) {
   }
 
   ngOnInit() {
@@ -27,13 +28,13 @@ export class ArtistaPage implements OnInit {
         this.foto = state.image;
       }
     });
-    this.canciones = this.rs.getCancionesByArtista(this.nombreArtista);
-    this.albumes = this.rs.getArtistaAlbums(this.nombreArtista);
+    this.canciones = this.cs.getCancionesByArtista(this.nombreArtista);
+    this.albumes = this.cs.getArtistaAlbums(this.nombreArtista);
     this.showSpinner = false;
   }
 
   openAlbum(nombre: string, cover: string) {
-    let playlist = this.rs.constructPlaylist("Album", false, nombre, [cover], []);
+    let playlist = this.cs.constructPlaylist("Album", false, nombre, [cover], []);
     // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
     let navigationExtras: NavigationExtras = {
       relativeTo: this.route,
@@ -46,7 +47,7 @@ export class ArtistaPage implements OnInit {
   }
 
   playSong(cancion: any){
-    let c = this.rs.constructTrack(cancion);
+    let c = this.cs.constructTrack(cancion);
     this.rs.start(c); 
   }
 

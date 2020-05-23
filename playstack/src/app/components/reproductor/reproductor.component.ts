@@ -1,9 +1,6 @@
-import { SplitPanePageModule } from './../../pages/split-pane/split-pane.module';
+import { Cancion, Episodio } from './../../services/reproductor/reproductor.service';
 import { SplitPanePage } from './../../pages/split-pane/split-pane.page';
-import { SplitPanePageRouterModule } from './../../pages/split-pane/split-pane.routing';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { ColaReproduccionPageRoutingModule } from './../../pages/cola-reproduccion/cola-reproduccion-routing.module';
-import { ColaReproduccionPage } from './../../pages/cola-reproduccion/cola-reproduccion.page';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor/reproductor.service';
 
