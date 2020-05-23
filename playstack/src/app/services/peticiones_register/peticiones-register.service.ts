@@ -11,7 +11,7 @@ export class PeticionesRegisterService {
   async hacerRegisterUsuario(nombre : string, passwd : string, email: string): Promise<number>
   {
     console.log("POST EN ACCION");
-    let retVal: number;
+    let retVal: number
     const httpOptions={
       headers : new HttpHeaders({
         'Content-Type': 'application/json'
