@@ -8,6 +8,11 @@ import { map } from 'rxjs/operators';
 export class Audio {
   nombre: string;
   path: string;
+
+  constructor(nombre: string, path: string) {
+    this.nombre = nombre;
+    this.path = path;
+  }
 }
 
 export class Cancion extends Audio {
@@ -15,11 +20,25 @@ export class Cancion extends Audio {
   artistas: string[];
   albumes: string[];
   esFavorita: boolean;
+
+  constructor(nombre: string, path: string, covers: string[], artistas: string[], albumes: string[], esFavorita: boolean) {
+    super(nombre, path);
+    this.covers = covers;
+    this.artistas = artistas;
+    this.albumes = albumes;
+    this.esFavorita = esFavorita;
+  }
 }
 
 export class Episodio extends Audio {
   numCap: number;
   fecha: Date;
+
+  constructor(nombre: string, path: string, numCap: number, fecha: Date) {
+    super(nombre, path);
+    this.numCap = numCap;
+    this.fecha = fecha;
+  }
 }
 
 /*
@@ -40,7 +59,7 @@ export class Playlist {
 export class Podcast {
   foto: string;
   tema: string;
-  episodios: Episodio[]; 
+  episodios: Episodio[];
 }
 
 
@@ -75,10 +94,10 @@ export class ReproductorService {
     this.listaAudio = playlist;
   }
 
-    // Devuelve:
+  // Devuelve:
   //  Cancion
   //  Episodio
-  tipoAudio(audio: any): string {
+  tipoAudio(audio: Audio): string {
     if (audio instanceof Cancion) {
       return "Cancion";
     }
@@ -98,8 +117,7 @@ export class ReproductorService {
 
   /* Control de reproduccion */
 
-  stop()
-  {
+  stop() {
     this.player.stop();
     delete this.player;
   }
@@ -108,7 +126,7 @@ export class ReproductorService {
     if (this.player) {
       this.player.stop();
       delete this.player;
-    }   
+    }
     this.activeTrack = track;
     this.player = new Howl({
       src: track.path,

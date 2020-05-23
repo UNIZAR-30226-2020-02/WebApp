@@ -120,7 +120,7 @@ export class SocialService {
   // Enviar solicitud
   async enviarSolicitud(seguidor: string): Promise<number> {
     let user = this.auth.getUserName();
-    console.log("Servicio rechazar: ", seguidor);
+    console.log("Servicio enviar solicitud: ", seguidor);
 
     let retVal: number;
 
@@ -142,7 +142,7 @@ export class SocialService {
   // Eliminar solicitud
   async eliminarSolicitud(seguidor: string): Promise<number> {
     let user = this.auth.getUserName();
-    console.log("Servicio rechazar: ", seguidor);
+    console.log("Servicio eliminar solicitud: ", seguidor);
 
     let retVal: number;
 
@@ -164,7 +164,7 @@ export class SocialService {
   // Dejar de seguir
   async dejarDeSeguir(seguidor: string): Promise<number> {
     let user = this.auth.getUserName();
-    console.log("Servicio rechazar: ", seguidor);
+    console.log("Servicio dejar de seguir: ", seguidor);
 
     let retVal: number;
 

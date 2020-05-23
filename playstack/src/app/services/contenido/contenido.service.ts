@@ -40,27 +40,12 @@ export class ContenidoService {
 
 
   constructTrack(cancion: any) {
-    let track: Cancion = {
-      nombre: cancion.key,
-      artistas: cancion.value.Artistas,
-      albumes: cancion.value.Albumes,
-      covers: cancion.value.ImagenesAlbum,
-      path: cancion.value.url,
-      esFavorita: cancion.value.EsFavorita
-    };
-    console.log("ConstructTrack nombre: " + track.nombre);
+    let track = new Cancion(cancion.key,  cancion.value.url, cancion.value.ImagenesAlbum, cancion.value.Artistas, cancion.value.Albumes, cancion.value.EsFavorita);
     return track;
   }
 
   constructTrack2(key: string, value: any) {
-    let track: Cancion = {
-      nombre: key,
-      artistas: value.Artistas,
-      albumes: value.Albumes,
-      covers: value.ImagenesAlbum,
-      path: value.url,
-      esFavorita: value.EsFavorita
-    };
+    let track = new Cancion(key, value.url, value.ImagenesAlbum, value.Artistas, value.Albumes, value.EsFavorita);
     return track;
   }
 

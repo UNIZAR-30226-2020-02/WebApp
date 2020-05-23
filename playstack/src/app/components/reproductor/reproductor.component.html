@@ -8,8 +8,8 @@
     <ion-col size="12">
       <span>
       <ion-range #range [(ngModel)]="rs.progress" max="100" color="danger" (touchend)="seek()" (mouseup)="seek()">
-        <!--<ion-label slot=start>{{ rs.player?.duracion }}</ion-label>
-        <ion-label slot=end>{{ rs.player?.duration() }}</ion-label>-->
+        <ion-label slot=start>0:00</ion-label>
+        <ion-label slot=end>3:40</ion-label>
       </ion-range>
       </span>
     </ion-col>

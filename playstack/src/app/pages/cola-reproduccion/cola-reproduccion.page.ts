@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
-import { ReproductorService, Playlist } from 'src/app/services/reproductor/reproductor.service';
+import { ReproductorService, Playlist, Cancion } from 'src/app/services/reproductor/reproductor.service';
+import { rmdirSync } from 'fs';
 
 
 @Component({
@@ -14,8 +15,27 @@ export class ColaReproduccionPage implements OnInit {
   constructor(public rs: ReproductorService) { }
 
   ngOnInit() {
+    console.log("Cola de reproduccion abierta");
   }
 
+  ionViewWillEnter() {
+    console.log("Cola de reproduccion abierta");
+    console.log("lista audios", this.rs.listaAudio);
+    console.log(this.rs.tipoAudio(this.rs.activeTrack));
+    console.log(this.rs.tipoAudio(this.rs.listaAudio[0]));
+    console.log((<Cancion>this.rs.activeTrack).artistas);
+  }
+
+  getActiveTrack() {
+    if (this.rs.tipoAudio(this.rs.activeTrack) == "Cancion") {
+      let cancion = <Cancion>this.rs.activeTrack;
+      return `<h1>${cancion.nombre}<h1><h2>${cancion.artistas}<h2>`
+    }
+  }
+
+  buttonAction() {
+    console.log("boton activado");
+  }
   // Reproduce la canción que ha pedido el usuario y
   // la elimina de la cola
   playSongCola(indice: number) {
