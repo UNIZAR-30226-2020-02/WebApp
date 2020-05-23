@@ -1,5 +1,4 @@
 import { ContenidoService } from 'src/app/services/contenido/contenido.service';
-import { ContenidoService } from './../../services/contenido/contenido.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ReproductorService, Podcast } from 'src/app/services/reproductor/reproductor.service';
 import { HttpClient } from '@angular/common/http';
