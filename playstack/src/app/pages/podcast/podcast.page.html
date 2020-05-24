@@ -31,11 +31,11 @@
 
         <div expand="full">
           <ion-spinner *ngIf="showSpinner"></ion-spinner>
-          <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
+          <ion-item *ngIf="showError">Algo ha ido mal</ion-item>
         </div>
 
         <ion-row *ngFor="let capitulo of listaCapitulos | async | keyvalue; let i = index">
-          <ion-item button (click)="playSong(i)" style="width: 100%;">
+          <ion-item button (click)="playChapter(i)" style="width: 100%;">
             <ion-col>{{ capitulo.value.numChapter }}</ion-col>
             <ion-col>{{ capitulo.value.nombre }}</ion-col>
             <ion-col>{{ capitulo.value.fecha }}</ion-col>
