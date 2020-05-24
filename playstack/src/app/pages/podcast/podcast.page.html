@@ -4,7 +4,7 @@
       <ion-back-button color="light" defaultHref="./home"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      {{ nombrePodcast }}
+      {{ podcast.value.tema }}
     </ion-title>
 
   </ion-toolbar>
@@ -14,23 +14,16 @@
   <ion-grid>
     <ion-row>
       <ion-col size="4" class="ion-text-center" style="padding: 40px;">
-        
-        <ion-img style="width: 50%; margin: 0 auto;" [src]="(podcast | async).Foto"></ion-img>
-        <h1>{{ nombrePodcast }}</h1>
-        <!--
-        <p>Número de episodios: {{ infoPodcast.capitulos.length }}</p>
-        <p>Idioma: {{ infoPodcast.idioma }}</p>
-        <p>Interlocutores: {{ infoPodcast.Interlocutores.join(', ') }}</p>
-        <p>Descripcion: {{ infoPodcast.Descripcion }}</p>
-        -->
-        
+        <ion-img style="width: 50%; margin: 0 auto;" [src]="podcast.value.Foto"></ion-img>
+        <h1>{{ podcast.key }}</h1>
+        <p>Número de episodios:</p>
       </ion-col>
       <ion-col size="8" style="padding: 40px">
         <ion-row class="ion-text-center">
           <h2>Capítulos:</h2>
         </ion-row>
         <ion-row style="font-size: large;">
-          <ion-col>#</ion-col>
+          <ion-col>Nº</ion-col>
           <ion-col>Nombre</ion-col>
           <ion-col>Fecha</ion-col>
           <ion-col>Duración</ion-col>
@@ -41,7 +34,6 @@
           <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
         </div>
 
-        <!--
         <ion-row *ngFor="let capitulo of listaCapitulos | async | keyvalue; let i = index">
           <ion-item button (click)="playSong(i)" style="width: 100%;">
             <ion-col>{{ capitulo.value.numChapter }}</ion-col>
@@ -50,7 +42,6 @@
             <ion-col>{{ capitulo.value.duracion }}</ion-col>
           </ion-item>
         </ion-row>
-      -->
       </ion-col>
     </ion-row>
   </ion-grid>
