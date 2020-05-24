@@ -72,4 +72,12 @@ export class PlaylistPage implements OnInit {
     this.rs.start(this.playlist.tracks[indice]);
   }
 
+  marcarFavorita(cancion: string) {
+    console.log("Favorita:", cancion);
+  }
+
+  desmarcarFavorita(cancion: string) {
+    console.log("No Favorita:", cancion);
+  }
+
 }

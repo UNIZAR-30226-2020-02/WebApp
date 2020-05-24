@@ -19,7 +19,7 @@
         <h1>{{ playlist.nombre }}</h1>
         <p *ngIf="playlist?.tipo == 'Playlist' && playlist?.esPrivada">Playlist privada</p>
         <p *ngIf="playlist?.tipo == 'Playlist' && !playlist?.esPrivada">Playlist pública</p>
-        <p>Número de canciones: {{ i }}</p>
+        <p>Número de canciones: {{ this.playlist?.tracks.length }}</p>
       </ion-col>
       <ion-col size="8" style="padding: 40px">
         <ion-row class="ion-text-center">
@@ -42,6 +42,7 @@
         <ion-row *ngFor="let cancion of listaCanciones | async | keyvalue; let i = index">
           <ion-item button (click)="playSong(i)" style="width: 100%;">
             {{ addSong(cancion, i) }}
+
             <ion-col>{{ i + 1 }}</ion-col>
 
             <!-- <ion-col><img src="{{ cancion.value.ImagenesAlbum[0] }}"></ion-col> -->
@@ -52,15 +53,12 @@
             <ion-col>3:40</ion-col>
 
             <ion-col *ngIf="cancion.value.EsFavorita">
-              <ion-icon name="heart-outline"></ion-icon>
+              <ion-button (click)="desmarcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart"></ion-icon></ion-button>
             </ion-col>
             <ion-col *ngIf="!cancion.value.EsFavorita">
-              <ion-icon name="heart"></ion-icon>
+              <ion-button (click)="marcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart-outline"></ion-icon></ion-button>
             </ion-col>
-            <!--
-        <ion-col>{{ playlist.value.duracion }}</ion-col>
-        <ion-col>{{ playlist.value.fecha }}</ion-col>
-        -->
+
           </ion-item>
         </ion-row>
       </ion-col>
