@@ -71,6 +71,10 @@ export class ContenidoService {
     return this.http.get(this.ROOT_URL + '/get/allartists');
   }
 
+  getTodosPodcasts() {
+    return this.http.get(this.ROOT_URL + '/get/allpodcasts');
+  }
+
   getCancionesByGenero(genero: string) {
     let user = this.auth.getUserName();
     let params = new HttpParams().set('NombreGenero', genero).append('Usuario', user);
