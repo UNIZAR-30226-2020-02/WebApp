@@ -38,17 +38,16 @@
 
         <div expand="full">
           <ion-spinner *ngIf="showSpinner"></ion-spinner>
-          <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
+          <ion-item *ngIf="showError">Algo ha ido mal</ion-item>
         </div>
 
         <!--
-        <ion-row *ngFor="let capitulo of (podcast | async).capitulos let i = index">
-          <ion-item button style="width: 100%;">
-            
-            <ion-col>{{ capitulo.numChapter }}</ion-col>
-            <ion-col>{{ capitulo.nombre }}</ion-col>
-            <ion-col>{{ capitulo.fecha }}</ion-col>
-            
+        <ion-row *ngFor="let capitulo of listaCapitulos | async | keyvalue; let i = index">
+          <ion-item button (click)="playChapter(i)" style="width: 100%;">
+            <ion-col>{{ capitulo.value.numChapter }}</ion-col>
+            <ion-col>{{ capitulo.value.nombre }}</ion-col>
+            <ion-col>{{ capitulo.value.fecha }}</ion-col>
+            <ion-col>{{ capitulo.value.duracion }}</ion-col>
           </ion-item>
         </ion-row>
       -->

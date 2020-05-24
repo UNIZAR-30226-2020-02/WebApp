@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ReproductorService } from 'src/app/services/reproductor/reproductor.service';
+import { ContenidoService } from 'src/app/services/contenido/contenido.service';
 
 @Component({
   selector: 'app-creador-contenido',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreadorContenidoPage implements OnInit {
   currentTab: string;
-  constructor() { }
+  constructor(public rs: ReproductorService, public cs : ContenidoService) { }
 
   ngOnInit() {
     this.currentTab = "Musica";
