@@ -46,7 +46,6 @@ export class ColaReproduccionPage implements OnInit {
   getNextAudios() {
     let indiceActual: number = this.rs.listaAudio.indexOf(this.rs.activeAudio);
     let nextAudios = this.rs.listaAudio.slice(indiceActual + 1);
-    console.log("Reproduciendo cancion", indiceActual);
     return nextAudios;
   }
   

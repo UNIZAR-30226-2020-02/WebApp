@@ -196,6 +196,8 @@
             <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
             <ion-col><img src="{{ programa.value.Foto }}" class="img-album" /></ion-col>
             <ion-col color="light">{{ programa.key }}</ion-col>
+            {{ programa.value.Idioma }}
+            {{ mostrarInterlocutores(programa.value.Interlocutores) }}
             <!-- Falta la duracion en el servicio <ion-col>{{ cancion.value.duracion}}</ion-col>-->
             <!-- Falta la fecha en el servicio <ion-col>{{ cancion.value.fecha}}</ion-col>-->
           </ion-item>

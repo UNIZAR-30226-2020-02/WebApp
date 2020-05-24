@@ -177,7 +177,8 @@
             </ion-list>
 
             <ion-list lines="none">
-              <ion-item *ngFor="let podcast of podcasts | keyvalue; let i = index;">
+              <ion-item button *ngFor="let podcast of podcasts | keyvalue; let i = index;"
+                (click)="openPodcast(podcast)">
                 <ion-thumbnail slot="start">
                   <img src="{{ podcast.value }}" />
                 </ion-thumbnail>

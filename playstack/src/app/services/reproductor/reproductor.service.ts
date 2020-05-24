@@ -138,7 +138,6 @@ export class ReproductorService {
 
   stop() {
     this.player.stop(this.idAudio);
-    delete this.player;
     this.idAudio = null;
   }
 
@@ -242,4 +241,5 @@ export class ReproductorService {
       this.updateProgress();
     }, 1000)
   }
+
 }

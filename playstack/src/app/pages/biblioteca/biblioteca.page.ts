@@ -21,6 +21,8 @@ export class BibliotecaPage implements OnInit {
   albumes: Observable<any>;
   podcasts: Observable<any>;
 
+  informacionPodcast: Observable<any>;
+
   showSpinner: boolean = false;
   showError: boolean = true;
   mensajeError: string = "";
@@ -104,6 +106,7 @@ export class BibliotecaPage implements OnInit {
     this.currentTabPodcasts = "Programas";
     this.showSpinner = true;
     this.showError = false;
+
     // Recuperar podcasts
     this.podcasts = this.cs.getPodcastsFollowed();
     this.podcasts.subscribe(
@@ -121,9 +124,10 @@ export class BibliotecaPage implements OnInit {
     this.currentTabPodcasts = "Episodios";
     this.showSpinner = true;
     this.showError = false;
+
     // Recuperar episodios
-    this.podcasts = this.cs.getEpisodios("Speak English now");
-    this.podcasts.subscribe(
+    this.informacionPodcast = this.cs.getInformacionPodcast("Speak English now");
+    this.informacionPodcast.subscribe(
       resultado => {
         this.showSpinner = false;
       },
@@ -197,6 +201,15 @@ export class BibliotecaPage implements OnInit {
     this.router.navigate(['../../podcast'], navigationExtras);
   }
 
+  mostrarInterlocutores(interlocutores: any) {
+    let inter: string[] = [];
+    interlocutores.forEach(elemento => {
+      for (let informacion in elemento) {
+        inter.push(informacion);
+      }
+    });
+    return inter.join(', ');
+  }
   /* Esto es para una ventana emergente para crear la playlist */
   /*async presentModal() {
     const modal = await this.modalController.create({
