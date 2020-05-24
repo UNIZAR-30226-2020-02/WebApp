@@ -1,3 +1,5 @@
+import { Episodio } from './../reproductor/reproductor.service';
+import { Podcast } from 'src/app/services/reproductor/reproductor.service';
 import { Injectable } from '@angular/core';
 import { Playlist, Cancion } from '../reproductor/reproductor.service';
 import { HttpParams, HttpClient } from '@angular/common/http';
@@ -51,14 +53,14 @@ export class ContenidoService {
   }
 
   constructPlaylist(tipo: string, esPrivada: boolean, nombre: string, covers: string[], tracks: Cancion[]) {
-    let playlist: Playlist = {
-      tipo: tipo,
-      esPrivada: esPrivada,
-      nombre: nombre,
-      covers: covers,
-      tracks: tracks
-    };
+    let playlist = new Playlist(tipo, esPrivada, nombre, covers, tracks);
     return playlist;
+  }
+
+
+  constructPodcast(titulo: string, descripcion: string, idioma: string, foto: string, tema: string, interlocutores: string[], episodios: Episodio[]) {
+    let podcast = new Podcast(titulo, descripcion, idioma, foto, tema, interlocutores, episodios);
+    return podcast;
   }
 
   getTodosGeneros() {
@@ -98,14 +100,14 @@ export class ContenidoService {
     let params = new HttpParams().set('NombreUsuario', user);
     return this.http.get(this.ROOT_URL + '/get/favoritesongs', { params });
   }
+
   getAllPodcasts(){
     return this.http.get(this.ROOT_URL + '/get/allpodcasts');
   }
-  getEpisodios(program: string){
+
+  getInformacionPodcast(program: string){
     let params = new HttpParams().set('NombrePodcast', program);
-    return this.http.get(this.ROOT_URL + '/get/podcast/all', { params }).pipe(
-      pluck('capitulos')
-    );
+    return this.http.get(this.ROOT_URL + '/get/podcast/all', { params });
   }
 
   getPodcastsFollowed(){

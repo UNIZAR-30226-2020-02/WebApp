@@ -17,16 +17,15 @@ export class ReproductorComponent implements OnInit {
   @ViewChild('range', {static: false}) range: IonRange;
 
 
-  constructor(public rs: ReproductorService, public router: Router, private activatedRoute: ActivatedRoute, private sp: SplitPanePage) { }
+  constructor(public rs: ReproductorService, public router: Router, private sp: SplitPanePage) { }
   
-  seek()
-  {
+  seek() {
+    console.log("Reproducctor seek: ", this.range.value);
+    console.log("Reproducctor seek: ", +this.range.value);
     let newValue = +this.range.value;
-    let duration : number = this.rs.getDuration();
-    console.log(duration * (newValue / 100));
-    this.rs.player.pause();
-    setTimeout(() => { this.rs.player.seek(duration * (newValue / 100)); }, 20)
-    setTimeout(() => { this.rs.player.play(); }, 50);
+    let duration: number = this.rs.getDuration();
+    console.log("seek: ", duration * (newValue / 100));
+    this.rs.player.seek(duration * (newValue / 100), this.rs.idAudio);
   }
 
   abrirColaReproduccion() {

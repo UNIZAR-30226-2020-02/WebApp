@@ -54,12 +54,34 @@ export class Playlist {
   nombre: string;
   covers: string[];
   tracks: Cancion[];
+
+  constructor(tipo: string, esPrivada: boolean, nombre: string, covers: string[], tracks: Cancion[]) {
+    this.tipo = tipo;
+    this.esPrivada = esPrivada;
+    this.nombre = nombre;
+    this.covers = covers;
+    this.tracks = tracks;
+  }
 }
 
 export class Podcast {
+  titulo: string;
+  descripcion: string;
+  idioma: string;
   foto: string;
   tema: string;
+  interlocutores: string[];
   episodios: Episodio[];
+
+  constructor (titulo: string, descripcion: string, idioma: string, foto: string, tema: string, interlocutores: string[], episodios: Episodio[]) {
+    this.titulo = titulo;
+    this.descripcion = descripcion;
+    this.idioma = idioma;
+    this.foto = foto;
+    this.tema = tema;
+    this.interlocutores = interlocutores;
+    this.episodios = episodios;
+  }
 }
 
 
@@ -73,25 +95,22 @@ export class ReproductorService {
   listaAudio: Audio[] = [];
   cola: Audio[] = [];
 
-  activeTrack: Audio = null;
+  activeAudio: Audio = null;
   player: Howl = null;
   isPlaying = false;
+
   progress = 0;
-  duracion: Number;
-  idCancion: Number;
+  duracion: Number = null;
+  idAudio: Number = null;
 
   constructor() { }
 
-  getDuration(): number {
-    return this.player.duration();
-  }
-
-  getActiveTrack(): any {
-    this.activeTrack
-  }
-
   setListaAudio(playlist: Audio[]) {
     this.listaAudio = playlist;
+  }
+
+  getActiveAudio(): any {
+    return this.activeAudio
   }
 
   // Devuelve:
@@ -113,50 +132,81 @@ export class ReproductorService {
   }
 
 
-
-
   /* Control de reproduccion */
 
   stop() {
-    this.player.stop();
+    this.player.stop(this.idAudio);
     delete this.player;
+    this.idAudio = null;
   }
 
-  start(track: Audio) {
+  start(audio: Audio) {
     if (this.player) {
       this.player.stop();
-      delete this.player;
     }
-    this.activeTrack = track;
+
     this.player = new Howl({
-      src: track.path,
+      src: audio.path,
       html5: true,
       onplay: () => {
-        console.log("callback de play");
+        console.log("onplay");
+        this.activeAudio = audio;
         this.isPlaying = true;
-        this.updateProgress(this.activeTrack);
-        this.duracion = this.player.duration();
+        this.updateProgress();
       },
       onend: () => {
+        console.log("onend");
         this.next();
       }
     });
-    console.log("Play: poniendo en marcha " + this.activeTrack.nombre);
-    this.player.play();
+    this.idAudio = this.player.play();
+    console.log(this.idAudio);
   }
 
-  togglePlayer() {
-    if (this.isPlaying) {
-      this.player.pause();
+  getDuration(): number {
+    try {
+      return this.player.duration(this.idAudio);
+    }
+    catch (error) {
+      return null;
+    }
+  }
+
+  getProgress(): number {
+    try {
+      return this.player.seek(this.idAudio);
+    }
+    catch (error) {
+      return null;
+    }
+  }
+
+  mostrarTiempo(segundos: number): string {
+    if (!segundos) {
+      return '--:--'
     }
     else {
-      this.player.play();
+      let min = Math.floor(segundos % 3600 / 60) || 0;
+      let seg = Math.floor(segundos % 3600 % 60) || 0;
+      return ('0' + min).slice(-2) + ":" + ('0' + seg).slice(-2);
     }
+  }
+
+
+  togglePlayer() {
+    console.log("Toogle player", this.idAudio);
+    if (this.isPlaying) {
+      this.player.pause(this.idAudio);
+    }
+    else {
+      this.idAudio = this.player.play();
+    }
+    console.log("Toole, player", this.idAudio);
     this.isPlaying = !this.isPlaying;
   }
 
   next() {
-    let index = this.listaAudio.indexOf(this.activeTrack);
+    let index = this.listaAudio.indexOf(this.activeAudio);
     if (index != this.listaAudio.length - 1) {
       console.log("Poniendo canción " + (index + 1));
       console.log("Se titula: " + this.listaAudio[index + 1].nombre);
@@ -170,7 +220,7 @@ export class ReproductorService {
   }
 
   prev() {
-    let index = this.listaAudio.indexOf(this.activeTrack);
+    let index = this.listaAudio.indexOf(this.activeAudio);
     if (index > 0) {
       console.log("Poniendo canción " + (index - 1));
       console.log("Se titula: " + this.listaAudio[index - 1].nombre);
@@ -183,13 +233,11 @@ export class ReproductorService {
     }
   }
 
-  updateProgress(track: Audio) {
-    this.duracion = this.player.duration();
-    //console.log("DURACION: "+this.duracion);
-    let seek = this.player.seek();
-    //console.log("SEEK: "+seek);
-    this.progress = (seek / this.player.duration()) * 100 || 0;
-    //console.log("PROGRESS: "+ this.progress);
-    if (track === this.activeTrack) { setTimeout(() => { this.updateProgress(track); }, 1000) }
+  updateProgress() {
+    let seek = this.player.seek(this.idAudio);
+    this.progress = (seek / this.getDuration()) * 100 || 0;
+    setTimeout(() => {
+      this.updateProgress();
+    }, 1000)
   }
 }

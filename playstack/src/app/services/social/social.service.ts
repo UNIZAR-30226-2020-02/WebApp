@@ -51,11 +51,7 @@ export class SocialService {
   getAudiosMasEscuchados(usuario: string) {
     console.log('audios mas escuchados de', usuario);
     let params = new HttpParams().set('Usuario', usuario);
-    return this.http.get(this.ROOT_URL + '/user/get/mostListenedSongs', { params }).pipe(
-      map(resultado => {
-        console.log("audios mas escuchados", resultado);
-      })
-    );
+    return this.http.get(this.ROOT_URL + '/user/get/mostListenedSongs', { params });
   }
 
   getPlaylistsPublicas(usuario: string) {
@@ -68,6 +64,12 @@ export class SocialService {
     console.log('ultimos audios de', usuario)
     let params = new HttpParams().set('Usuario', usuario);
     return this.http.get(this.ROOT_URL + '/user/get/lastsongs', { params });
+  }
+
+  getGenerosMasEscuchados(usuario: string) {
+    console.log('generos mas escuchados', usuario);
+    let params = new HttpParams().set('NombreUsuario', usuario);
+    return this.http.get(this.ROOT_URL + '/user/get/mostListenedGenres', { params })
   }
 
 
