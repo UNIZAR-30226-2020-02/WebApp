@@ -131,6 +131,9 @@ export class ReproductorService {
     }
   }
 
+
+
+
   /* Control de reproduccion */
 
   stop() {

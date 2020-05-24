@@ -19,7 +19,7 @@
         <h1>{{ playlist.nombre }}</h1>
         <p *ngIf="playlist?.tipo == 'Playlist' && playlist?.esPrivada">Playlist privada</p>
         <p *ngIf="playlist?.tipo == 'Playlist' && !playlist?.esPrivada">Playlist pública</p>
-        <p>Número de canciones:  Patata </p>
+        <p>Número de canciones: {{ i }}</p>
       </ion-col>
       <ion-col size="8" style="padding: 40px">
         <ion-row class="ion-text-center">

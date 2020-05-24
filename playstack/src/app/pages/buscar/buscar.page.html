@@ -86,7 +86,7 @@
 
             <ion-list lines="none">
               <ion-item *ngFor="let playlist of playlists | keyvalue; let i = index;" button
-                (click)="openPlaylist(playlist.key,playlist.value.EsPrivado, playlist.value.Fotos)">
+                (click)="openPlaylist(playlist.key, playlist.value.Fotos)">
                 <ion-thumbnail slot="start">
                   <img src="{{ playlist.value.Fotos[0] }}" />
                 </ion-thumbnail>
@@ -135,7 +135,7 @@
 
             <ion-list lines="none">
               <ion-item *ngFor="let album of albumes | keyvalue; let i = index;" button
-                (click)="openAlbum(album.key, album.value)">
+                (click)="openAlbum(album.key, [album.value])">
                 <ion-thumbnail slot="start">
                   <img src="{{ album.value }}" />
                 </ion-thumbnail>

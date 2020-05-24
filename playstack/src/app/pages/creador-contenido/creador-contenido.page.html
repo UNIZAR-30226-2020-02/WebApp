@@ -18,7 +18,7 @@
 
   <ion-content *ngIf="currentTab == 'Musica'">
     <ion-item-group style="text-align: right;">
-      <ion-button color="light" style="width: auto; height: 45px; padding-bottom: 10px;" >
+      <ion-button color="light" style="width: auto; height: 45px; padding-bottom: 10px;" (click)="presentModal()">
         <ion-icon name="add-outline"></ion-icon>
         <b>Crear Album</b>
       </ion-button>
@@ -36,13 +36,21 @@
         <ion-col>Duración</ion-col>
         <ion-col>Fecha</ion-col>
       </ion-row>
-      
+      <ion-row *ngFor="let cancion of listado | async | keyvalue"
+        (click)="rs.start(rs.constructTrack(cancion)); rs.addToPlaylistObservable(listado)">
+        <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
+        <img src="{{ cancion.value[0] }}" />
+        <ion-col>{{ cancion.key }}</ion-col>
+        <ion-col>{{ cancion.value.Artistas }}</ion-col>
+        <!-- Falta la duracion en el servicio <ion-col>{{ cancion.value.duracion}}</ion-col>-->
+        <!-- Falta la fecha en el servicio <ion-col>{{ cancion.value.fecha}}</ion-col>-->
+      </ion-row>
     </ion-grid>
   </ion-content>
 
   <ion-content *ngIf="currentTab == 'Podcasts'">
     <ion-item-group style="text-align: right; padding-right: 10px;">
-      <ion-button color="light" style="width: auto; height: 45px; padding-bottom: 10px;">
+      <ion-button color="light" style="width: auto; height: 45px; padding-bottom: 10px;" (click)="presentModal()">
         <ion-icon name="add-outline"></ion-icon>
         <b>Crear Podcast</b>
       </ion-button>
@@ -56,7 +64,15 @@
         <ion-col>Duración</ion-col>
         <ion-col>Fecha</ion-col>
       </ion-row>
-
-     </ion-grid>
+      <ion-row *ngFor="let cancion of listado | async | keyvalue"
+        (click)="rs.start(rs.constructTrack(cancion)); rs.addToPlaylistObservable(listado)">
+        <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
+        <img src="{{ cancion.value[0] }}" />
+        <ion-col>{{ cancion.key }}</ion-col>
+        <ion-col>{{ cancion.value.Artistas }}</ion-col>
+        <!-- Falta la duracion en el servicio <ion-col>{{ cancion.value.duracion}}</ion-col>-->
+        <!-- Falta la fecha en el servicio <ion-col>{{ cancion.value.fecha}}</ion-col>-->
+      </ion-row>
+    </ion-grid>
   </ion-content>
 </ion-content>
