@@ -2,7 +2,7 @@ import { Episodio } from './../reproductor/reproductor.service';
 import { Podcast } from 'src/app/services/reproductor/reproductor.service';
 import { Injectable } from '@angular/core';
 import { Playlist, Cancion } from '../reproductor/reproductor.service';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
@@ -176,5 +176,44 @@ export class ContenidoService {
     return this.http.get(this.ROOT_URL + '/get/artist/albums', { params });
   }
 
+  async addToPlaylist(playlist: string, song:string){
+    let user = this.auth.getUserName();
+    
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    
+    let postParams = { 'NombreUsuario': user, 'NombrePlaylist': playlist, 'NombreCancion': song};
+    await this.http.post(this.ROOT_URL + '/user/add/song/toplaylist',
+    postParams, httpOptions).toPromise()
+    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
+
+  async removeFromPlaylist(playlist: string, song:string){
+    let user = this.auth.getUserName();
+    
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    let postParams = { 'NombreUsuario': user, 'NombrePlaylist': playlist, 'NombreCancion': song};
+
+    await this.http.post(this.ROOT_URL + '/user/remove/song/fromplaylist',
+    postParams, httpOptions).toPromise()
+    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
 }
 
