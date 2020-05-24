@@ -1,0 +1,17 @@
+{
+  "hosting": [
+    {
+      "app": {
+        "project": "app",
+        "target": "build",
+        "configuration": "production",
+        "path": "www"
+      },
+      "azureHosting": {
+        "subscription": "afad3579-9d89-4305-bbc9-6ff50c6816f3",
+        "resourceGroupName": "app-static-deploy",
+        "account": "playstack"
+      }
+    }
+  ]
+}
