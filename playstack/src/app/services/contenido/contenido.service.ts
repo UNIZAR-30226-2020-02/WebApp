@@ -219,5 +219,43 @@ export class ContenidoService {
 
     return retVal;
   }
+
+  async addToPlaylist(playlist: string, cancion: string){
+    let user = this.auth.getUserName();
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    let postParams = {'NombreUsuario': user, 'NombrePlaylist': playlist, 'NombreCancion': cancion};
+
+    await this.http.post(this.ROOT_URL + '/user/add/song/toplaylist',
+    postParams, httpOptions).toPromise()
+    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
+
+  async removeFromPlaylist(playlist: string, cancion: string){
+    let user = this.auth.getUserName();
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    let postParams = {'NombreUsuario': user, 'NombrePlaylist': playlist, 'NombreCancion': cancion};
+
+    await this.http.post(this.ROOT_URL + '/user/remove/song/fromplaylist',
+    postParams, httpOptions).toPromise()
+    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
 }
 

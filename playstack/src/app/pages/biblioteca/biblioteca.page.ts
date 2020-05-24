@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReproductorService } from '../../services/reproductor/reproductor.service';
+import { ReproductorService, Episodio } from '../../services/reproductor/reproductor.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -21,7 +21,9 @@ export class BibliotecaPage implements OnInit {
   albumes: Observable<any>;
   podcasts: Observable<any>;
 
-  informacionPodcast: Observable<any>;
+  pod: any;
+
+  informacionPodcast: Episodio[] = [];
 
   showSpinner: boolean = false;
   showError: boolean = true;
@@ -126,16 +128,26 @@ export class BibliotecaPage implements OnInit {
     this.showError = false;
 
     // Recuperar episodios
-    this.informacionPodcast = this.cs.getInformacionPodcast("Speak English now");
-    this.informacionPodcast.subscribe(
+    this.pod = this.cs.getInformacionPodcast("Speak English now");
+    this.pod.subscribe(
       resultado => {
         this.showSpinner = false;
+        console.log(resultado);
+        if (this.isEmpty(resultado)) {
+          this.showError = true;
+        }
+        else {
+          this.pod = resultado;
+          this.pod.capitulos.forEach(episodio => {
+            this.informacionPodcast.push(new Episodio(episodio.nombre, episodio.url, episodio.numChapter,
+              episodio.fecha.substring(0, 10)));
+          });
+        }
       },
       error => {
         this.showSpinner = false;
-        this.mensajeError = "No hay podcasts"
         this.showError = true;
-      });
+      });    
   }
 
   openPlaylist(nombre: string, esPrivada: boolean, covers: string[]) {
@@ -210,6 +222,9 @@ export class BibliotecaPage implements OnInit {
     });
     return inter.join(', ');
   }
+  private isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+  }
   /* Esto es para una ventana emergente para crear la playlist */
   /*async presentModal() {
     const modal = await this.modalController.create({
@@ -217,4 +232,10 @@ export class BibliotecaPage implements OnInit {
     });
     return await modal.present();
   }*/
+  playChapter(indice: number) {
+    // Establece la lista de reproducción del reproductor como las
+    // canciones que hay después de la que se pone (incluida).
+    this.rs.setListaAudio(this.informacionPodcast);
+    this.rs.start(this.informacionPodcast[indice]);
+  }
 }

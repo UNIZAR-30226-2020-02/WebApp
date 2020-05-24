@@ -70,5 +70,4 @@ export class ArtistaPage implements OnInit {
       default: {console.log("Error de post")}
     }
   }
-
 }
