@@ -8,24 +8,24 @@
 
 
 <ion-content>
-  <!--
+  
   <div class="div-horizontal-scroll">
     <h1>Generos</h1>
     <ion-spinner *ngIf="showSpinner1"></ion-spinner>
-    <app-scrollhorizontal [listaPlaylists]="cs.getTodosGeneros()"></app-scrollhorizontal>
+    <app-scrollhorizontal [listaConjuntos]="cs.getTodosGeneros()" [tipoConjuntos]="'Generos'"></app-scrollhorizontal>
   </div>
 
   <div class="div-horizontal-scroll">
     <h1>Artistas</h1>
     <ion-spinner *ngIf="showSpinner2"></ion-spinner>
-    <app-scrollhorizontal [listaPlaylists]="cs.getTodosArtistas()"></app-scrollhorizontal>
+    <app-scrollhorizontal [listaConjuntos]="cs.getTodosArtistas()" [tipoConjuntos]="'Artistas'"></app-scrollhorizontal>
   </div>
 
-  <div class="div-horizonal-scroll">
+  <div class="div-horizontal-scroll">
     <h1>Podcasts recomendados</h1>
-    <app-scrollhorizontal [listaPodcasts]="cs.getTodosPodcasts()"></app-scrollhorizontal>
+    <app-scrollhorizontal [listaConjuntos]="cs.getTodosPodcasts()" [tipoConjuntos]="'Podcasts'"></app-scrollhorizontal>
   </div>
--->
+
 </ion-content>
 
 <ion-footer>

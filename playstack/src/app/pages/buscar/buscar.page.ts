@@ -159,5 +159,18 @@ export class BuscarPage implements OnInit {
     this.router.navigate(['../../playlist'], navigationExtras);
   }
 
+  openPodcast(pod: any) {
+    // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
+    let navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute,
+      state: {
+        podcast: pod
+      }
+    };
+    console.log(this.activatedRoute);
+    this.router.navigate(['../../podcast'], navigationExtras);
+  }
+
+
   
 }

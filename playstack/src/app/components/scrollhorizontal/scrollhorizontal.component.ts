@@ -1,3 +1,4 @@
+import { ContenidoService } from 'src/app/services/contenido/contenido.service';
 import { Playlist } from './../../services/reproductor/reproductor.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor/reproductor.service';
@@ -13,7 +14,10 @@ export class ScrollhorizontalComponent implements OnInit {
 
   @Input()
   listaConjuntos: Observable<any>;
+  @Input()
   tipoConjuntos: string;
+
+  conjuntos: any;
 
   slideOpts = {
     slidesPerView: 4,
@@ -27,23 +31,55 @@ export class ScrollhorizontalComponent implements OnInit {
     }
   }
 
-  constructor(public rs: ReproductorService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(public rs: ReproductorService, private router: Router, private activatedRoute: ActivatedRoute, private cs: ContenidoService) { }
 
   ngOnInit() {
+    console.log(this.listaConjuntos);
+    this.listaConjuntos.subscribe(
+      resultado => {console.log(resultado); this.conjuntos=resultado}
+    )
   }
 
-  openPlaylist(playlist: Playlist) {
-    
-    console.log("Abrir playlist: ", playlist.tipo, playlist.esPrivada, playlist.nombre);
-
-    // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
-    let navigationExtras: NavigationExtras = {
-      relativeTo: this.activatedRoute,
-      state: {
-        playlist: playlist
+  openConjunto(conjunto: any) {
+    console.log(conjunto);
+    switch (this.tipoConjuntos) {
+      case 'Generos': {
+        console.log('Abrir género');
+        let navigationExtras: NavigationExtras = {
+          relativeTo: this.activatedRoute,
+          state: {
+            playlist: this.cs.constructPlaylist('Genero', false, conjunto.key, [conjunto.value], [])
+          }
+        };
+        console.log(this.activatedRoute);
+        this.router.navigate(['../../playlist'], navigationExtras);
+        break;
       }
-    };
-    console.log(this.activatedRoute);
-    this.router.navigate(['../../playlist'], navigationExtras);
+      case 'Artistas': {
+        console.log('Abrir artista', conjunto.key, conjunto.value);
+        let navigationExtras: NavigationExtras = {
+          relativeTo: this.activatedRoute,
+          state: {
+            nombreArtista: conjunto.key,
+            image: conjunto.value
+          }
+        };
+        console.log(this.activatedRoute);
+        this.router.navigate(['../../artista'], navigationExtras);
+        break;
+      }
+      case 'Podcasts': {
+        console.log('Abrir podcast');
+        let navigationExtras: NavigationExtras = {
+          relativeTo: this.activatedRoute,
+          state: {
+            podcast: conjunto
+          }
+        };
+        console.log(this.activatedRoute);
+        this.router.navigate(['../../podcast'], navigationExtras);
+        break;
+      }
+    }
   }
 }

@@ -58,7 +58,7 @@
           <ion-col>Fecha</ion-col>
         </ion-row>
         <ion-row style="margin: 20px; align-items: center;">
-          <ion-item button (click)="openFavoritas('Favoritas', false, ['../../../assets/albumes/Favs_cover.jpg'])" cass="item-playlist">
+          <ion-item button (click)="openFavoritas('Favoritas', false, ['../../../assets/albumes/Favs_cover.jpg'])" class="item-playlist">
           <ion-col>
             <div class="img-playlist">
               <img src="../../../assets/albumes/Favs_cover.jpg"/>
@@ -99,13 +99,9 @@
           <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
         </div>
         <ion-row *ngFor="let artista of artistas | async | keyvalue" >
-          <ion-item button (click)="openArtist(artista.key, artista.value)">
-            <ion-col>
+          <ion-item style="width: 100%;" button (click)="openArtist(artista.key, artista.value)">
               <img src="{{ artista.value }}" class="img-artista" />
-            </ion-col>
-            <ion-col>
               {{ artista.key }}
-            </ion-col>
           </ion-item>
         </ion-row>
       </ion-grid>
@@ -165,15 +161,14 @@
           <ion-col>Nº capítulo</ion-col>
           <ion-col>Nombre</ion-col>
           <ion-col size="3">Fecha</ion-col>
+          <ion-col size="2">Duracion</ion-col>
         </ion-row>
-        <ion-row *ngFor="let programa of podcasts | async | keyvalue">
-          <ion-item button class="item-album">
-            <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
-            <ion-col size="1">{{ programa.key }}</ion-col>
-            <ion-col>
-              {{ programa.value.nombre }}
-            </ion-col>
-            <ion-col size="3">{{ programa.value.fecha.substring(0,10) }}</ion-col>
+        <ion-row *ngFor="let capitulo of informacionPodcast">
+          <ion-item button (click)="playChapter(i)" style="width: 100%;">
+            <ion-col>{{ capitulo.numCap }}</ion-col>
+            <ion-col>{{ capitulo.nombre }}</ion-col>
+            <ion-col>{{ capitulo.fecha }}</ion-col>
+            <ion-col>10:00</ion-col>
           </ion-item>
         </ion-row>
       </ion-grid>
@@ -196,6 +191,8 @@
             <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
             <ion-col><img src="{{ programa.value.Foto }}" class="img-album" /></ion-col>
             <ion-col color="light">{{ programa.key }}</ion-col>
+            {{ programa.value.Idioma }}
+            {{ mostrarInterlocutores(programa.value.Interlocutores) }}
             <!-- Falta la duracion en el servicio <ion-col>{{ cancion.value.duracion}}</ion-col>-->
             <!-- Falta la fecha en el servicio <ion-col>{{ cancion.value.fecha}}</ion-col>-->
           </ion-item>

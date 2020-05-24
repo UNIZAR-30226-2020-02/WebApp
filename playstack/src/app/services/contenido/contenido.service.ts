@@ -1,6 +1,8 @@
+import { Episodio } from './../reproductor/reproductor.service';
+import { Podcast } from 'src/app/services/reproductor/reproductor.service';
 import { Injectable } from '@angular/core';
 import { Playlist, Cancion } from '../reproductor/reproductor.service';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
@@ -51,14 +53,14 @@ export class ContenidoService {
   }
 
   constructPlaylist(tipo: string, esPrivada: boolean, nombre: string, covers: string[], tracks: Cancion[]) {
-    let playlist: Playlist = {
-      tipo: tipo,
-      esPrivada: esPrivada,
-      nombre: nombre,
-      covers: covers,
-      tracks: tracks
-    };
+    let playlist = new Playlist(tipo, esPrivada, nombre, covers, tracks);
     return playlist;
+  }
+
+
+  constructPodcast(titulo: string, descripcion: string, idioma: string, foto: string, tema: string, interlocutores: string[], episodios: Episodio[]) {
+    let podcast = new Podcast(titulo, descripcion, idioma, foto, tema, interlocutores, episodios);
+    return podcast;
   }
 
   getTodosGeneros() {
@@ -67,6 +69,10 @@ export class ContenidoService {
 
   getTodosArtistas() {
     return this.http.get(this.ROOT_URL + '/get/allartists');
+  }
+
+  getTodosPodcasts() {
+    return this.http.get(this.ROOT_URL + '/get/allpodcasts');
   }
 
   getCancionesByGenero(genero: string) {
@@ -98,14 +104,14 @@ export class ContenidoService {
     let params = new HttpParams().set('NombreUsuario', user);
     return this.http.get(this.ROOT_URL + '/get/favoritesongs', { params });
   }
+
   getAllPodcasts(){
     return this.http.get(this.ROOT_URL + '/get/allpodcasts');
   }
-  getEpisodios(program: string){
+
+  getInformacionPodcast(program: string){
     let params = new HttpParams().set('NombrePodcast', program);
-    return this.http.get(this.ROOT_URL + '/get/podcast/all', { params }).pipe(
-      pluck('capitulos')
-    );
+    return this.http.get(this.ROOT_URL + '/get/podcast/all', { params });
   }
 
   getPodcastsFollowed(){
@@ -174,5 +180,82 @@ export class ContenidoService {
     return this.http.get(this.ROOT_URL + '/get/artist/albums', { params });
   }
 
+  async addToFavorites(song:string){
+    let user = this.auth.getUserName();
+    
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    
+    let postParams = { 'Usuario': user,'Titulo': song};
+    await this.http.post(this.ROOT_URL + '/user/add/song/tofavorites',
+    postParams, httpOptions).toPromise()
+    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
+
+  async removeFromFavorites(song:string){
+    let user = this.auth.getUserName();
+    
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    let postParams = { 'Usuario': user, 'Titulo': song};
+
+    await this.http.post(this.ROOT_URL + '/user/remove/song/fromfavorites',
+    postParams, httpOptions).toPromise()
+    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
+
+  async addToPlaylist(playlist: string, cancion: string){
+    let user = this.auth.getUserName();
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    let postParams = {'NombreUsuario': user, 'NombrePlaylist': playlist, 'NombreCancion': cancion};
+
+    await this.http.post(this.ROOT_URL + '/user/add/song/toplaylist',
+    postParams, httpOptions).toPromise()
+    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
+
+  async removeFromPlaylist(playlist: string, cancion: string){
+    let user = this.auth.getUserName();
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    let postParams = {'NombreUsuario': user, 'NombrePlaylist': playlist, 'NombreCancion': cancion};
+
+    await this.http.post(this.ROOT_URL + '/user/remove/song/fromplaylist',
+    postParams, httpOptions).toPromise()
+    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
 }
 

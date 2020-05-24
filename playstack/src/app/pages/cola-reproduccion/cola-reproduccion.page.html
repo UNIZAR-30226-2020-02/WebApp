@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button color="light" defaultHref="./home"></ion-back-button>
+      <ion-back-button color="light" defaultHref="/app/home"></ion-back-button>
     </ion-buttons>
     <ion-title>
       Cola de Reproduccion
@@ -13,8 +13,10 @@
 <ion-content>
   <!-- <img src="{{ $any(rs.getActiveTrack()).value[0] }}" style="width: 50px; height: 50px; border-radius: 5px; margin: 10px;"> -->
   <ion-title>Sonando</ion-title>
-  <ion-label *ngIf="rs?.activeTrack == null">No se está reproduciendo ninguna canción</ion-label>
-  <ion-grid *ngIf="rs?.activeTrack != null">
+  <ion-item style="padding-bottom: 50px;" *ngIf="rs?.getActiveAudio() == null">
+    <ion-label>No se está reproduciendo ninguna canción</ion-label>
+  </ion-item>
+  <ion-grid *ngIf="rs?.getActiveAudio() != null" style="padding-bottom: 50px;">
     <ion-row style="font-size: large;">
       <ion-col></ion-col>
       <ion-col>Titulo</ion-col>
@@ -27,16 +29,16 @@
     <ion-row>
       <ion-item button (click)="rs.togglePlayer()" style=" width: 100%;">
 
-        <div *ngIf="rs.tipoAudio(rs.activeTrack) == 'Cancion'">
-          <ion-col>{{ rs.activeTrack.nombre }}</ion-col>
-          <ion-col>{{ $any(rs.activeTrack).albumes?.join(", ") }}</ion-col>
-          <ion-col>{{ $any(rs.activeTrack).artistas?.join(", ") }}</ion-col>
-          <ion-col>3:40</ion-col>
+        <div *ngIf="rs.tipoAudio(rs.getActiveAudio()) == 'Cancion'">
+          <ion-col>{{ rs.getActiveAudio().nombre }}</ion-col>
+          <ion-col>{{ $any(rs.getActiveAudio()).albumes?.join(", ") }}</ion-col>
+          <ion-col>{{ $any(rs.getActiveAudio()).artistas?.join(", ") }}</ion-col>
+          <ion-col>{{ rs.getActiveAudio().duracion }}</ion-col>
 
-          <ion-col *ngIf="$any(rs.activeTrack).esFavorita">
+          <ion-col *ngIf="$any(rs.getActiveAudio()).esFavorita">
             <ion-icon name="heart-outline"></ion-icon>
           </ion-col>
-          <ion-col *ngIf="$any(!rs.activeTrack).esFavorita">
+          <ion-col *ngIf="$any(!rs.getActiveAudio()).esFavorita">
             <ion-icon name="heart"></ion-icon>
           </ion-col>
         </div>
@@ -45,8 +47,11 @@
   </ion-grid>
 
   <ion-title>A continuación en la cola</ion-title>
-  <ion-label *ngIf="rs?.cola.length === 0">No hay música en la cola</ion-label>
-  <ion-grid *ngIf="rs?.cola.length > 0">
+  <ion-item style="padding-bottom: 50px;" *ngIf="rs?.cola.length === 0">
+    <ion-label>No hay música en la cola</ion-label>
+  </ion-item>
+  
+  <ion-grid *ngIf="rs?.cola.length > 0" style="padding-bottom: 50px;">
     <ion-row style="font-size: large;">
       <ion-col>#</ion-col>
       <ion-col>Titulo</ion-col>
@@ -55,32 +60,40 @@
       <ion-col>Duracion</ion-col>
       <ion-col>Favorita</ion-col>
     </ion-row>
-<!--
-    <ion-row *ngFor="let track of rs.cola; let i = index">
-      <ion-item button (click)="playSongCola(i)" style=" width: 100%;">
-        <ion-col>{{ i + 1 }}</ion-col>
 
-        <ion-col>{{ track.nombre }}</ion-col>
-        <ion-col>{{ track.albumes?.join(", ") }}</ion-col>
-        <ion-col>{{ track.artistas?.join(", ") }}</ion-col>
-        <ion-col>3:40</ion-col>
+    <ion-row *ngFor="let audio of rs.cola; let i = index">
+      <ion-item button (click)="playAudioCola(i)" style=" width: 100%;">
 
-        <ion-col *ngIf="track.esFavorita">
-          <ion-icon name="heart-outline"></ion-icon>
-        </ion-col>
-        <ion-col *ngIf="!track.esFavorita">
-          <ion-icon name="heart"></ion-icon>
-        </ion-col>
-        <ion-col>{{ playlist.value.duracion }}</ion-col>
-        <ion-col>{{ playlist.value.fecha }}</ion-col>
+        <div *ngIf="rs.tipoAudio(audio) == 'Cancion'">
+          <ion-col>{{ i + 1 }}</ion-col>
+
+          <ion-col>{{ audio.nombre }}</ion-col>
+          <ion-col>{{ $any(audio).albumes?.join(", ") }}</ion-col>
+          <ion-col>{{ $any(audio).artistas?.join(", ") }}</ion-col>
+          <ion-col>3:40</ion-col>
+
+          <ion-col *ngIf="$any(audio).esFavorita">
+            <ion-icon name="heart-outline"></ion-icon>
+          </ion-col>
+          <ion-col *ngIf="!$any(audio).esFavorita">
+            <ion-icon name="heart"></ion-icon>
+          </ion-col>
+        </div>
+
+        <div *ngIf="rs.tipoAudio(audio) == 'Cancion'">
+          Esto es un podcast
+        </div>
+
       </ion-item>
     </ion-row>
   </ion-grid>
 
 
   <ion-title>A continuación</ion-title>
-  <ion-label *ngIf="rs?.playlist.length === 0">No se está reproduciendo ninguna playlist</ion-label>
-  <ion-grid *ngIf="rs?.playlist.length > 0">
+  <ion-item style="padding-bottom: 50px;" *ngIf="rs?.listaAudio.length === 0">
+    <ion-label>No se está reproduciendo ninguna playlist</ion-label>
+  </ion-item>
+  <ion-grid *ngIf="rs?.listaAudio.length > 0">
     <ion-row style="font-size: large;">
       <ion-col>#</ion-col>
       <ion-col>Titulo</ion-col>
@@ -90,28 +103,24 @@
       <ion-col>Favorita</ion-col>
     </ion-row>
 
-    <ion-row *ngFor="let track of getNextPlaylistSongs(); let i = index">
-      <ion-item button (click)="playSongPlaylist(i);" style=" width: 100%;">
+    <ion-row *ngFor="let audio of getNextAudios(); let i = index">
+      <ion-item button (click)="playAudioPlaylist(i);" style=" width: 100%;">
         <ion-col>{{ i + 1 }}</ion-col>
 
-        <ion-col>{{ track.nombre }}</ion-col>
-        <ion-col>{{ track.albumes?.join(", ") }}</ion-col>
-        <ion-col>{{ track.artistas?.join(", ") }}</ion-col>
+        <ion-col>{{ audio.nombre }}</ion-col>
+        <ion-col>{{ $any(audio).albumes?.join(", ") }}</ion-col>
+        <ion-col>{{ $any(audio).artistas?.join(", ") }}</ion-col>
         <ion-col>3:40</ion-col>
 
-        <ion-col *ngIf="track.esFavorita">
+        <ion-col *ngIf="$any(audio).esFavorita">
           <ion-icon name="heart-outline"></ion-icon>
         </ion-col>
-        <ion-col *ngIf="!track.esFavorita">
+        <ion-col *ngIf="!$any(audio).esFavorita">
           <ion-icon name="heart"></ion-icon>
         </ion-col>
 
-        <ion-col>{{ playlist.value.duracion }}</ion-col>
-        <ion-col>{{ playlist.value.fecha }}</ion-col>
-
       </ion-item>
     </ion-row>
-  -->
   </ion-grid>
 
 </ion-content>

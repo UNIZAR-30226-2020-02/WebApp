@@ -21,39 +21,32 @@ export class ColaReproduccionPage implements OnInit {
   ionViewWillEnter() {
     console.log("Cola de reproduccion abierta");
     console.log("lista audios", this.rs.listaAudio);
-    console.log(this.rs.tipoAudio(this.rs.activeTrack));
+    console.log(this.rs.tipoAudio(this.rs.activeAudio));
     console.log(this.rs.tipoAudio(this.rs.listaAudio[0]));
-    console.log((<Cancion>this.rs.activeTrack).artistas);
-  }
-
-  getActiveTrack() {
-    if (this.rs.tipoAudio(this.rs.activeTrack) == "Cancion") {
-      let cancion = <Cancion>this.rs.activeTrack;
-      return `<h1>${cancion.nombre}<h1><h2>${cancion.artistas}<h2>`
-    }
+    console.log((<Cancion>this.rs.activeAudio).artistas);
   }
 
   buttonAction() {
     console.log("boton activado");
   }
+
   // Reproduce la canción que ha pedido el usuario y
   // la elimina de la cola
-  playSongCola(indice: number) {
+  playAudioCola(indice: number) {
     this.rs.start(this.rs.cola[indice]);
     this.rs.cola.splice(indice, 1);
   }
 
   // Reproduce la canción que ha pedido el usuario y
   // avanza la playlist hasta ese punto
-  playSongPlaylist(indice: number) {
-    this.rs.start(this.getNextPlaylistSongs()[indice]);
+  playAudioPlaylist(indice: number) {
+    this.rs.start(this.getNextAudios()[indice]);
   }
 
-  getNextPlaylistSongs() {
-    let indiceActual: number = this.rs.listaAudio.indexOf(this.rs.activeTrack);
-    let nextSongs = this.rs.listaAudio.slice(indiceActual + 1);
-    console.log("Reproduciendo cancion", indiceActual);
-    return nextSongs;
+  getNextAudios() {
+    let indiceActual: number = this.rs.listaAudio.indexOf(this.rs.activeAudio);
+    let nextAudios = this.rs.listaAudio.slice(indiceActual + 1);
+    return nextAudios;
   }
   
 }

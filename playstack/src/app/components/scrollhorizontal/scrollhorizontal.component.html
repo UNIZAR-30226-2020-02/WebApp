@@ -1,10 +1,10 @@
 <ion-slides [options]="slideOpts">
-  <ion-slide *ngFor="let playlist of listaConjuntos">
-    <ion-card (click)="openPlaylist(playlist)">
-      <img src="{{ playlist.covers[0] }}"/>
+  <ion-slide *ngFor="let conjunto of conjuntos | keyvalue">
+  <ion-card (click)="openConjunto(conjunto)">
+      <img [src]="conjunto.value"/>
       <ion-card-header>
         <ion-label>
-          {{ playlist.nombre }}
+          {{ conjunto.key }}
         </ion-label>
       </ion-card-header>
     </ion-card>

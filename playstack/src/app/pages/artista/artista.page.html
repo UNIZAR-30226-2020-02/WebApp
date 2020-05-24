@@ -19,8 +19,8 @@
       <ion-col>Titulo</ion-col>
       <ion-col>Album</ion-col>
       <ion-col>Artista</ion-col>
-      <ion-col>Duracion</ion-col>
-      <ion-col>Favorita</ion-col>
+      <ion-col size="2" class="ion-text-center">Duracion</ion-col>
+      <ion-col size="2" class="ion-text-center">Favorita</ion-col>
     </ion-row>
 
     <div expand="full">
@@ -32,15 +32,14 @@
         <ion-col>{{ cancion.key }}</ion-col>
         <ion-col>{{ cancion.value.Albumes?.join(", ") }}</ion-col>
         <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
-        <ion-col>3:40</ion-col>
+        <ion-col size="2" class="ion-text-center">3:40</ion-col>
 
-        <ion-col *ngIf="cancion.value.EsFavorita">
-          <ion-icon name="heart-outline"></ion-icon>
+        <ion-col size="2" class="ion-text-center" *ngIf="cancion.value.EsFavorita">
+          <ion-button (click)="desmarcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart"></ion-icon></ion-button>
         </ion-col>
-        <ion-col *ngIf="!cancion.value.EsFavorita">
-          <ion-icon name="heart"></ion-icon>
+        <ion-col size="2" class="ion-text-center" *ngIf="!cancion.value.EsFavorita">
+          <ion-button (click)="marcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart-outline"></ion-icon></ion-button>
         </ion-col>
-
       </ion-item>
     </ion-row>
   </ion-grid>

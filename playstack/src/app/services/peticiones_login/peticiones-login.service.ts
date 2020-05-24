@@ -18,7 +18,6 @@ export class PeticionesLoginService {
     let response = await this.http.post("https://playstack.azurewebsites.net/user/login", postParams, httpOptions).toPromise()
     .then(res => {if(res.toString() === "Usuario autenticado correctamente"){ retVal = 201;}})
     .catch(msg => {console.log('Error: ' + msg.status + ' ' + msg.statusText);retVal = msg.status;})
-    
     return retVal;
   }
 }

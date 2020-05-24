@@ -4,19 +4,26 @@
       <ion-back-button color="light" defaultHref="./home"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      {{ podcast.value.tema }}
+      Podcast
     </ion-title>
 
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
   <ion-grid>
     <ion-row>
       <ion-col size="4" class="ion-text-center" style="padding: 40px;">
-        <ion-img style="width: 50%; margin: 0 auto;" [src]="podcast.value.Foto"></ion-img>
+        <ion-img style="width: 50%; margin: 0 auto;" [src]="datosPodcast?.Foto"></ion-img>
         <h1>{{ podcast.key }}</h1>
-        <p>Número de episodios:</p>
+        <p>Número de episodios: {{ datosPodcast?.capitulos.length }}</p>
+        <ion-chip>{{ datosPodcast?.Tema }}</ion-chip>
+        <ion-chip>{{ datosPodcast?.idioma }}</ion-chip>
+        <h3>Interlocutores</h3>
+        <p>{{ datosPodcast?.Interlocutores.join(', ') }}</p>
+        <h3>Descripcion</h3>
+        <p>{{ datosPodcast?.Descripcion }}</p>
       </ion-col>
       <ion-col size="8" style="padding: 40px">
         <ion-row class="ion-text-center">
@@ -31,15 +38,15 @@
 
         <div expand="full">
           <ion-spinner *ngIf="showSpinner"></ion-spinner>
-          <ion-item *ngIf="showError">Algo ha ido mal</ion-item>
+          <ion-item *ngIf="showError">{{ mensajeError }}</ion-item>
         </div>
 
-        <ion-row *ngFor="let capitulo of listaCapitulos | async | keyvalue; let i = index">
+        <ion-row *ngFor="let capitulo of listaEpisodios; let i = index">
           <ion-item button (click)="playChapter(i)" style="width: 100%;">
-            <ion-col>{{ capitulo.value.numChapter }}</ion-col>
-            <ion-col>{{ capitulo.value.nombre }}</ion-col>
-            <ion-col>{{ capitulo.value.fecha }}</ion-col>
-            <ion-col>{{ capitulo.value.duracion }}</ion-col>
+            <ion-col>{{ capitulo.numCap }}</ion-col>
+            <ion-col>{{ capitulo.nombre }}</ion-col>
+            <ion-col>{{ capitulo.fecha }}</ion-col>
+            <ion-col>10:00</ion-col>
           </ion-item>
         </ion-row>
       </ion-col>
