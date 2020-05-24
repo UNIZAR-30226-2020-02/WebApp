@@ -33,11 +33,17 @@ export class Cancion extends Audio {
 export class Episodio extends Audio {
   numCap: number;
   fecha: Date;
+  foto: string;
+  podcast: string;
+  interlocutores: string[];
 
-  constructor(nombre: string, path: string, numCap: number, fecha: Date) {
+  constructor(nombre: string, path: string, numCap: number, fecha: Date, foto: string, podcast: string, interlocutores: string[]) {
     super(nombre, path);
     this.numCap = numCap;
     this.fecha = fecha;
+    this.foto = foto;
+    this.podcast = podcast;
+    this.interlocutores = interlocutores;
   }
 }
 
@@ -111,6 +117,17 @@ export class ReproductorService {
 
   getActiveAudio(): any {
     return this.activeAudio
+  }
+
+  addToCola(audio: Audio) {
+    this.cola.push(audio);
+  }
+
+  playAudioCola(indice: number) {
+    if (indice < this.cola.length) {
+      this.start(this.cola[indice]);
+      this.cola.splice(indice);
+    }
   }
 
   // Devuelve:

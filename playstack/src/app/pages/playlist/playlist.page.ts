@@ -1,6 +1,6 @@
 import { ContenidoService } from './../../services/contenido/contenido.service';
 import { Component, OnInit, Input, Pipe, PipeTransform } from '@angular/core';
-import { ReproductorService, Playlist } from 'src/app/services/reproductor/reproductor.service';
+import { ReproductorService, Playlist, Cancion } from 'src/app/services/reproductor/reproductor.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,7 +21,7 @@ export class PlaylistPage implements OnInit {
   showError: boolean = false;
   mensajeError: string = "La playlist está vacía";
 
-  constructor(public rs: ReproductorService, public c: ContenidoService, public http: HttpClient,
+  constructor(public rs: ReproductorService, public cs: ContenidoService, public http: HttpClient,
     private route: ActivatedRoute, private router: Router) {
 
     this.route.queryParams.subscribe(() => {
@@ -33,7 +33,7 @@ export class PlaylistPage implements OnInit {
   }
 
   ngOnInit() {
-    this.listaCanciones = this.c.recuperarTracks(this.playlist);
+    this.listaCanciones = this.cs.recuperarTracks(this.playlist);
     this.cargarCanciones();
     console.log("playlist", this.playlist);
   }
@@ -59,7 +59,7 @@ export class PlaylistPage implements OnInit {
 
   addSong(cancion: any, indice: number) {
     if (this.playlist.tracks[indice] === undefined) {
-      this.playlist.tracks[indice] = this.c.constructTrack(cancion);
+      this.playlist.tracks[indice] = this.cs.constructTrack(cancion);
       console.log(this.playlist.tracks);
     }
   }
@@ -78,6 +78,11 @@ export class PlaylistPage implements OnInit {
 
   desmarcarFavorita(cancion: string) {
     console.log("No Favorita:", cancion);
+  }
+
+  addToCola(cancion: any) {
+    console.log("Añadir", cancion.key, "a la cola");
+    this.rs.addToCola(this.cs.constructTrack(cancion));
   }
 
 }

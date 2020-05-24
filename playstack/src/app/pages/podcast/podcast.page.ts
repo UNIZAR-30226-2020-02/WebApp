@@ -55,7 +55,7 @@ export class PodcastPage implements OnInit {
   cargarEpisodios() {
     this.datosPodcast.capitulos.forEach(episodio => {
       this.listaEpisodios.push(new Episodio(episodio.nombre, episodio.url, episodio.numChapter,
-        episodio.fecha.substring(0, 10)));
+        episodio.fecha.substring(0, 10), this.datosPodcast.Foto, this.podcast.key, this.datosPodcast.Interlocutores));
     });
   }
 

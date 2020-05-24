@@ -8,12 +8,16 @@ import { SocialPageRoutingModule } from './social-routing.module';
 
 import { SocialPage } from './social.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SocialPageRoutingModule
+    SocialPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [SocialPage]
 })

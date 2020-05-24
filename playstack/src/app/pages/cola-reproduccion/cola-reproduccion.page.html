@@ -13,7 +13,9 @@
 <ion-content>
   <!-- <img src="{{ $any(rs.getActiveTrack()).value[0] }}" style="width: 50px; height: 50px; border-radius: 5px; margin: 10px;"> -->
   <ion-title>Sonando</ion-title>
-  <ion-label *ngIf="rs?.getActiveAudio() == null">No se está reproduciendo ninguna canción</ion-label>
+
+  <ion-text *ngIf="rs?.getActiveAudio() == null">No se está reproduciendo ninguna canción</ion-text>
+  
   <ion-grid *ngIf="rs?.getActiveAudio() != null">
     <ion-row style="font-size: large;">
       <ion-col></ion-col>

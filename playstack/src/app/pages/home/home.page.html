@@ -23,6 +23,7 @@
 
   <div class="div-horizontal-scroll">
     <h1>Podcasts recomendados</h1>
+        <ion-spinner *ngIf="showSpinner3"></ion-spinner>
     <app-scrollhorizontal [listaConjuntos]="cs.getTodosPodcasts()" [tipoConjuntos]="'Podcasts'"></app-scrollhorizontal>
   </div>
 

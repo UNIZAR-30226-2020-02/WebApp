@@ -1,3 +1,4 @@
+import { Podcast } from 'src/app/services/reproductor/reproductor.service';
 import { Playlist } from './../../services/reproductor/reproductor.service';
 import { Component, OnInit } from '@angular/core';
 import { ReproductorService } from '../../services/reproductor/reproductor.service';
@@ -13,29 +14,25 @@ import { ContenidoService } from 'src/app/services/contenido/contenido.service';
 export class HomePage implements OnInit {
 
   
-  cancionesRap: Observable<any>;
-  cancionesTechno: Observable<any>;
+  generos: Observable<any>;
+  artistas: Observable<any>;
+  podcasts: Observable<any>;
 
   showSpinner1: boolean = true;
   showSpinner2: boolean = true;
-
+  showSpinner3: boolean = true;
 
   constructor(public rs: ReproductorService, public cs: ContenidoService) {
   }
 
   ngOnInit() {
 
-    // this.cancionesRap = this.rs.getCancionesByGenero("Rap");
-    // this.cancionesRap.subscribe(() => this.showSpinner1 = false);
-    // this.cancionesTechno = this.rs.getCancionesByGenero("Techno");
-    // this.cancionesTechno.subscribe(() => this.showSpinner2 = false);
-    this.showSpinner1 = false;
-    this.showSpinner2 = false;
-    /*
-    this.canciones.subscribe(data => {
-      console.log('my data: ', data);
-    })
-    */
+    this.generos = this.cs.getTodosGeneros();
+    this.generos.subscribe(() => this.showSpinner1 = false);
+    this.artistas = this.cs.getTodosArtistas();
+    this.artistas.subscribe(() => this.showSpinner2 = false);
+    this.podcasts = this.cs.getTodosPodcasts();
+    this.podcasts.subscribe(() => this.showSpinner3 = false);
   }
 
 }
