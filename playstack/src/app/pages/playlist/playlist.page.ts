@@ -74,20 +74,20 @@ export class PlaylistPage implements OnInit {
 
   async marcarFavorita(cancion: string) {
     console.log("Favorita:", cancion);
-    let resp = await this.c.addToPlaylist("Favoritas", cancion);
+    let resp = await this.c.addToFavorites(cancion);
     switch(resp)
     {
-      case 200: this.ngOnInit();
+      case 200: this.ngOnInit();break;
       default: {console.log("Error de post")}
     }
   }
 
   async desmarcarFavorita(cancion: string) {
     console.log("No Favorita:", cancion);
-    let resp = await this.c.removeFromPlaylist("Favoritas", cancion);
+    let resp = await this.c.removeFromFavorites(cancion);
     switch(resp)
     {
-      case 200: this.ngOnInit();
+      case 200: this.ngOnInit();break;
       default: {console.log("Error de post")}
     }
   }

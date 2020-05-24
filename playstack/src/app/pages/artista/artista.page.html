@@ -40,8 +40,6 @@
         <ion-col *ngIf="!cancion.value.EsFavorita">
           <ion-button (click)="marcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart-outline"></ion-icon></ion-button>
         </ion-col>
-        </ion-col>
-
       </ion-item>
     </ion-row>
   </ion-grid>

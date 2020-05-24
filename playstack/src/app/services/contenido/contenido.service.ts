@@ -180,7 +180,7 @@ export class ContenidoService {
     return this.http.get(this.ROOT_URL + '/get/artist/albums', { params });
   }
 
-  async addToPlaylist(playlist: string, song:string){
+  async addToFavorites(song:string){
     let user = this.auth.getUserName();
     
     let retVal: number;
@@ -191,8 +191,8 @@ export class ContenidoService {
       })
     };
     
-    let postParams = { 'NombreUsuario': user, 'NombrePlaylist': playlist, 'NombreCancion': song};
-    await this.http.post(this.ROOT_URL + '/user/add/song/toplaylist',
+    let postParams = { 'Usuario': user,'Titulo': song};
+    await this.http.post(this.ROOT_URL + '/user/add/song/tofavorites',
     postParams, httpOptions).toPromise()
     .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
     .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
@@ -200,7 +200,7 @@ export class ContenidoService {
     return retVal;
   }
 
-  async removeFromPlaylist(playlist: string, song:string){
+  async removeFromFavorites(song:string){
     let user = this.auth.getUserName();
     
     let retVal: number;
@@ -210,9 +210,9 @@ export class ContenidoService {
         'Content-Type': 'application/json'
       })
     };
-    let postParams = { 'NombreUsuario': user, 'NombrePlaylist': playlist, 'NombreCancion': song};
+    let postParams = { 'Usuario': user, 'Titulo': song};
 
-    await this.http.post(this.ROOT_URL + '/user/remove/song/fromplaylist',
+    await this.http.post(this.ROOT_URL + '/user/remove/song/fromfavorites',
     postParams, httpOptions).toPromise()
     .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
     .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
