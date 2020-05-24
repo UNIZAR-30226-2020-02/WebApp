@@ -2,7 +2,7 @@ import { Episodio } from './../reproductor/reproductor.service';
 import { Podcast } from 'src/app/services/reproductor/reproductor.service';
 import { Injectable } from '@angular/core';
 import { Playlist, Cancion } from '../reproductor/reproductor.service';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
@@ -180,5 +180,44 @@ export class ContenidoService {
     return this.http.get(this.ROOT_URL + '/get/artist/albums', { params });
   }
 
+  async addToFavorites(song:string){
+    let user = this.auth.getUserName();
+    
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    
+    let postParams = { 'Usuario': user,'Titulo': song};
+    await this.http.post(this.ROOT_URL + '/user/add/song/tofavorites',
+    postParams, httpOptions).toPromise()
+    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
+
+  async removeFromFavorites(song:string){
+    let user = this.auth.getUserName();
+    
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    let postParams = { 'Usuario': user, 'Titulo': song};
+
+    await this.http.post(this.ROOT_URL + '/user/remove/song/fromfavorites',
+    postParams, httpOptions).toPromise()
+    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
 }
 

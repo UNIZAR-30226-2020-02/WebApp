@@ -35,12 +35,11 @@
         <ion-col>3:40</ion-col>
 
         <ion-col *ngIf="cancion.value.EsFavorita">
-          <ion-icon name="heart-outline"></ion-icon>
+          <ion-button (click)="desmarcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart"></ion-icon></ion-button>
         </ion-col>
         <ion-col *ngIf="!cancion.value.EsFavorita">
-          <ion-icon name="heart"></ion-icon>
+          <ion-button (click)="marcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart-outline"></ion-icon></ion-button>
         </ion-col>
-
       </ion-item>
     </ion-row>
   </ion-grid>
