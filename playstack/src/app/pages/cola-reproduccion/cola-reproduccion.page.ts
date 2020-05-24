@@ -33,8 +33,7 @@ export class ColaReproduccionPage implements OnInit {
   // Reproduce la canción que ha pedido el usuario y
   // la elimina de la cola
   playAudioCola(indice: number) {
-    this.rs.start(this.rs.cola[indice]);
-    this.rs.cola.splice(indice, 1);
+    this.rs.playAudioCola(indice);
   }
 
   // Reproduce la canción que ha pedido el usuario y

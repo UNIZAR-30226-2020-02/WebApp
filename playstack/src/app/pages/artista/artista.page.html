@@ -9,18 +9,18 @@
 
 <ion-content>
 
-  <ion-avatar style="margin-left: auto; margin-right: auto; width: 200px; height: 200px;">
+  <ion-avatar style="margin-top: 10px; margin-left: auto; margin-right: auto; width: 200px; height: 200px;">
     <img class="imagen-perfil" [src]="foto">
   </ion-avatar>
 
   <h2>Canciones de {{ nombreArtista }}</h2>
   <ion-grid>
     <ion-row style="font-size: large;">
-      <ion-col>Titulo</ion-col>
+      <ion-col size="2">Titulo</ion-col>
       <ion-col>Album</ion-col>
       <ion-col>Artista</ion-col>
       <ion-col>Duracion</ion-col>
-      <ion-col>Favorita</ion-col>
+      <ion-col></ion-col>
     </ion-row>
 
     <div expand="full">
@@ -29,17 +29,17 @@
 
     <ion-row *ngFor="let cancion of canciones | async | keyvalue;">
       <ion-item button (click)="playSong(cancion)" style="width: 100%;">
-        <ion-col>{{ cancion.key }}</ion-col>
+        <ion-col size="2">{{ cancion.key }}</ion-col>
         <ion-col>{{ cancion.value.Albumes?.join(", ") }}</ion-col>
         <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
         <ion-col>3:40</ion-col>
+        
+        <ion-col>
+          <ion-button *ngIf="cancion.value.EsFavorita" (click)="desmarcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart"></ion-icon></ion-button>
+          <ion-button *ngIf="!cancion.value.EsFavorita" (click)="marcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart-outline"></ion-icon></ion-button>
+          <ion-button (click)="addToCola(cancion); $event.stopPropagation()"><ion-icon name="list-outline"></ion-icon></ion-button>
+        </ion-col>
 
-        <ion-col *ngIf="cancion.value.EsFavorita">
-          <ion-button (click)="desmarcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart"></ion-icon></ion-button>
-        </ion-col>
-        <ion-col *ngIf="!cancion.value.EsFavorita">
-          <ion-button (click)="marcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart-outline"></ion-icon></ion-button>
-        </ion-col>
       </ion-item>
     </ion-row>
   </ion-grid>
@@ -50,25 +50,20 @@
       <ion-spinner *ngIf="showSpinner"></ion-spinner>
     </div>
     <ion-row>
+      <ion-col size="2"></ion-col>
       <ion-col>Nombre</ion-col>
-      <ion-col>Artista</ion-col>
-      <ion-col>Duración</ion-col>
-      <ion-col>Fecha</ion-col>
     </ion-row>
     <ion-row *ngFor="let album of albumes | async | keyvalue">
       <ion-item button (click)="openAlbum(album.key, album.value)" class="item-album">
-        <!--NO SE POR QUÉ FALLA [color]="cancion.key == rs.activeTrack?.nombre ? 'playstack shade' : 'white'"-->
-        <ion-col><img style="width: 50px; height: 50px;" src="{{ album.value }}"/></ion-col>
+        <ion-col size="2"><img style="width: 50px; height: 50px;" src="{{ album.value }}" /></ion-col>
         <ion-col>{{ album.key }}</ion-col>
-        <!-- Falta la duracion en el servicio <ion-col>{{ cancion.value.duracion}}</ion-col>-->
-        <!-- Falta la fecha en el servicio <ion-col>{{ cancion.value.fecha}}</ion-col>-->
       </ion-item>
     </ion-row>
   </ion-grid>
 </ion-content>
 
 <ion-footer>
-<ion-toolbar>
-<app-reproductor></app-reproductor>
-</ion-toolbar>
+  <ion-toolbar>
+    <app-reproductor></app-reproductor>
+  </ion-toolbar>
 </ion-footer>

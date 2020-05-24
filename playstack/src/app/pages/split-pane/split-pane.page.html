@@ -30,27 +30,27 @@
 
         <ion-menu-toggle auto-hide="false">
 
-          <ion-item [routerLink]="['/app/home']" lines="none" detail="false">
+          <ion-item [routerLink]="['/app/home']" lines="none" detail="false" (click)="seleccionar('home')" [class.selected]="tabSeleccionada == 'home'">
             <ion-icon slot="start" name="home-outline"></ion-icon>
             <ion-label>Home</ion-label>
           </ion-item>
 
-          <ion-item [routerLink]="['/app/buscar']" lines="none" detail="false">
+          <ion-item [routerLink]="['/app/buscar']" lines="none" detail="false" (click)="seleccionar('buscar')" [class.selected]="tabSeleccionada == 'buscar'">
             <ion-icon slot="start" name="search-outline"></ion-icon>
             <ion-label>Buscar</ion-label>
           </ion-item>
 
-          <ion-item [routerLink]="['/app/biblioteca']" lines="none" detail="false">
+          <ion-item [routerLink]="['/app/biblioteca']" lines="none" detail="false" (click)="seleccionar('biblioteca')" [class.selected]="tabSeleccionada == 'biblioteca'">
             <ion-icon slot="start" name="library-outline"></ion-icon>
             <ion-label>Biblioteca</ion-label>
           </ion-item>
 
-          <ion-item [routerLink]="['/app/creador-contenido']" lines="none" detail="false">
+          <ion-item [routerLink]="['/app/creador-contenido']" lines="none" detail="false" (click)="seleccionar('creador-contenido')" [class.selected]="tabSeleccionada == 'creador-contenido'">
             <ion-icon style="width: 25px; height: 25px; padding-right: 20px;" src="assets/icon/playstack-icon.svg"></ion-icon>
             <ion-label>Crear contenido</ion-label>
           </ion-item>
 
-          <ion-item [routerLink]="['/app/social']" lines="none" detail="false">
+          <ion-item [routerLink]="['/app/social']" lines="none" detail="false" (click)="seleccionar('social')" [class.selected]="tabSeleccionada == 'social'">
             <ion-icon slot="start" name="people-outline"></ion-icon>
             <ion-label>Social</ion-label>
           </ion-item>

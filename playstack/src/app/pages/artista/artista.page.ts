@@ -71,4 +71,8 @@ export class ArtistaPage implements OnInit {
     }
   }
 
+  addToCola(cancion) {
+    console.log("Añadir", cancion.key, "a la cola");
+    this.rs.addToCola(this.cs.constructTrack(cancion));
+  }
 }

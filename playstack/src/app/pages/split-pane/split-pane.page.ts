@@ -15,6 +15,8 @@ export class SplitPanePage implements OnInit {
 
   public playlists = ["Éxitos de España", "Canciones favoritas", "Mi Playlist"];
 
+  tabSeleccionada: string = "home";
+
   nombreUsuario: string;
   fotoUsuario : string;
   tipoCuenta : string;
@@ -28,6 +30,10 @@ export class SplitPanePage implements OnInit {
 
     open(id: string) {
       this.router.navigateByUrl('/' + id);
+    }
+
+    seleccionar(tab: string) {
+      this.tabSeleccionada = tab;
     }
 
 }

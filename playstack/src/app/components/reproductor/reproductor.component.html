@@ -4,7 +4,7 @@
     
     <ion-col size="12" *ngIf="rs.getActiveAudio()">
         <div *ngIf="rs.tipoAudio(rs.getActiveAudio()) == 'Cancion'">
-          <ion-item style="width: 500px; margin: 0 auto;">
+          <ion-item style="width: 500px; margin: 0 auto;" lines="none">
             <ion-thumbnail slot=start>
               <img [src]="rs.getActiveAudio().covers[0]">
             </ion-thumbnail>
@@ -15,7 +15,7 @@
           </ion-item>
         </div>
         <div *ngIf="rs.tipoAudio(rs.getActiveAudio()) == 'Episodio'">
-          <ion-item style="width: 400px; margin: 0 auto;">
+          <ion-item style="width: 400px; margin: 0 auto;" lines="none">
             <ion-thumbnail slot=start>
               <img [src]="rs.getActiveAudio().foto">
             </ion-thumbnail>

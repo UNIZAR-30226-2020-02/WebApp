@@ -14,7 +14,8 @@ import { CreadorContenidoPage } from './creador-contenido.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    CreadorContenidoPageRoutingModule
+    CreadorContenidoPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [CreadorContenidoPage]
 })

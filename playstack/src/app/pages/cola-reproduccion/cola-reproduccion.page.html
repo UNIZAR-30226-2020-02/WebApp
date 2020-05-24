@@ -13,10 +13,10 @@
 <ion-content>
   <!-- <img src="{{ $any(rs.getActiveTrack()).value[0] }}" style="width: 50px; height: 50px; border-radius: 5px; margin: 10px;"> -->
   <ion-title>Sonando</ion-title>
-
-  <ion-text *ngIf="rs?.getActiveAudio() == null">No se está reproduciendo ninguna canción</ion-text>
-  
-  <ion-grid *ngIf="rs?.getActiveAudio() != null">
+  <ion-item style="padding-bottom: 50px;" *ngIf="rs?.getActiveAudio() == null">
+    <ion-label>No se está reproduciendo ninguna canción</ion-label>
+  </ion-item>
+  <ion-grid *ngIf="rs?.getActiveAudio() != null" style="padding-bottom: 50px;">
     <ion-row style="font-size: large;">
       <ion-col></ion-col>
       <ion-col>Titulo</ion-col>
@@ -28,27 +28,29 @@
 
     <ion-row>
       <ion-item button (click)="rs.togglePlayer()" style=" width: 100%;">
+        <ion-col></ion-col>
+        <ion-col>{{ rs.getActiveAudio().nombre }}</ion-col>
+        <ion-col>{{ $any(rs.getActiveAudio()).albumes?.join(", ") }}</ion-col>
+        <ion-col>{{ $any(rs.getActiveAudio()).artistas?.join(", ") }}</ion-col>
+        <ion-col>{{ rs.getActiveAudio().duracion }}</ion-col>
 
-        <div *ngIf="rs.tipoAudio(rs.getActiveAudio()) == 'Cancion'">
-          <ion-col>{{ rs.getActiveAudio().nombre }}</ion-col>
-          <ion-col>{{ $any(rs.getActiveAudio()).albumes?.join(", ") }}</ion-col>
-          <ion-col>{{ $any(rs.getActiveAudio()).artistas?.join(", ") }}</ion-col>
-          <ion-col>{{ rs.getActiveAudio().duracion }}</ion-col>
-
-          <ion-col *ngIf="$any(rs.getActiveAudio()).esFavorita">
-            <ion-icon name="heart-outline"></ion-icon>
-          </ion-col>
-          <ion-col *ngIf="$any(!rs.getActiveAudio()).esFavorita">
-            <ion-icon name="heart"></ion-icon>
-          </ion-col>
-        </div>
+        <ion-col *ngIf="$any(rs.getActiveAudio()).esFavorita">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-col>
+        <ion-col *ngIf="$any(!rs.getActiveAudio()).esFavorita">
+          <ion-icon name="heart"></ion-icon>
+        </ion-col>
+        
       </ion-item>
     </ion-row>
   </ion-grid>
 
   <ion-title>A continuación en la cola</ion-title>
-  <ion-label *ngIf="rs?.cola.length === 0">No hay música en la cola</ion-label>
-  <ion-grid *ngIf="rs?.cola.length > 0">
+  <ion-item style="padding-bottom: 50px;" *ngIf="rs?.cola.length === 0">
+    <ion-label>No hay música en la cola</ion-label>
+  </ion-item>
+
+  <ion-grid *ngIf="rs?.cola.length > 0" style="padding-bottom: 50px;">
     <ion-row style="font-size: large;">
       <ion-col>#</ion-col>
       <ion-col>Titulo</ion-col>
@@ -61,25 +63,18 @@
     <ion-row *ngFor="let audio of rs.cola; let i = index">
       <ion-item button (click)="playAudioCola(i)" style=" width: 100%;">
 
-        <div *ngIf="rs.tipoAudio(audio) == 'Cancion'">
-          <ion-col>{{ i + 1 }}</ion-col>
+        <ion-col>{{ i + 1 }}</ion-col>
+        <ion-col>{{ audio.nombre }}</ion-col>
+        <ion-col>{{ $any(audio).albumes?.join(", ") }}</ion-col>
+        <ion-col>{{ $any(audio).artistas?.join(", ") }}</ion-col>
+        <ion-col>3:40</ion-col>
 
-          <ion-col>{{ audio.nombre }}</ion-col>
-          <ion-col>{{ $any(audio).albumes?.join(", ") }}</ion-col>
-          <ion-col>{{ $any(audio).artistas?.join(", ") }}</ion-col>
-          <ion-col>3:40</ion-col>
-
-          <ion-col *ngIf="$any(audio).esFavorita">
-            <ion-icon name="heart-outline"></ion-icon>
-          </ion-col>
-          <ion-col *ngIf="!$any(audio).esFavorita">
-            <ion-icon name="heart"></ion-icon>
-          </ion-col>
-        </div>
-
-        <div *ngIf="rs.tipoAudio(audio) == 'Cancion'">
-          Esto es un podcast
-        </div>
+        <ion-col *ngIf="$any(audio).esFavorita">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-col>
+        <ion-col *ngIf="!$any(audio).esFavorita">
+          <ion-icon name="heart"></ion-icon>
+        </ion-col>
 
       </ion-item>
     </ion-row>
@@ -87,7 +82,9 @@
 
 
   <ion-title>A continuación</ion-title>
-  <ion-label *ngIf="rs?.listaAudio.length === 0">No se está reproduciendo ninguna playlist</ion-label>
+  <ion-item style="padding-bottom: 50px;" *ngIf="rs?.listaAudio.length === 0">
+    <ion-label>No se está reproduciendo ninguna playlist</ion-label>
+  </ion-item>
   <ion-grid *ngIf="rs?.listaAudio.length > 0">
     <ion-row style="font-size: large;">
       <ion-col>#</ion-col>
