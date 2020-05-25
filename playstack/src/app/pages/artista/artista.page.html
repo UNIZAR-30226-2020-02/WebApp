@@ -28,7 +28,7 @@
     </div>
 
     <ion-row *ngFor="let cancion of canciones | async | keyvalue;">
-      <ion-item button (click)="playSong(cancion)" style="width: 100%;">
+      <ion-item button (click)="playSong(cancion)" style="width: 100%;" [class.selected]="cancion?.key == rs.getActiveAudio()?.nombre">
         <ion-col size="2">{{ cancion.key }}</ion-col>
         <ion-col>{{ cancion.value.Albumes?.join(", ") }}</ion-col>
         <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
