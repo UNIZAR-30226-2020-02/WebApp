@@ -18,7 +18,7 @@
         <ion-img style="width: 50%; margin: 0 auto;" [src]="playlist.covers[0]"></ion-img>
         <div>
           <h1>{{ playlist.nombre }}</h1>
-          <ion-button (click)="editPlaylist(); $event.stopPropagation()">
+          <ion-button *ngIf="playlist?.tipo == 'Playlist'" (click)="editPlaylist(); $event.stopPropagation()">
             <ion-icon name="create"></ion-icon>
           </ion-button>
         </div>
