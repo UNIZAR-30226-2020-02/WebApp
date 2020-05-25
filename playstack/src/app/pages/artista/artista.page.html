@@ -38,6 +38,9 @@
           <ion-button *ngIf="cancion.value.EsFavorita" (click)="desmarcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart"></ion-icon></ion-button>
           <ion-button *ngIf="!cancion.value.EsFavorita" (click)="marcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart-outline"></ion-icon></ion-button>
           <ion-button (click)="addToCola(cancion); $event.stopPropagation()"><ion-icon name="list-outline"></ion-icon></ion-button>
+          <ion-button (click)="addToPlaylist(cancion.key); $event.stopPropagation()">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
         </ion-col>
 
       </ion-item>

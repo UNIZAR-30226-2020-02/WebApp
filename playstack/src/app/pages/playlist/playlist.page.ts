@@ -110,7 +110,7 @@ export class PlaylistPage implements OnInit {
       // El usuario elige una playlist
       var options = {
         title: 'Choose the name',
-        message: 'Which name do you like?',
+        message: 'Añadir a playlist',
         inputs: [],
         buttons: [
           {
@@ -159,6 +159,43 @@ export class PlaylistPage implements OnInit {
         break;
       }
     }
+  }
+
+  async editPlaylist(){
+    var options = {
+      title: 'Choose the name',
+      message: 'Cambiar nombre',
+      inputs: [],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: async data => {
+            console.log("Nuevo nombre:", data.Nombre);
+            let respuesta = await this.cs.actualizarPlaylist(this.playlist.nombre, data.Nombre, this.playlist.esPrivada);
+            switch (respuesta) {
+              case 200: console.log("Se ha cambiado el nombre"); this.playlist.nombre = data.Nombre; this.ngOnInit(); break;
+              default: console.log("No se ha podido añadir la cancion"); break;
+            }
+            
+          }
+        }
+      ]
+    };
+    options.inputs.push({
+      name: 'Nombre',
+      type: 'text',
+      placeholder: 'Nuevo nombre'
+    });
+    // Create the alert with the options
+    let alert = await this.alertController.create(options);
+    alert.present();
   }
 
 }
