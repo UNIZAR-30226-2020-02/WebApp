@@ -43,7 +43,7 @@ export class ContenidoService {
 
 
   constructTrack(cancion: any) {
-    let track = new Cancion(cancion.key, cancion.value.url, cancion.value.ImagenesAlbum, cancion.value.Artistas, cancion.value.Albumes, cancion.value.EsFavorita);
+    let track = new Cancion(cancion.key, cancion.value.url, cancion.value.ImagenesAlbums, cancion.value.Artistas, cancion.value.Albumes, cancion.value.EsFavorita);
     return track;
   }
 
