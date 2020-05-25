@@ -43,12 +43,22 @@ export class ContenidoService {
 
 
   constructTrack(cancion: any) {
-    let track = new Cancion(cancion.key, cancion.value.url, cancion.value.ImagenesAlbums, cancion.value.Artistas, cancion.value.Albumes, cancion.value.EsFavorita);
+    // Corregir error del backend
+    let covers = cancion.value.ImagenesAlbums
+    if (!covers) {
+      covers = cancion.value.ImagenesAlbum;
+    }
+    let track = new Cancion(cancion.key, cancion.value.url, covers, cancion.value.Artistas, cancion.value.Albumes, cancion.value.EsFavorita);
     return track;
   }
 
   constructTrack2(key: string, value: any) {
-    let track = new Cancion(key, value.url, value.ImagenesAlbum, value.Artistas, value.Albumes, value.EsFavorita);
+    // Corregir error del backend
+    let covers = value.ImagenesAlbums
+    if (!covers) {
+      covers = value.ImagenesAlbum;
+    }
+    let track = new Cancion(key, value.url, covers, value.Artistas, value.Albumes, value.EsFavorita);
     return track;
   }
 
