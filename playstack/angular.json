@@ -128,7 +128,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {
@@ -168,6 +170,17 @@
               "cordovaBuildTarget": "app:ionic-cordova-build:production",
               "devServerTarget": "app:serve:production"
             }
+          }
+        },
+        "azureLogout": {
+          "builder": "@azure/ng-deploy:logout"
+        },
+        "deploy": {
+          "builder": "@azure/ng-deploy:deploy",
+          "options": {
+            "host": "Azure",
+            "type": "static",
+            "config": "azure.json"
           }
         }
       }
