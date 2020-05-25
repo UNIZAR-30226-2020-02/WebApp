@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ContenidoService } from 'src/app/services/contenido/contenido.service';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class BibliotecaPage implements OnInit {
 
 
   constructor(public rs: ReproductorService, public cs: ContenidoService, public http: HttpClient,
-     private router: Router, private activatedRoute: ActivatedRoute) {
+    private router: Router, private activatedRoute: ActivatedRoute, public alertController: AlertController) {
   }
 
   ngOnInit() {
@@ -61,6 +62,7 @@ export class BibliotecaPage implements OnInit {
     this.playlists = this.cs.getUserPlaylists();
     this.playlists.subscribe(
       resultado => {
+        console.log(resultado);
         this.showSpinner = false;
       },
       error => {
@@ -120,7 +122,7 @@ export class BibliotecaPage implements OnInit {
         this.mensajeError = "No hay podcasts"
         this.showError = true;
       });
-    }
+  }
 
   setEpisodios() {
     this.currentTabPodcasts = "Episodios";
@@ -148,20 +150,27 @@ export class BibliotecaPage implements OnInit {
       error => {
         this.showSpinner = false;
         this.showError = true;
-      });    
+      });
   }
 
   openPlaylist(nombre: string, esPrivada: boolean, covers: string[]) {
-    let playlist = this.cs.constructPlaylist("Playlist", esPrivada, nombre, covers, []);
-    // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
-    let navigationExtras: NavigationExtras = {
-      relativeTo: this.activatedRoute,
-      state: {
-        playlist: playlist
+    // Mirar si ha cambiado el estado de privacidad
+    this.cs.getUserPlaylists().subscribe(
+      resultado => {
+        esPrivada = resultado[nombre].Privado;
+
+        let playlist = this.cs.constructPlaylist("Playlist", esPrivada, nombre, covers, []);
+        // Abrir pantalla de visualización de playlist pasando a la página el objeto que contiene la playlist
+        let navigationExtras: NavigationExtras = {
+          relativeTo: this.activatedRoute,
+          state: {
+            playlist: playlist
+          }
+        };
+        console.log(this.activatedRoute);
+        this.router.navigate(['../../playlist'], navigationExtras);
       }
-    };
-    console.log(this.activatedRoute);
-    this.router.navigate(['../../playlist'], navigationExtras);
+    )
   }
 
   openFavoritas(nombre: string, esPrivada: boolean, covers: string[]) {
@@ -237,5 +246,61 @@ export class BibliotecaPage implements OnInit {
     // Establece la lista de reproducción del reproductor como las
     // canciones que hay después de la que se pone (incluida).
     console.log("play", capitulo);
+  }
+
+
+  async crearPlaylist() {
+
+    const alert = await this.alertController.create({
+      header: 'Crear playlist',
+      message: 'Introduce un nombre para tu playlist',
+      inputs: [
+        {
+          name: 'nombrePlaylist',
+          type: 'text',
+          placeholder: 'Nombre'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (data) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Aceptar',
+          handler: async (data) => {
+            console.log('Confirm Okay');
+            if (data.nombrePlaylist == undefined) {
+              this.errorNombrePlaylist();
+            } else {
+              let respuesta = await this.cs.crearPlaylist(data.nombrePlaylist, true);
+              switch (respuesta) {
+                case 200: this.setPlaylists(); break;
+                default: console.log("error creando la playlist"); break;
+              }
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async errorNombrePlaylist() {
+    const alert = await this.alertController.create({
+      header: 'Error al crear la playlist',
+      message: 'No has introducido un nombre para la playlist',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

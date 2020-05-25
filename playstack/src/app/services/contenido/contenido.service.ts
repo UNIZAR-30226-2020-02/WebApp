@@ -17,7 +17,7 @@ export class ContenidoService {
   readonly ROOT_URL = 'https://playstack.azurewebsites.net';
 
 
-  
+
   /* Búsqueda y construcción de listas de reproducción */
 
   /*
@@ -43,7 +43,7 @@ export class ContenidoService {
 
 
   constructTrack(cancion: any) {
-    let track = new Cancion(cancion.key,  cancion.value.url, cancion.value.ImagenesAlbum, cancion.value.Artistas, cancion.value.Albumes, cancion.value.EsFavorita);
+    let track = new Cancion(cancion.key, cancion.value.url, cancion.value.ImagenesAlbum, cancion.value.Artistas, cancion.value.Albumes, cancion.value.EsFavorita);
     return track;
   }
 
@@ -105,16 +105,16 @@ export class ContenidoService {
     return this.http.get(this.ROOT_URL + '/get/favoritesongs', { params });
   }
 
-  getAllPodcasts(){
+  getAllPodcasts() {
     return this.http.get(this.ROOT_URL + '/get/allpodcasts');
   }
 
-  getInformacionPodcast(program: string){
+  getInformacionPodcast(program: string) {
     let params = new HttpParams().set('NombrePodcast', program);
     return this.http.get(this.ROOT_URL + '/get/podcast/all', { params });
   }
 
-  getPodcastsFollowed(){
+  getPodcastsFollowed() {
     let user = this.auth.getUserName();
     let params = new HttpParams().set('NombreUsuario', user);
     return this.http.get(this.ROOT_URL + '/get/podcast/followed', { params });
@@ -159,6 +159,26 @@ export class ContenidoService {
     return this.http.get(this.ROOT_URL + '/get/playlists', { params });
   }
 
+  async getUserPlaylistsArray() {
+    let playlists: string[] = [];
+    let user = this.auth.getUserName();
+    let params = new HttpParams().set('NombreUsuario', user);
+    console.log("Recuperar playlists", user, params);
+    await this.http.get(this.ROOT_URL + '/get/playlists', { params }).toPromise()
+      .then(resultado => {
+        console.log(resultado);
+        for (let playlist in resultado) {
+          playlists.push(playlist);
+        }
+      })
+      .catch(error => {
+        console.log("Error");
+        playlists = null;
+      });
+    console.log(playlists);
+    return playlists;
+  }
+
   getArtistas() {
     return this.http.get(this.ROOT_URL + '/get/allartists');
   }
@@ -180,9 +200,9 @@ export class ContenidoService {
     return this.http.get(this.ROOT_URL + '/get/artist/albums', { params });
   }
 
-  async addToFavorites(song:string){
+  async addToFavorites(song: string) {
     let user = this.auth.getUserName();
-    
+
     let retVal: number;
 
     const httpOptions = {
@@ -190,19 +210,19 @@ export class ContenidoService {
         'Content-Type': 'application/json'
       })
     };
-    
-    let postParams = { 'Usuario': user,'Titulo': song};
+
+    let postParams = { 'Usuario': user, 'Titulo': song };
     await this.http.post(this.ROOT_URL + '/user/add/song/tofavorites',
-    postParams, httpOptions).toPromise()
-    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
-    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+      postParams, httpOptions).toPromise()
+      .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+      .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
 
     return retVal;
   }
 
-  async removeFromFavorites(song:string){
+  async removeFromFavorites(song: string) {
     let user = this.auth.getUserName();
-    
+
     let retVal: number;
 
     const httpOptions = {
@@ -210,17 +230,17 @@ export class ContenidoService {
         'Content-Type': 'application/json'
       })
     };
-    let postParams = { 'Usuario': user, 'Titulo': song};
+    let postParams = { 'Usuario': user, 'Titulo': song };
 
     await this.http.post(this.ROOT_URL + '/user/remove/song/fromfavorites',
-    postParams, httpOptions).toPromise()
-    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
-    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+      postParams, httpOptions).toPromise()
+      .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+      .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
 
     return retVal;
   }
 
-  async addToPlaylist(playlist: string, cancion: string){
+  async addToPlaylist(playlist: string, cancion: string) {
     let user = this.auth.getUserName();
     let retVal: number;
 
@@ -229,17 +249,17 @@ export class ContenidoService {
         'Content-Type': 'application/json'
       })
     };
-    let postParams = {'NombreUsuario': user, 'NombrePlaylist': playlist, 'NombreCancion': cancion};
+    let postParams = { 'NombreUsuario': user, 'NombrePlayList': playlist, 'NombreCancion': cancion };
 
     await this.http.post(this.ROOT_URL + '/user/add/song/toplaylist',
-    postParams, httpOptions).toPromise()
-    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
-    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+      postParams, httpOptions).toPromise()
+      .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+      .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
 
     return retVal;
   }
 
-  async removeFromPlaylist(playlist: string, cancion: string){
+  async removeFromPlaylist(playlist: string, cancion: string) {
     let user = this.auth.getUserName();
     let retVal: number;
 
@@ -248,12 +268,55 @@ export class ContenidoService {
         'Content-Type': 'application/json'
       })
     };
-    let postParams = {'NombreUsuario': user, 'NombrePlaylist': playlist, 'NombreCancion': cancion};
+    let postParams = { 'NombreUsuario': user, 'NombrePlayList': playlist, 'NombreCancion': cancion };
 
     await this.http.post(this.ROOT_URL + '/user/remove/song/fromplaylist',
-    postParams, httpOptions).toPromise()
-    .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
-    .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+      postParams, httpOptions).toPromise()
+      .then(res => { console.log(res, 'Solicitud aceptada'); retVal = 200; })
+      .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
+
+  async crearPlaylist(nombre: string, esPrivada: boolean) {
+    let user = this.auth.getUserName();
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    let postParams = { 'NombreUsuario': user, 'NombrePlayList': nombre, 'EsPrivado': esPrivada };
+
+    await this.http.post(this.ROOT_URL + '/create/playlist',
+      postParams, httpOptions).toPromise()
+      .then(res => { console.log(res, 'Playlist creada'); retVal = 200; })
+      .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
+
+    return retVal;
+  }
+
+  async actualizarPlaylist(nombrePlaylist: string, nuevoNombrePlaylist: string, nuevoPrivado: boolean) {
+    let user = this.auth.getUserName();
+    let retVal: number;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    let postParams = {
+      'NombreUsuario': user, 'NombrePlayList': nombrePlaylist,
+      'NuevoNombre': nuevoNombrePlaylist, 'NuevoPrivado': nuevoPrivado
+    };
+
+    console.log("actualizar playlist", user, nombrePlaylist, nuevoNombrePlaylist, nuevoPrivado);
+
+    await this.http.post(this.ROOT_URL + '/user/update/playlist',
+      postParams, httpOptions).toPromise()
+      .then(res => { console.log('Cambiado estado'); retVal = 200; })
+      .catch(msg => { console.log('Error:', msg.status, msg.statusText); retVal = msg.status })
 
     return retVal;
   }

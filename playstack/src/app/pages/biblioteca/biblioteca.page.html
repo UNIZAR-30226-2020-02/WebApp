@@ -40,7 +40,7 @@
 
     <ion-item-group *ngIf="currentTabMusica == 'Playlists'" class="listado">
       <ion-item-group style="text-align: right;">
-        <ion-button color="light" style="width: auto; height: 45px; padding-bottom: 10px;">
+        <ion-button color="light" style="width: auto; height: 45px; padding-bottom: 10px;" (click)="crearPlaylist()">
           <ion-icon name="add-outline"></ion-icon>
           <b>Crear playlist</b>
         </ion-button>

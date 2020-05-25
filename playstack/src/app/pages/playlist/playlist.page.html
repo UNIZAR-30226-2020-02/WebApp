@@ -17,8 +17,12 @@
       <ion-col size="4" class="ion-text-center" style="padding: 40px;">
         <ion-img style="width: 50%; margin: 0 auto;" [src]="playlist.covers[0]"></ion-img>
         <h1>{{ playlist.nombre }}</h1>
-        <p *ngIf="playlist?.tipo == 'Playlist' && playlist?.esPrivada">Playlist privada</p>
-        <p *ngIf="playlist?.tipo == 'Playlist' && !playlist?.esPrivada">Playlist pública</p>
+
+        <ion-item *ngIf="playlist?.tipo == 'Playlist'" style="width: min-content; margin: 0 auto;">
+          <ion-label>Privada</ion-label>
+          <ion-toggle [checked]="playlist.esPrivada" (click)="togglePrivada()"></ion-toggle>
+        </ion-item>
+
         <p>Número de canciones: {{ this.playlist?.tracks.length }}</p>
       </ion-col>
       <ion-col size="8" style="padding: 40px">
@@ -26,12 +30,12 @@
           <h2>Canciones</h2>
         </ion-row>
         <ion-row style="font-size: large;">
-          <ion-col>#</ion-col>
+          <ion-col size="1">#</ion-col>
           <ion-col>Titulo</ion-col>
           <ion-col>Album</ion-col>
           <ion-col>Artista</ion-col>
-          <ion-col>Duracion</ion-col>
-          <ion-col></ion-col>
+          <ion-col size="2">Duracion</ion-col>
+          <ion-col size="2"></ion-col>
         </ion-row>
 
         <div expand="full">
@@ -52,10 +56,21 @@
             <ion-col>{{ cancion.value.Artistas?.join(", ") }}</ion-col>
             <ion-col size="2" class="ion-text-center">3:40</ion-col>
 
-            <ion-col>
-              <ion-button *ngIf="cancion.value.EsFavorita" (click)="desmarcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart"></ion-icon></ion-button>
-              <ion-button *ngIf="!cancion.value.EsFavorita" (click)="marcarFavorita(cancion.key); $event.stopPropagation()"><ion-icon name="heart-outline"></ion-icon></ion-button>
-              <ion-button (click)="addToCola(cancion); $event.stopPropagation()"><ion-icon name="list-outline"></ion-icon></ion-button>
+            <ion-col size="2">
+              <ion-button *ngIf="cancion.value.EsFavorita || playlist.tipo == 'Favoritas'"
+                (click)="desmarcarFavorita(cancion.key); $event.stopPropagation()">
+                <ion-icon name="heart"></ion-icon>
+              </ion-button>
+              <ion-button *ngIf="!cancion.value.EsFavorita && playlist.tipo != 'Favoritas'"
+                (click)="marcarFavorita(cancion.key); $event.stopPropagation()">
+                <ion-icon name="heart-outline"></ion-icon>
+              </ion-button>
+              <ion-button (click)="addToCola(cancion); $event.stopPropagation()">
+                <ion-icon name="list-outline"></ion-icon>
+              </ion-button>
+              <ion-button (click)="addToPlaylist(cancion.key); $event.stopPropagation()">
+                <ion-icon name="add-outline"></ion-icon>
+              </ion-button>
             </ion-col>
 
           </ion-item>
