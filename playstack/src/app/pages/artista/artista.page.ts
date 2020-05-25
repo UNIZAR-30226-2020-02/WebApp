@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ReproductorService } from 'src/app/services/reproductor/reproductor.service';
 import { Observable } from 'rxjs';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-artista',
@@ -17,7 +18,7 @@ export class ArtistaPage implements OnInit {
   showSpinner: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router,
-      public rs: ReproductorService, private cs: ContenidoService) {
+      private rs: ReproductorService, private cs: ContenidoService, private alertController: AlertController) {
   }
 
   ngOnInit() {
@@ -74,5 +75,53 @@ export class ArtistaPage implements OnInit {
   addToCola(cancion) {
     console.log("Añadir", cancion.key, "a la cola");
     this.rs.addToCola(this.cs.constructTrack(cancion));
+  }
+
+  async addToPlaylist(cancion: string) {
+    let playlists = await this.cs.getUserPlaylistsArray();
+    if (playlists == null) {
+      console.log("Error al recuperar las playlists");
+    }
+    else if (playlists == []) {
+      console.log("No hay playlists");
+    }
+    else {
+      // El usuario elige una playlist
+      var options = {
+        title: 'Choose the name',
+        message: 'Añadir a playlist',
+        inputs: [],
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: async data => {
+              console.log("seleccionada", data, "cancion", cancion);
+              let respuesta = await this.cs.addToPlaylist(data, cancion);
+              switch (respuesta) {
+                case 200: console.log("se ha añadido la canción"); break;
+                default: console.log("No se ha podido añadir la cancion"); break;
+              }
+            }
+          }
+        ]
+      };
+
+      // Now we add the radio buttons
+      options.inputs.push({ name : 'playlist', value: playlists[0], label: playlists[0], type: 'radio', checked: true });
+      for(let i=1; i < playlists.length; i++) {
+        options.inputs.push({ name : 'playlist', value: playlists[i], label: playlists[i], type: 'radio' });
+      }
+      // Create the alert with the options
+      let alert = await this.alertController.create(options);
+      alert.present();
+    }
+    // this.cs.addToPlaylist(cancion);
   }
 }

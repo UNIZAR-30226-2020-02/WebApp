@@ -16,8 +16,12 @@
     <ion-row>
       <ion-col size="4" class="ion-text-center" style="padding: 40px;">
         <ion-img style="width: 50%; margin: 0 auto;" [src]="playlist.covers[0]"></ion-img>
-        <h1>{{ playlist.nombre }}</h1>
-
+        <div>
+          <h1>{{ playlist.nombre }}</h1>
+          <ion-button (click)="editPlaylist(); $event.stopPropagation()">
+            <ion-icon name="create"></ion-icon>
+          </ion-button>
+        </div>
         <ion-item *ngIf="playlist?.tipo == 'Playlist'" style="width: min-content; margin: 0 auto;">
           <ion-label>Privada</ion-label>
           <ion-toggle [checked]="playlist.esPrivada" (click)="togglePrivada()"></ion-toggle>

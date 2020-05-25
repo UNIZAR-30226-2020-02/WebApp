@@ -138,6 +138,12 @@
     padding-top: 10px;
     padding-left: 10px;
   }
+  alert-radio-label sc-ion-alert-md{
+    > div {
+      color: #fff;
+      margin-bottom: 10px;
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
