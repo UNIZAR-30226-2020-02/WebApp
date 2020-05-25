@@ -27,7 +27,7 @@
     </ion-row>
 
     <ion-row>
-      <ion-item button (click)="rs.togglePlayer()" style=" width: 100%;">
+      <ion-item button (click)="rs.togglePlayer()" style=" width: 100%;" class="selected">
         <ion-col></ion-col>
         <ion-col>{{ rs.getActiveAudio().nombre }}</ion-col>
         <ion-col>{{ $any(rs.getActiveAudio()).albumes?.join(", ") }}</ion-col>
