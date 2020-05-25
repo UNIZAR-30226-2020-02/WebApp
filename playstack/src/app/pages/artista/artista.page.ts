@@ -18,11 +18,7 @@ export class ArtistaPage implements OnInit {
   showSpinner: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router,
-<<<<<<< HEAD
       private rs: ReproductorService, private cs: ContenidoService, private alertController: AlertController) {
-=======
-      public rs: ReproductorService, private cs: ContenidoService) {
->>>>>>> cbbfa584651c8d86f3cd3c0990cb52e05488f549
   }
 
   ngOnInit() {

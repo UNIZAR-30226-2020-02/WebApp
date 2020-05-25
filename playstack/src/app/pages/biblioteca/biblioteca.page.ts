@@ -42,8 +42,7 @@ export class BibliotecaPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.currentTab = "Musica";
-    this.setPlaylists();
+    this.playlists = this.cs.getUserPlaylists();
   }
 
   setMusic() {
